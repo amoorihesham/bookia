@@ -1,16 +1,13 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Lato } from 'next/font/google';
 import { ClerkProvider, ThemeProvider } from '@/components/providers';
 import './globals.css';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const lato = Lato({
+  variable: '--font-lato',
+  weight: ['100', '300', '400', '700', '900'],
   subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
+  preload: true,
 });
 
 export const metadata: Metadata = {
@@ -29,7 +26,7 @@ export default function RootLayout({
         lang='en'
         suppressHydrationWarning
       >
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <body className={`${lato.variable} antialiased`}>
           <ThemeProvider
             attribute='class'
             defaultTheme='system'
