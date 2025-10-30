@@ -1,7 +1,5 @@
 import { ReactNode } from 'react';
 
-const AuthLayout = ({ children }: { children: ReactNode }) => {
+export default function AuthLayout({ children }: { children: ReactNode }) {
   return <main className='h-screen flex items-center justify-center'>{children}</main>;
-};
-
-export default AuthLayout;
+}
