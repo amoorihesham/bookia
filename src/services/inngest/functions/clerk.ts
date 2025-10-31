@@ -22,28 +22,26 @@ export const clerkCreatedUser = inngest.createFunction(
     await step.run('verify-webhook', async () => {
       try {
         verifyWebhook(event.data);
-      } catch (error) {
+      } catch {
         throw new NonRetriableError('Invalid webhook');
       }
     });
 
-    const userId = await step.run('create-user', async () => {
+    await step.run('create-user', async () => {
       const userData = event.data.data;
-      const email = userData.email_addresses.find((email) => email.id === userData.primary_email_address_id);
+      const email = userData.email_addresses.find(
+        (email) => email.id === userData.primary_email_address_id
+      )?.email_address;
 
       if (!email) throw new NonRetriableError('No primary email address found.');
 
       await db.insert(UserTable).values({
         id: userData.id,
-        username: `${String(userData.first_name) + String(userData.last_name) || userData.username}`,
-        email: email.email_address,
-        method: 'github',
-        image: userData.image_url,
-        plan: 'free',
-        role: 'user',
+        username: userData.username || [userData.first_name, userData.last_name].join(' '),
+        email,
+        method: userData.external_accounts[0].provider,
+        image: userData.image_url || userData.external_accounts[0].image_url,
       });
-
-      return userData.id;
     });
   }
 );
