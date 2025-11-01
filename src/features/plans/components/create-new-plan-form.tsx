@@ -2,12 +2,15 @@
 import { Button } from '@/components/ui/button';
 import {
   Field,
+  FieldContent,
   FieldDescription,
+  FieldError,
   FieldGroup,
   FieldLabel,
   FieldLegend,
   FieldSeparator,
   FieldSet,
+  FieldTitle,
 } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { PlanTable } from '@/drizzle/schema';
@@ -26,23 +29,48 @@ export function CreateNewPlanForm() {
     console.log(values);
   };
   return (
-    <div className='w-full max-w-md'>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <FieldSet>
-          <FieldGroup className='flex-row'>
-            <Field>
-              <FieldLabel>plan name</FieldLabel>
-              <Input />
-              <FieldDescription>Plan name that will show in website.</FieldDescription>
-            </Field>
-            <Field>
-              <FieldLabel>plan name</FieldLabel>
-              <Input />
-              <FieldDescription>Plan name that will show in website.</FieldDescription>
-            </Field>
-          </FieldGroup>
-        </FieldSet>
-      </form>
-    </div>
+    <form
+      onSubmit={form.handleSubmit(onSubmit)}
+      className='min-w-full'
+    >
+      <FieldGroup className='w-full gap-3'>
+        <Field>
+          <FieldContent className='gap-2'>
+            <FieldLabel className='capitalize'>plan name</FieldLabel>
+            <Input />
+            <FieldDescription className='text-xs tracking-wider m'>
+              Plan name that will show in website.
+            </FieldDescription>
+            <FieldError errors={[]} />
+          </FieldContent>
+        </Field>
+        <Field>
+          <FieldContent className='gap-2'>
+            <FieldLabel className='capitalize'>plan price</FieldLabel>
+            <Input />
+            <FieldDescription className='text-xs tracking-wider m'>
+              Plan price that will show in website.
+            </FieldDescription>
+            <FieldError errors={[]} />
+          </FieldContent>
+        </Field>
+        <Field>
+          <FieldContent className='gap-2'>
+            <FieldLabel className='capitalize'>plan max featured count</FieldLabel>
+            <Input />
+            <FieldDescription className='text-xs tracking-wider m'>
+              Plan max featured count that will show in website.
+            </FieldDescription>
+            <FieldError errors={[]} />
+          </FieldContent>
+        </Field>
+        <Button
+          type='submit'
+          className='cursor-pointer mt-3 capitalize'
+        >
+          create
+        </Button>
+      </FieldGroup>
+    </form>
   );
 }

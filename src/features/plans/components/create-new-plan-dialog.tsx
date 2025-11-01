@@ -17,9 +17,9 @@ export const CreateNewPlanDialog = () => {
           <Construction /> create new plan
         </Button>
       </DialogTrigger>
-      <DialogContent className='min-w-2xl'>
+      <DialogContent className='min-w-sm'>
         <DialogHeader>
-          <DialogTitle>Create New Plan</DialogTitle>
+          <DialogTitle className='text-center font-semibold text-xl'>Create New Plan</DialogTitle>
         </DialogHeader>
         <CreateNewPlanForm />
       </DialogContent>
