@@ -1,74 +1,23 @@
-import { env } from '@/data/env/server';
-import { Webhook } from 'svix';
 import { inngest } from '../client';
-import { NonRetriableError } from 'inngest';
-import { db } from '@/drizzle/db';
-import { UserTable } from '@/drizzle/schema';
-import { eq } from 'drizzle-orm';
-import { deleteUser, insertUser, updateUser } from '@/features/users/db/users';
-
-function verifyWebhook({ raw, headers }: { raw: string; headers: Record<string, string> }) {
-  return new Webhook(env.CLERK_SECRET_WEBHOOK_KEY).verify(raw, headers);
-}
+import { deleteUser } from '@/features/users/db/users';
+import { createNewSubscription } from '@/features/subscriptions/db';
+import { createUserFromWebhook, updateUserFromWebhook } from '@/features/users/lib';
+import { verifyWebhook } from '../lib';
 
 export const clerkCreatedUser = inngest.createFunction(
   {
     id: 'clerk/create-db-user',
-    name: 'Clerk = Create Database User',
+    name: 'Clerk - Create Database User',
   },
   {
     event: 'clerk/user.created',
   },
   async ({ event, step }) => {
-    await step.run('verify-webhook', async () => {
-      try {
-        verifyWebhook(event.data);
-      } catch {
-        throw new NonRetriableError('Invalid webhook');
-      }
-    });
+    await step.run('verify-webhook', () => verifyWebhook(event.data));
 
-    await step.run('create-user', async () => {
-      const userData = event.data.data;
-      const email = userData.email_addresses.find(
-        (email) => email.id === userData.primary_email_address_id
-      )?.email_address;
+    const user = await step.run('create-user', () => createUserFromWebhook(event.data.data));
 
-      if (!email) throw new NonRetriableError('No primary email address found.');
-
-      await insertUser({
-        id: userData.id,
-        username: userData.username || [userData.first_name, userData.last_name].join(' '),
-        email,
-        method: userData.external_accounts[0].provider,
-        image: userData.image_url || userData.external_accounts[0].image_url,
-      });
-    });
-  }
-);
-
-export const clerkDeletedUser = inngest.createFunction(
-  {
-    id: 'clerk/delete-db-user',
-    name: 'Clerk = Delete Database User',
-  },
-  {
-    event: 'clerk/user.deleted',
-  },
-  async ({ event, step }) => {
-    await step.run('verify-webhook', async () => {
-      try {
-        verifyWebhook(event.data);
-      } catch {
-        throw new NonRetriableError('Invalid webhook');
-      }
-    });
-
-    await step.run('delete-user', async () => {
-      const userData = event.data.data;
-
-      await deleteUser(userData.id!);
-    });
+    await step.run('create-user-subscription', () => createNewSubscription(user!));
   }
 );
 
@@ -81,27 +30,21 @@ export const clerkUpdatedUser = inngest.createFunction(
     event: 'clerk/user.updated',
   },
   async ({ event, step }) => {
-    await step.run('verify-webhook', async () => {
-      try {
-        verifyWebhook(event.data);
-      } catch {
-        throw new NonRetriableError('Invalid webhook');
-      }
-    });
+    await step.run('verify-webhook', () => verifyWebhook(event.data));
+    await step.run('update-user', () => updateUserFromWebhook(event.data.data));
+  }
+);
 
-    step.run('update-user', async () => {
-      const userData = event.data.data;
-      const email = userData.email_addresses.find((email) => email.id === userData.primary_email_address_id);
-
-      if (!email) throw new NonRetriableError('No primary email address found.');
-
-      await updateUser(userData.id, {
-        email: email.email_address,
-        image: userData.image_url,
-        method: 'google',
-        username: `${String(userData.first_name) + String(userData.last_name) || userData.username}`,
-        updatedAt: new Date(),
-      });
-    });
+export const clerkDeletedUser = inngest.createFunction(
+  {
+    id: 'clerk/delete-db-user',
+    name: 'Clerk = Delete Database User',
+  },
+  {
+    event: 'clerk/user.deleted',
+  },
+  async ({ event, step }) => {
+    await step.run('verify-webhook', () => verifyWebhook(event.data));
+    await step.run('delete-user', () => deleteUser(event.data.data.id!));
   }
 );

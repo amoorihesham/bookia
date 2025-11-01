@@ -3,10 +3,19 @@ import { UserTable } from '@/drizzle/schema';
 import { eq } from 'drizzle-orm';
 import { revalidateTag } from 'next/cache';
 
+export async function getDatabaseUser(clerkUserId: string) {
+  return await db.query.UserTable.findFirst({
+    where: eq(UserTable.id, clerkUserId),
+    with: {
+      plan: true,
+      subscription: true,
+    },
+  });
+}
 export async function insertUser(user: typeof UserTable.$inferInsert) {
-  await db.insert(UserTable).values(user).onConflictDoNothing();
+  const result = await db.insert(UserTable).values(user).onConflictDoNothing().returning();
 
-  revalidateTag(user.id, { expire: 1000 });
+  return result[0];
 }
 
 export async function updateUser(id: string, user: Partial<typeof UserTable.$inferInsert>) {

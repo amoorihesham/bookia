@@ -9,7 +9,7 @@ type ClerkWebhookData<T> = {
   };
 };
 
-type Events = {
+export type Events = {
   'clerk/user.created': ClerkWebhookData<UserJSON>;
   'clerk/user.updated': ClerkWebhookData<UserJSON>;
   'clerk/user.deleted': ClerkWebhookData<DeletedObjectJSON>;
