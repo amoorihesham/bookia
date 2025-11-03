@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Lato } from 'next/font/google';
 import { ClerkProvider, ThemeProvider } from '@/components/providers';
 import './globals.css';
+import { Toaster } from 'sonner';
 
 const lato = Lato({
   variable: '--font-lato',
@@ -34,6 +35,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             {children}
+            <Toaster />
           </ThemeProvider>
         </body>
       </html>

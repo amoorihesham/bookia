@@ -6,10 +6,6 @@ import { revalidateTag } from 'next/cache';
 export async function getDatabaseUser(clerkUserId: string) {
   return await db.query.UserTable.findFirst({
     where: eq(UserTable.id, clerkUserId),
-    with: {
-      plan: true,
-      subscription: true,
-    },
   });
 }
 export async function insertUser(user: typeof UserTable.$inferInsert) {

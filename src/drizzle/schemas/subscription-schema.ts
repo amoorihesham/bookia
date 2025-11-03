@@ -6,11 +6,11 @@ import { relations } from 'drizzle-orm';
 
 export const SubscriptionTable = pgTable('subscriptions', {
   id,
-  userId: varchar('user_id').references(() => UserTable.id),
-  planId: uuid('plan_id').references(() => PlanTable.id),
+  userId: varchar().references(() => UserTable.id),
+  planId: uuid().references(() => PlanTable.id),
   valid: boolean().notNull().default(true),
   activated: date().notNull(),
-  renewAt: date('renew_at').notNull(),
+  renewAt: date().notNull(),
   remain: numeric().notNull(),
   max_featured_count: numeric().notNull(),
   remain_featured_count: numeric().notNull(),

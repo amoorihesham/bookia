@@ -1,4 +1,4 @@
-import { boolean, date, numeric, pgTable, real, time, varchar } from 'drizzle-orm/pg-core';
+import { boolean, date, integer, pgTable, real, varchar } from 'drizzle-orm/pg-core';
 import { createdAt, id, updatedAt } from '../schemaHelpers';
 import { UserTable } from './user-schema';
 import { relations } from 'drizzle-orm';
@@ -6,13 +6,13 @@ import { relations } from 'drizzle-orm';
 export const EventTable = pgTable('events', {
   id,
   name: varchar().notNull(),
-  orgainer: varchar()
-    .references(() => UserTable.id)
-    .notNull(),
+  organizer: varchar()
+    .notNull()
+    .references(() => UserTable.id, { onDelete: 'cascade' }),
   ticket_price: real().notNull(),
-  tickets: numeric().notNull().default('1'),
+  tickets: integer().notNull(),
   place: varchar().notNull(),
-  gusts: varchar().array(),
+  guests: varchar().array(),
   featured: boolean().default(false),
   held_on: date().notNull(),
   open: boolean().default(true),
@@ -22,7 +22,7 @@ export const EventTable = pgTable('events', {
 
 export const EvenetRelations = relations(EventTable, ({ one }) => ({
   organizer: one(UserTable, {
-    fields: [EventTable.orgainer],
+    fields: [EventTable.organizer],
     references: [UserTable.id],
   }),
 }));

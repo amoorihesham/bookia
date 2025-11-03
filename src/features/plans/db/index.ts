@@ -5,3 +5,7 @@ export const insertPlan = async (values: typeof PlanTable.$inferInsert) => {
   const result = await db.insert(PlanTable).values(values).returning();
   return result[0];
 };
+
+export const queryPlans = async () => {
+  return await db.query.PlanTable.findMany();
+};
