@@ -21,7 +21,7 @@ export const UserTable = pgTable('users', {
 export const UserRelations = relations(UserTable, ({ one, many }) => {
   return {
     plan: one(PlanTable, {
-      fields: [UserTable.id],
+      fields: [UserTable.plan_id],
       references: [PlanTable.id],
     }),
     subscription: one(SubscriptionTable),
