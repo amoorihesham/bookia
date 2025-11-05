@@ -44,12 +44,6 @@ export default function WebsiteLayout({ children }: { children: ReactNode }) {
                 icon: <DraftingCompass />,
                 label: 'Expired',
               },
-              {
-                href: '/sign-in',
-                icon: <LogInIcon />,
-                label: 'Sign In',
-                authStatus: 'signedOut',
-              },
             ]}
           />{' '}
           <SidebarNavMenuGroup

@@ -19,5 +19,8 @@ export const EventTable = pgTable('events', {
 });
 
 export const EvenetRelations = relations(EventTable, ({ one }) => ({
-  organizer: one(UserTable),
+  organizer: one(UserTable, {
+    fields: [EventTable.user_id],
+    references: [UserTable.clerk_id],
+  }),
 }));

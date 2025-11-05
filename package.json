@@ -7,8 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "inngest:dev":"npx inngest-cli dev",
+    "inngest:dev": "npx inngest-cli dev",
     "seed:plans": "dotenv -e .env.local -- npx tsx src/drizzle/seed/plans.ts",
+    "seed:events": "dotenv -e .env.local -- npx tsx src/drizzle/seed/events.ts",
     "db:push": "dotenv -e .env.local -- drizzle-kit push"
   },
   "dependencies": {

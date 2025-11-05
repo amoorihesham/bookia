@@ -3,7 +3,7 @@ import { EventTable } from '@/drizzle/schema';
 import { eq, gt, lt, sql } from 'drizzle-orm';
 
 const eventsRepository = {
-  findAllEvents: async () => db.query.EventTable.findMany(),
+  findAllEvents: async () => db.query.EventTable.findMany({ with: { organizer: true } }),
   findAllFeaturedEvents: async () => db.query.EventTable.findMany({ where: eq(EventTable.featured, true) }),
   findAllExpiredEvents: async () => db.query.EventTable.findMany({ where: lt(EventTable.held_on, sql`CURRENT_DATE`) }),
   findAllTodayEvents: async () => db.query.EventTable.findMany({ where: eq(EventTable.held_on, sql`CURRENT_DATE`) }),

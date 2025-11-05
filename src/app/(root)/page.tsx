@@ -1,10 +1,10 @@
-import { EventsGrid } from '@/features/events/components/events-grid';
+import { EventsGrid, EventsGridSkeleton } from '@/features/events/components';
 import { Suspense } from 'react';
 
 export default function Homepage() {
   return (
     <div>
-      <Suspense>
+      <Suspense fallback={<EventsGridSkeleton />}>
         <EventsGrid />
       </Suspense>
     </div>
