@@ -8,13 +8,12 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Heart, TicketPercent } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { formateCurrecny } from '@/shared/lib/formaters';
 import { cn } from '@/lib/utils';
 import { EventLoveButton } from './event-love-button';
 import { EventBookButton } from './event-book-button';
+import { EventToggleFeaturedButton } from './event-toggle-featured-button';
 
 type Props = typeof EventTable.$inferSelect & { organizer: typeof UserTable.$inferSelect | null };
 
@@ -75,6 +74,7 @@ export const EventCard = ({
         </div>
       </CardContent>
       <CardFooter className='flex-col gap-2'>
+        <EventToggleFeaturedButton id={id} />
         <EventLoveButton id={id} />
         <EventBookButton id={id} />
       </CardFooter>
