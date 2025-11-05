@@ -1,12 +1,13 @@
 'use client';
 
 import { ReactNode } from 'react';
-import { SidebarGroup, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '../ui/sidebar';
+import { SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '../ui/sidebar';
 import { SignedIn, SignedOut } from '@/services/clerk/components/signin-status';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 export function SidebarNavMenuGroup({
+  title,
   items,
   className,
 }: {
@@ -17,11 +18,14 @@ export function SidebarNavMenuGroup({
     authStatus?: 'signedOut' | 'signedIn';
   }[];
   className?: string;
+  title?: string;
 }) {
   const pathname = usePathname();
 
   return (
     <SidebarGroup className={className}>
+      {title && <SidebarGroupLabel>{title}</SidebarGroupLabel>}
+
       <SidebarMenu>
         {items.map((item) => {
           const html = (
