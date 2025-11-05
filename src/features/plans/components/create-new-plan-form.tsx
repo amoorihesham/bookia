@@ -6,7 +6,6 @@ import { useTransition } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { insertPlanSchema } from '../schemas';
-import { createNewPlan } from '../actions/admin';
 import { toast } from 'sonner';
 import z from 'zod';
 
@@ -22,15 +21,15 @@ export function CreateNewPlanForm() {
   });
 
   const onSubmit = async (values: z.infer<typeof insertPlanSchema>) => {
-    startTransition(async () => {
-      const { success, message, code, error } = await createNewPlan(values);
-      if (success) {
-        toast.success(message);
-        form.reset();
-        return;
-      }
-      toast.error(code, { description: error });
-    });
+    // startTransition(async () => {
+    //   const { success, message, code, error } = await createNewPlan(values);
+    //   if (success) {
+    //     toast.success(message);
+    //     form.reset();
+    //     return;
+    //   }
+    //   toast.error(code, { description: error });
+    // });
   };
   return (
     <form

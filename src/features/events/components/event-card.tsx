@@ -14,7 +14,7 @@ import { Badge } from '@/components/ui/badge';
 import { formateCurrecny } from '@/shared/lib/formaters';
 import { cn } from '@/lib/utils';
 
-type Props = typeof EventTable.$inferSelect & { organizer: typeof UserTable.$inferSelect };
+type Props = typeof EventTable.$inferSelect & { organizer: typeof UserTable.$inferSelect | null };
 
 export const EventCard = ({
   id,
@@ -32,7 +32,7 @@ export const EventCard = ({
     <Card className='w-full'>
       <CardHeader>
         <CardTitle>{name}</CardTitle>
-        <CardDescription>By {organizer.username}</CardDescription>
+        <CardDescription>By {organizer?.username}</CardDescription>
         <CardAction className='gap-2 flex items-center'>
           {featured && <Badge className='bg-chart-4 text-foreground'>Featured</Badge>}
           {open ? (

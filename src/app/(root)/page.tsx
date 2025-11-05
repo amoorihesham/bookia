@@ -1,7 +1,10 @@
-import { EventsGrid, EventsGridSkeleton } from '@/features/events/components';
 import { Suspense } from 'react';
+import { EventsGrid, EventsGridSkeleton } from '@/features/events/components';
+import { cacheLife } from 'next/cache';
 
-export default function Homepage() {
+export default async function Homepage() {
+  'use cache';
+  cacheLife('days');
   return (
     <div>
       <Suspense fallback={<EventsGridSkeleton />}>
