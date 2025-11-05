@@ -1,14 +1,11 @@
-import { boolean, date, integer, pgTable, real, varchar } from 'drizzle-orm/pg-core';
-import { createdAt, id, updatedAt } from '../schemaHelpers';
+import { boolean, date, integer, pgTable, real, uuid, varchar } from 'drizzle-orm/pg-core';
+import { createdAt, updatedAt } from '../schemaHelpers';
 import { UserTable } from './user-schema';
 import { relations } from 'drizzle-orm';
 
 export const EventTable = pgTable('events', {
-  id,
+  id: uuid().primaryKey().notNull().defaultRandom(),
   name: varchar().notNull(),
-  organizer: varchar()
-    .notNull()
-    .references(() => UserTable.id, { onDelete: 'cascade' }),
   ticket_price: real().notNull(),
   tickets: integer().notNull(),
   place: varchar().notNull(),
@@ -21,8 +18,5 @@ export const EventTable = pgTable('events', {
 });
 
 export const EvenetRelations = relations(EventTable, ({ one }) => ({
-  organizer: one(UserTable, {
-    fields: [EventTable.organizer],
-    references: [UserTable.id],
-  }),
+  organizer: one(UserTable),
 }));

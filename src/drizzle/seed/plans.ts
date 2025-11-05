@@ -6,16 +6,19 @@ const initialPlans: (typeof PlanTable.$inferInsert)[] = [
     name: 'free',
     max_featured_count: 3,
     price: 0,
+    frequancy: 'monthly',
   },
   {
     name: 'basic',
     max_featured_count: 50,
     price: 10,
+    frequancy: 'monthly',
   },
   {
     name: 'ultimate',
     max_featured_count: 1000,
     price: 20,
+    frequancy: 'monthly',
   },
 ];
 

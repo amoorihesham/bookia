@@ -1,20 +1,18 @@
 import { db } from '@/drizzle/db';
-import { PlanTable, SubscriptionTable, UserTable } from '@/drizzle/schema';
-import { eq } from 'drizzle-orm';
+import { SubscriptionTable, UserTable } from '@/drizzle/schema';
+import { getPlanById, queryPlans } from '@/features/plans/db';
 
 export const createNewSubscription = async (user: typeof UserTable.$inferSelect) => {
   try {
-    const plan = await db.query.PlanTable.findFirst({ where: eq(PlanTable.name, user.plan) });
-    if (!plan) throw new Error('Plan not found');
-
+    const plan = await getPlanById(user.plan_id!);
     const subscription = await db
       .insert(SubscriptionTable)
       .values({
         userId: user?.id,
-        planId: plan.id,
+        planId: plan?.id,
         activated: new Date().toISOString(),
-        max_featured_count: plan.max_featured_count.toString(),
-        remain_featured_count: plan.max_featured_count.toString(),
+        max_featured_count: plan?.max_featured_count,
+        remain_featured_count: plan?.max_featured_count,
         valid: true,
         remain: '3',
         renewAt: new Date().toISOString(),
