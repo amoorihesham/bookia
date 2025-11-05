@@ -13,6 +13,8 @@ import { Heart, TicketPercent } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { formateCurrecny } from '@/shared/lib/formaters';
 import { cn } from '@/lib/utils';
+import { EventLoveButton } from './event-love-button';
+import { EventBookButton } from './event-book-button';
 
 type Props = typeof EventTable.$inferSelect & { organizer: typeof UserTable.$inferSelect | null };
 
@@ -73,15 +75,8 @@ export const EventCard = ({
         </div>
       </CardContent>
       <CardFooter className='flex-col gap-2'>
-        <Button
-          variant={'outline'}
-          className='w-full'
-        >
-          <Heart />
-        </Button>
-        <Button className='w-full'>
-          <TicketPercent />
-        </Button>
+        <EventLoveButton id={id} />
+        <EventBookButton id={id} />
       </CardFooter>
     </Card>
   );
