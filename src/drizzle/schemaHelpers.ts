@@ -4,4 +4,4 @@ export const createdAt = timestamp({ withTimezone: true, mode: 'string' }).notNu
 export const updatedAt = timestamp({ withTimezone: true, mode: 'string' })
   .notNull()
   .defaultNow()
-  .$onUpdate(() => String(new Date()));
+  .$onUpdate(() => new Date().toISOString());
