@@ -2,8 +2,12 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Check } from 'lucide-react';
+import { cacheLife } from 'next/cache';
 
-export default function PricingPage() {
+export default async function PricingPage() {
+  'use cache';
+  cacheLife('days');
+
   return (
     <section className='py-16 md:py-32'>
       <div className='mx-auto max-w-6xl px-6'>

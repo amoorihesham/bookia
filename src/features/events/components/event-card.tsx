@@ -74,9 +74,13 @@ export const EventCard = ({
         </div>
       </CardContent>
       <CardFooter className='flex-col gap-2'>
-        <EventToggleFeaturedButton id={id} />
+        {!featured && <EventToggleFeaturedButton id={id} />}
+
         <EventLoveButton id={id} />
-        <EventBookButton id={id} />
+        <EventBookButton
+          id={id}
+          open={open!}
+        />
       </CardFooter>
     </Card>
   );
