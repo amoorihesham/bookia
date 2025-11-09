@@ -5,6 +5,7 @@ import { PlanTable } from './plan-schema';
 import { relations } from 'drizzle-orm';
 import { SubscriptionTable } from './subscription-schema';
 import { EventTable } from './event-table';
+import { bookingTable } from './booking-table';
 
 export const UserTable = pgTable('users', {
   clerk_id: varchar().primaryKey().notNull().unique(),
@@ -26,5 +27,8 @@ export const UserRelations = relations(UserTable, ({ one, many }) => ({
   subscription: one(SubscriptionTable),
   events: many(EventTable, {
     relationName: 'user_events',
+  }),
+  bookings: many(bookingTable, {
+    relationName: 'user_bookings',
   }),
 }));

@@ -7,7 +7,8 @@ const eventsRepository = {
     db.query.EventTable.findMany({
       with: { organizer: true },
     }),
-  findAllFeaturedEvents: async () => db.query.EventTable.findMany({ where: eq(EventTable.featured, true) }),
+  findAllFeaturedEvents: async () =>
+    db.query.EventTable.findMany({ where: eq(EventTable.featured, true), with: { organizer: true } }),
   findAllExpiredEvents: async () =>
     db.query.EventTable.findMany({ where: lt(EventTable.held_on, sql`CURRENT_DATE`), with: { organizer: true } }),
   findAllTodayEvents: async () =>

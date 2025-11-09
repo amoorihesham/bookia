@@ -1,12 +1,7 @@
-import { GetExpiredEventsAction } from '@/features/events/actions/query';
 import { EventsGrid, EventsGridSkeleton } from '@/features/events/components';
-import { cacheLife } from 'next/cache';
 import { Suspense } from 'react';
 
 export default async function ExpiredPage() {
-  'use cache';
-  cacheLife('days');
-  const events = await GetExpiredEventsAction();
   return (
     <div className='py-10'>
       <div className='mx-auto max-w-2xl space-y-4 text-center mb-12'>
@@ -17,7 +12,7 @@ export default async function ExpiredPage() {
         </p>
       </div>
       <Suspense fallback={<EventsGridSkeleton />}>
-        <EventsGrid events={events} />
+        <EventsGrid term='expired' />
       </Suspense>
     </div>
   );

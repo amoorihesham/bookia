@@ -1,12 +1,7 @@
 import { Suspense } from 'react';
 import { EventsGrid, EventsGridSkeleton } from '@/features/events/components';
-import { cacheLife } from 'next/cache';
-import { GetTodayEventsAction } from '@/features/events/actions/query';
 
 export default async function TodayPage() {
-  'use cache';
-  cacheLife('days');
-  const events = await GetTodayEventsAction();
   return (
     <div className='py-10'>
       <div className='mx-auto max-w-2xl space-y-4 text-center mb-12'>
@@ -17,7 +12,7 @@ export default async function TodayPage() {
         </p>
       </div>
       <Suspense fallback={<EventsGridSkeleton />}>
-        <EventsGrid events={events} />
+        <EventsGrid term='today' />
       </Suspense>
     </div>
   );

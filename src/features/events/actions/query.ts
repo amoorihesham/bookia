@@ -1,16 +1,16 @@
-import { cacheLife } from 'next/cache';
 import eventsRepository from '../db/events.repo';
 
-export const GetAllEventsAction = async () => {
-  'use cache';
-  cacheLife('minutes');
-  return eventsRepository.findAllEvents();
-};
-
-export const GetTodayEventsAction = async () => {
-  return eventsRepository.findAllTodayEvents();
-};
-
-export const GetExpiredEventsAction = async () => {
-  return eventsRepository.findAllExpiredEvents();
+export const GetEventsAction = async (term: 'all' | 'featured' | 'today' | 'expired' = 'all') => {
+  switch (term) {
+    case 'all':
+      return eventsRepository.findAllEvents();
+    case 'today':
+      return eventsRepository.findAllTodayEvents();
+    case 'expired':
+      return eventsRepository.findAllExpiredEvents();
+    case 'featured':
+      return eventsRepository.findAllFeaturedEvents();
+    default:
+      return eventsRepository.findAllEvents();
+  }
 };
