@@ -9,3 +9,5 @@ export function formateCurrecny(amount: number | string) {
     currencyDisplay: 'symbol',
   }).format(inSureNumber);
 }
+
+
