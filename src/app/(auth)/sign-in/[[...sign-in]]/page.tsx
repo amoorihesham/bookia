@@ -1,8 +1,9 @@
-import { SigninPage } from '@/services/clerk';
-
 import { Suspense } from 'react';
+import { SigninPage } from '@/services/clerk';
+import { connection } from 'next/server';
 
-export default function SignInPage() {
+export default async function SignInPage() {
+  await connection();
   return (
     <Suspense
       fallback={

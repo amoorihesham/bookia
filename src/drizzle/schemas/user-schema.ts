@@ -8,7 +8,7 @@ import { EventTable } from './event-table';
 import { bookingTable } from './booking-table';
 
 export const UserTable = pgTable('users', {
-  clerk_id: varchar().primaryKey().notNull().unique(),
+  clerk_id: varchar().primaryKey().notNull(),
   username: varchar().notNull().unique(),
   email: varchar().notNull().unique(),
   image: varchar().notNull(),
