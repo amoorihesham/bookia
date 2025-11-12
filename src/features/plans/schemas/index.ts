@@ -1,4 +1,16 @@
-import { PlanTable } from '@/drizzle/schema';
-import { createInsertSchema } from 'drizzle-zod';
+import z from 'zod';
 
-export const insertPlanSchema = createInsertSchema(PlanTable);
+export const insertPlanSchema = z.object({
+  name: z.string().min(1, { error: 'Plane name is required' }),
+  frequency: z.string().min(1, { error: 'Plane frequency is required' }),
+  price: z
+    .string()
+    .transform((v) => parseFloat(v))
+    .refine((v) => !isNaN(v) && v > 0, { error: 'Plan price must be greater than 0' }),
+  max_featured_count: z
+    .string()
+    .transform((v) => parseInt(v))
+    .refine((v) => !isNaN(v) && v > 0, { error: 'Plan max featured count must be greater than 0' }),
+});
+
+export type createNewPlanInput = z.input<typeof insertPlanSchema>;

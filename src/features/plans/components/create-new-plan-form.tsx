@@ -1,106 +1,59 @@
 'use client';
-import { Button } from '@/components/ui/button';
-import { Field, FieldContent, FieldDescription, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
-import { useTransition } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useAppForm } from '@/hooks/useAppForm';
 import { insertPlanSchema } from '../schemas';
-import { toast } from 'sonner';
-import z from 'zod';
+import { FieldGroup } from '@/components/ui/field';
+import { Plane } from 'lucide-react';
+import { SelectItem } from '@/components/ui/select';
 
 export function CreateNewPlanForm() {
-  const [isPending, startTransition] = useTransition();
-  const form = useForm<z.infer<typeof insertPlanSchema>>({
-    resolver: zodResolver(insertPlanSchema),
+  const form = useAppForm({
     defaultValues: {
       name: '',
-      price: 0,
-      max_featured_count: 0,
+      price: '',
+      max_featured_count: '0',
+      frequency: 'monthly',
+    },
+    validators: {
+      onSubmit: insertPlanSchema,
+    },
+    onSubmit: async ({ value }) => {
+      console.log(value);
     },
   });
-
-  const onSubmit = async (values: z.infer<typeof insertPlanSchema>) => {
-    // startTransition(async () => {
-    //   const { success, message, code, error } = await createNewPlan(values);
-    //   if (success) {
-    //     toast.success(message);
-    //     form.reset();
-    //     return;
-    //   }
-    //   toast.error(code, { description: error });
-    // });
-  };
   return (
     <form
-      onSubmit={form.handleSubmit(onSubmit)}
-      className='min-w-full'
+      onSubmit={(e) => {
+        e.preventDefault();
+        form.handleSubmit();
+      }}
+      className='max-w-3xl mx-auto mt-14 bg-card/80 p-6 rounded-md'
     >
-      <FieldGroup className='w-full gap-3'>
-        <Controller
-          control={form.control}
-          name='name'
-          render={({ field, fieldState }) => (
-            <Field>
-              <FieldContent className='gap-2'>
-                <FieldLabel className='capitalize'>plan name</FieldLabel>
-                <Input {...field} />
-                <FieldDescription className='text-xs tracking-wider m'>
-                  Plan name that will show in website.
-                </FieldDescription>
-                <FieldError errors={[{ message: fieldState.error?.message }]} />
-              </FieldContent>
-            </Field>
-          )}
-        />
+      <FieldGroup className='w-full gap-3 space-y-3'>
+        <div className='flex items-center gap-x-4'>
+          <form.AppField name='name'>{(field) => <field.Input label='Plan Name' />}</form.AppField>
+          <form.AppField name='price'>{(field) => <field.Input label='Plan Price' />}</form.AppField>
+        </div>
+        <div className='flex items-center gap-x-4'>
+          <form.AppField name='frequency'>
+            {(field) => (
+              <field.Select label='Plan Frequency'>
+                <SelectItem value='monthly'>Monthly</SelectItem>
+                <SelectItem value='yearly'>Yearly</SelectItem>
+              </field.Select>
+            )}
+          </form.AppField>
+          <form.AppField name='max_featured_count'>
+            {(field) => <field.Input label='Plan Max Featured Count' />}
+          </form.AppField>
+        </div>
 
-        <Controller
-          control={form.control}
-          name='price'
-          render={({ field, fieldState }) => (
-            <Field>
-              <FieldContent className='gap-2'>
-                <FieldLabel className='capitalize'>plan price</FieldLabel>
-                <Input
-                  type='number'
-                  {...field}
-                  onChange={(e) => field.onChange(parseFloat(e.target.value))}
-                />
-                <FieldDescription className='text-xs tracking-wider m'>
-                  Plan price that will show in website.
-                </FieldDescription>
-                <FieldError errors={[{ message: fieldState.error?.message }]} />
-              </FieldContent>
-            </Field>
-          )}
-        />
-        <Controller
-          control={form.control}
-          name='max_featured_count'
-          render={({ field, fieldState }) => (
-            <Field>
-              <FieldContent className='gap-2'>
-                <FieldLabel className='capitalize'>plan max featured count</FieldLabel>
-                <Input
-                  type='number'
-                  {...field}
-                  onChange={(e) => field.onChange(parseFloat(e.target.value))}
-                />
-                <FieldDescription className='text-xs tracking-wider m'>
-                  Plan max featured count that will show in website.
-                </FieldDescription>
-                <FieldError errors={[{ message: fieldState.error?.message }]} />
-              </FieldContent>
-            </Field>
-          )}
-        />
-        <Button
-          disabled={isPending}
-          type='submit'
-          className='cursor-pointer mt-3 capitalize'
-        >
-          {isPending ? 'creating...' : 'create'}
-        </Button>
+        <form.AppForm>
+          <form.FormSubmitButton
+            label='Create New Plan'
+            pendingLabel='Createing New Plan'
+            Icon={Plane}
+          />
+        </form.AppForm>
       </FieldGroup>
     </form>
   );

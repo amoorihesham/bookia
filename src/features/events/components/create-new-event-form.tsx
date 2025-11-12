@@ -2,16 +2,15 @@
 
 import { useTransition } from 'react';
 import { toast } from 'sonner';
-import { Button } from '@/components/ui/button';
+import { Construction } from 'lucide-react';
 import { FieldGroup } from '@/components/ui/field';
 import { SelectItem } from '@/components/ui/select';
 import { createNewEventSchema } from '../schemas';
 import { createNewEventAction } from '../actions/mutation';
 import { useAppForm } from '@/hooks/useAppForm';
-import { Construction } from 'lucide-react';
 
 export const CreateNewEventForm = () => {
-  const [isPending, startTransition] = useTransition();
+  const [_, startTransition] = useTransition();
   const form = useAppForm({
     defaultValues: {
       name: '',
