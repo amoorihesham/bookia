@@ -11,7 +11,7 @@ const initialEvents: (typeof EventTable.$inferInsert)[] = [
     tickets: 100,
     ticket_price: 5,
     guests: ['Amr Hesha', 'Jack'],
-    held_on: new Date('2025-03-15T10:00:00Z').toISOString(),
+    held_on: new Date('2025-03-15T10:00:00Z'),
   },
   {
     name: 'Next Conf 2025',
@@ -22,7 +22,7 @@ const initialEvents: (typeof EventTable.$inferInsert)[] = [
     tickets: 100,
     ticket_price: 5,
     guests: ['Amr Hesha', 'Jack'],
-    held_on: new Date('2025-11-15T09:00:00Z').toISOString(),
+    held_on: new Date('2025-11-15T09:00:00Z'),
   },
   {
     name: 'SQL Conf 2025',
@@ -33,7 +33,7 @@ const initialEvents: (typeof EventTable.$inferInsert)[] = [
     tickets: 100,
     ticket_price: 5,
     guests: ['Amr Hesha', 'Jack'],
-    held_on: new Date('2025-11-01T09:00:00Z').toISOString(),
+    held_on: new Date('2025-11-01T09:00:00Z'),
   },
 ];
 

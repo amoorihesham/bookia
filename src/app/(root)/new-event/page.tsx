@@ -1,7 +1,10 @@
-import { CreateNewEventForm } from "@/features/events/components";
+import { CreateNewEventForm } from '@/features/events/components';
+import { cacheLife } from 'next/cache';
+import { Suspense } from 'react';
 
-
-export default function NewEventPage() {
+export default async function NewEventPage() {
+  'use cache';
+  cacheLife('hours');
   return (
     <div>
       <div className='mx-auto max-w-2xl space-y-6 text-center'>
@@ -11,7 +14,9 @@ export default function NewEventPage() {
           modify these later.
         </p>
       </div>
-      <CreateNewEventForm />
+      <Suspense fallback={<p>loading...</p>}>
+        <CreateNewEventForm />
+      </Suspense>
     </div>
   );
 }
