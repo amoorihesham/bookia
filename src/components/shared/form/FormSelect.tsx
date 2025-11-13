@@ -1,9 +1,8 @@
-import { ReactNode } from 'react';
 import { Select, SelectContent, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useFieldContext } from '@/hooks/useAppForm';
 import { FormBase, FormControlProps } from './FormBase';
 
-export function FormSelect({ children, ...props }: FormControlProps & { children: ReactNode }) {
+export function FormSelect({ children, ...props }: FormControlProps & React.SelectHTMLAttributes<HTMLSelectElement>) {
   const field = useFieldContext<string>();
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 

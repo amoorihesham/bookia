@@ -43,7 +43,7 @@ export const EventCard = ({
           <p className='flex items-center gap-2'>
             On:
             <span className={cn('font-semibold text-chart-2', !open && 'text-destructive')}>
-              {format(held_on, 'd-MMM-yyyy')}
+              {format(held_on, 'EEE, MM d')}
             </span>
             At:
             <span className='text-muted-foreground underline '>{format(held_on, 'hh:mm a')}</span>

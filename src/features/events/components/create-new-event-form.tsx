@@ -52,8 +52,22 @@ export const CreateNewEventForm = () => {
     >
       <FieldGroup className='w-full gap-3 space-y-3'>
         <div className='flex items-center gap-x-4'>
-          <form.AppField name='name'>{(field) => <field.Input label='Event name' />}</form.AppField>
-          <form.AppField name='place'>{(field) => <field.Input label='Event place' />}</form.AppField>
+          <form.AppField name='name'>
+            {(field) => (
+              <field.Input
+                label='Event name'
+                placeholder='React conf 2025'
+              />
+            )}
+          </form.AppField>
+          <form.AppField name='place'>
+            {(field) => (
+              <field.Input
+                label='Event place'
+                placeholder='Copghenhagen'
+              />
+            )}
+          </form.AppField>
         </div>
         <div className='flex items-center gap-x-4'>
           <form.AppField name='tickets'>{(field) => <field.Input label='Event avaliable tickets' />}</form.AppField>
@@ -82,7 +96,7 @@ export const CreateNewEventForm = () => {
           {(field) => (
             <field.Input
               label='Event guests'
-              description='Comma seperated name, ex Doe,Adam...'
+              placeholder='Comma seprated ex Jhon_Doe,Marie_Martin'
             />
           )}
         </form.AppField>

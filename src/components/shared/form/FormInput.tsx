@@ -2,10 +2,10 @@ import { useFieldContext } from '@/hooks/useAppForm';
 import { FormBase, FormControlProps } from './FormBase';
 import { Input } from '@/components/ui/input';
 
-export function FormInput(props: FormControlProps) {
+export function FormInput(props: FormControlProps & React.InputHTMLAttributes<HTMLInputElement>) {
   const field = useFieldContext<string>();
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
-
+  const placeholder = props.placeholder;
   return (
     <FormBase {...props}>
       <Input
@@ -15,6 +15,7 @@ export function FormInput(props: FormControlProps) {
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(e.target.value)}
         aria-invalid={isInvalid}
+        placeholder={placeholder}
       />
     </FormBase>
   );

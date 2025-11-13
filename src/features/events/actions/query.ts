@@ -1,22 +1,33 @@
 import { cacheTag } from 'next/cache';
 import eventsRepository from '../db/events.repo';
+import { FindEventsFilterTerm } from '../types';
+import { getCurrentUser } from '@/shared/lib/auth';
 
-export const GetEventsAction = async (term: 'all' | 'featured' | 'today' | 'expired' = 'all') => {
-  switch (term) {
-    case 'all':
-      cacheTag(`${term}-events`);
-      return eventsRepository.findAllEvents();
-    case 'today':
-      cacheTag(`${term}-events`);
-      return eventsRepository.findAllTodayEvents();
-    case 'expired':
-      cacheTag(`${term}-events`);
-      return eventsRepository.findAllExpiredEvents();
-    case 'featured':
-      cacheTag(`${term}-events`);
-      return eventsRepository.findAllFeaturedEvents();
-    default:
-      cacheTag(`${term}-events`);
-      return eventsRepository.findAllEvents();
+export const GetEventsAction = async (term: FindEventsFilterTerm = 'all') => {
+  cacheTag(`${term}-events`);
+  return eventsRepository.findAllEvents(term);
+};
+
+export const GetUserEventsAction = async () => {
+  const user = await getCurrentUser();
+  if (!user) throw Error('No user found');
+
+  let featured_count = 0;
+  let open_count = 0;
+  let close_count = 0;
+
+  const result = await eventsRepository.findUserEvents(user.clerk_id);
+  
+  for (const e of result) {
+    if (e.featured) featured_count += 1;
+    if (e.open) open_count += 1;
+    if (!e.open) close_count += 1;
   }
+  return {
+    events: result,
+    count: result.length,
+    featured_count,
+    open_count,
+    close_count,
+  };
 };
