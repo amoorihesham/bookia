@@ -1,23 +1,11 @@
 import { EventTable, UserTable } from '@/drizzle/schema';
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardDescription, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { formateCurrecny } from '@/shared/lib/formaters';
 import { cn } from '@/lib/utils';
-import { EventLoveButton } from './event-love-button';
-import { EventBookButton } from './event-book-button';
-import { EventToggleFeaturedButton } from './event-toggle-featured-button';
 import { format } from 'date-fns';
 import { ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
-import { BookAlert, Clock, Locate, MapPin, Ticket, TicketCheck } from 'lucide-react';
+import { BookAlert, Clock, MapPin, TicketCheck } from 'lucide-react';
 import { TooltipButton } from '@/components/buttons';
 
 type Props = { event: typeof EventTable.$inferSelect & { organizer: typeof UserTable.$inferSelect | null } };

@@ -6,6 +6,7 @@ export default async function Homepage() {
     <div>
       <Suspense fallback={<EventsGridSkeleton />}>
         <EventsGrid term='all' />
+        
       </Suspense>
     </div>
   );
