@@ -1,13 +1,20 @@
+import { EventsGrid, EventsGridSkeleton } from '@/features/events/components';
+import { Suspense } from 'react';
+
 export default async function FeaturedPage() {
   return (
-    <div className='py-10'>
-      <div className='mx-auto max-w-2xl space-y-4 text-center mb-12'>
-        <h1 className='text-center text-4xl font-semibold lg:text-5xl'>What&apos;s Happening Today?</h1>
-        <p>
-          Ready for some excitement? Browse all events taking place today and jump into the experiences happening around
-          you!
+    <>
+      <div className='mx-auto max-w-2xl space-y-1 lg:space-y-4 text-center mb-6 lg:mb-12'>
+        <h1 className='text-center text-2xl font-semibold lg:text-5xl'>Featured Events You Can&apos;t Miss</h1>
+        <p className='text-xs lg:text-base'>
+          Discover our hand-picked selection of standout events! These are the most exciting experiences happening
+          around — make sure you&apos;re part of them before they&apos;re gone!
         </p>
       </div>
-    </div>
+
+      <Suspense fallback={<EventsGridSkeleton />}>
+        <EventsGrid term='featured' />
+      </Suspense>
+    </>
   );
 }

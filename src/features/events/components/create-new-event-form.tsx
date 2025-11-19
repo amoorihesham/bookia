@@ -48,10 +48,10 @@ export const CreateNewEventForm = () => {
         e.preventDefault();
         form.handleSubmit();
       }}
-      className='max-w-3xl mx-auto mt-14 bg-card/80 p-6 rounded-md'
+      className='max-w-3xl mx-auto mt-6 lg:mt-14 bg-card/80 p-4 lg:p-6 rounded-md'
     >
-      <FieldGroup className='w-full gap-3 space-y-3'>
-        <div className='flex items-center gap-x-4'>
+      <FieldGroup className='w-full gap-2 lg:gap-3  space-y-2'>
+        <div className='flex flex-col lg:flex-row items-center gap-4 lg:gap-x-4'>
           <form.AppField name='name'>
             {(field) => (
               <field.Input
