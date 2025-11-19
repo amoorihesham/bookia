@@ -1,9 +1,10 @@
 import { EventCard } from '@/features/events/components';
 import { cn } from '@/lib/utils';
 import { GetUserEventsAction } from '@/features/events/actions/query';
+import { EmptyComponent } from '@/components/shared';
 
 export default async function StatsSection() {
-  const { events, close_count, count, featured_count, open_count } = await GetUserEventsAction();
+  const { events, count, close_count, featured_count, open_count } = await GetUserEventsAction();
 
   return (
     <section className='py-12 md:py-10'>
@@ -35,15 +36,18 @@ export default async function StatsSection() {
           </div>
         </div>
       </div>
-
-      <div className={cn('grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 mt-14')}>
-        {events.map((event) => (
-          <EventCard
-            key={event.id}
-            event={event}
-          />
-        ))}
-      </div>
+      {events.length ? (
+        <div className={cn('grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 mt-14')}>
+          {events.map((event) => (
+            <EventCard
+              key={event.id}
+              event={event}
+            />
+          ))}
+        </div>
+      ) : (
+        <EmptyComponent className='mt-10' />
+      )}
     </section>
   );
 }
