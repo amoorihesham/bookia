@@ -10,14 +10,21 @@ export const GetEventsAction = async (term: FindEventsFilterTerm = 'all') => {
 
 export const GetUserEventsAction = async () => {
   const user = await getCurrentUser();
-  if (!user) throw Error('No user found');
+  if (!user)
+    return {
+      events: [],
+      count: 0,
+      featured_count: 0,
+      open_count: 0,
+      close_count: 0,
+    };
 
   let featured_count = 0;
   let open_count = 0;
   let close_count = 0;
 
   const result = await eventsRepository.findUserEvents(user.clerk_id);
-  
+
   for (const e of result) {
     if (e.featured) featured_count += 1;
     if (e.open) open_count += 1;
