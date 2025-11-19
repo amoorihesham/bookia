@@ -3,17 +3,18 @@ import { Suspense } from 'react';
 
 export default async function ExpiredPage() {
   return (
-    <div className='py-10'>
-      <div className='mx-auto max-w-2xl space-y-4 text-center mb-12'>
-        <h1 className='text-center text-4xl font-semibold lg:text-5xl'>What&apos;s Happening Today?</h1>
-        <p>
-          Ready for some excitement? Browse all events taking place today and jump into the experiences happening around
-          you!
+    <>
+      <div className='mx-auto max-w-2xl space-y-1 lg:space-y-4 text-center mb-6 lg:mb-12'>
+        <h1 className='text-center text-2xl font-semibold lg:text-5xl'>Past Events That Made Memories</h1>
+        <p className='text-xs lg:text-base'>
+          Missed an event? Don&apos;t worry — here&apos;s a look back at all the past experiences that have already
+          taken place. Relive the moments and get inspired for what&apos;s coming next!
         </p>
       </div>
+
       <Suspense fallback={<EventsGridSkeleton />}>
         <EventsGrid term='expired' />
       </Suspense>
-    </div>
+    </>
   );
 }

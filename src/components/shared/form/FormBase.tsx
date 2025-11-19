@@ -29,6 +29,7 @@ export function FormBase({ children, label, description, controlFirst, horizonta
     <Field
       data-invalid={isInvalid}
       orientation={horizontal ? 'horizontal' : undefined}
+      className='gap-1 lg:gap-2'
     >
       {controlFirst ? (
         <>

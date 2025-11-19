@@ -1,7 +1,15 @@
 'use client';
 
 import { ReactNode } from 'react';
-import { SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '../ui/sidebar';
+import {
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuBadge,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  useSidebar,
+} from '../ui/sidebar';
 import { SignedIn, SignedOut } from '@/services/clerk/components/signin-status';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -21,7 +29,7 @@ export function SidebarNavMenuGroup({
   title?: string;
 }) {
   const pathname = usePathname();
-
+  const { isMobile, setOpenMobile } = useSidebar();
   return (
     <SidebarGroup className={className}>
       {title && <SidebarGroupLabel>{title}</SidebarGroupLabel>}
@@ -34,7 +42,12 @@ export function SidebarNavMenuGroup({
                 asChild
                 isActive={pathname === item.href}
               >
-                <Link href={item.href}>
+                <Link
+                  href={item.href}
+                  onClick={() => {
+                    if (isMobile) setOpenMobile(false);
+                  }}
+                >
                   {item.icon}
                   <span>{item.label}</span>
                 </Link>

@@ -11,6 +11,7 @@ import {
 import { SignedIn } from '@/services/clerk/components/signin-status';
 import { AppSidebarClient } from './app-sidebar-client';
 import { ReactNode } from 'react';
+import {ContentWrapper} from '../shared';
 
 export function AppSidebar({
   children,
@@ -41,7 +42,7 @@ export function AppSidebar({
             </SidebarFooter>
           </SignedIn>
         </Sidebar>
-        <main className='flex-1 max-w-[1440px] mx-auto py-8'>{children}</main>
+        <ContentWrapper className='flex-1 py-6 lg:py-8'>{children}</ContentWrapper>
       </AppSidebarClient>
     </SidebarProvider>
   );
