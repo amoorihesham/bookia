@@ -3,8 +3,6 @@ import { auth, UserJSON } from '@clerk/nextjs/server';
 
 export async function getCurrentUser() {
   const { userId } = await auth();
-  console.log(userId);
-
   if (!userId) return null;
 
   return userRepository.findUserById(userId);

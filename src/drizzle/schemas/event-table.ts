@@ -1,4 +1,4 @@
-import { boolean, date, integer, pgTable, real, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
+import { boolean, integer, pgTable, real, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
 import { createdAt, updatedAt } from '../schemaHelpers';
 import { UserTable } from './user-schema';
 import { relations } from 'drizzle-orm';
@@ -12,7 +12,8 @@ export const EventTable = pgTable('events', {
   place: varchar().notNull(),
   guests: varchar().array(),
   featured: boolean().default(false),
-  held_on: timestamp({ withTimezone: true, mode: 'date' }).notNull(),
+  held_on: timestamp({ withTimezone: false, mode: 'date' }).notNull(),
+  cover_thumbnail: varchar().notNull(),
   open: boolean().default(true),
   createdAt,
   updatedAt,

@@ -8,7 +8,6 @@ import {
   CardTitle,
   EventCard,
   EventsGridSkeleton,
-  LoveEventButton,
 } from '@/features/events/components';
 import { GetUserEventsAction } from '@/features/events/actions/query';
 import { EmptyComponent } from '@/components/shared';

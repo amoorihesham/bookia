@@ -5,6 +5,7 @@ import {
   FormSelect,
   FormTextarea,
   SubmitButton,
+  FormUpload,
 } from '@/components/shared/form';
 import { createFormHook, createFormHookContexts } from '@tanstack/react-form';
 
@@ -13,6 +14,7 @@ const { fieldContext, formContext, useFieldContext, useFormContext } = createFor
 const { useAppForm } = createFormHook({
   fieldComponents: {
     Input: FormInput,
+    Upload: FormUpload,
     Textarea: FormTextarea,
     Select: FormSelect,
     Checkbox: FormCheckbox,

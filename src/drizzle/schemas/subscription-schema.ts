@@ -18,6 +18,7 @@ export const SubscriptionTable = pgTable('subscriptions', {
   remaining_days: integer().notNull(),
   max_featured_events: integer().notNull(),
   remaining_featured_events: integer().notNull(),
+  stripe_customer_id: varchar().unique(),
   createdAt,
   updatedAt,
 });

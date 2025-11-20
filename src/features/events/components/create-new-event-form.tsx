@@ -9,25 +9,32 @@ import { createNewEventSchema } from '../schemas';
 import { createNewEventAction } from '../actions/mutation';
 import { useAppForm } from '@/hooks/useAppForm';
 
+import z from 'zod';
+
+const defaultValues: z.infer<typeof createNewEventSchema> = {
+  name: '',
+  place: '',
+  guests: '',
+  featured: false,
+  open: true,
+  held_on: new Date(),
+  ticket_price: 0,
+  tickets: 0,
+};
+
 export const CreateNewEventForm = () => {
   const [_, startTransition] = useTransition();
   const form = useAppForm({
-    defaultValues: {
-      name: '',
-      place: '',
-      guests: '',
-      held_on: new Date().toISOString(),
-      tickets: '0',
-      ticket_price: '0',
-      open: 'true',
-      featured: 'false',
-    },
+    defaultValues,
 
     validators: {
       onSubmit: createNewEventSchema,
     },
+
     onSubmit: async ({ value }) => {
       startTransition(async () => {
+        console.log(value);
+
         const result = await createNewEventAction(value);
         if (result.success && 'data' in result) {
           toast.success(result.message, { description: `Event ${result.data.name} created successfully.` });
@@ -100,6 +107,7 @@ export const CreateNewEventForm = () => {
             />
           )}
         </form.AppField>
+        <form.AppField name='cover_thumbnail'>{(field) => <field.Upload label='Cover Thimbnail' />}</form.AppField>
 
         <form.AppForm>
           <form.FormSubmitButton

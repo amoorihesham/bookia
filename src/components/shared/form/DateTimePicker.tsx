@@ -7,7 +7,7 @@ import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
 
 export function DateTimePicker(props: FormControlProps) {
-  const field = useFieldContext<string>();
+  const field = useFieldContext<Date>();
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
   return (
@@ -20,7 +20,7 @@ export function DateTimePicker(props: FormControlProps) {
             aria-invalid={isInvalid}
           >
             <CalendarIcon className='mr-2 h-4 w-4' />
-            {field.state.value ? format(field.state.value, 'PPP p') : <span>Pick a date & time</span>}
+            {field.state.value ? format(new Date(field.state.value), 'PPPP, hh:mm') : <span>Pick a date & time</span>}
           </Button>
         </PopoverTrigger>
         <PopoverContent
@@ -30,7 +30,7 @@ export function DateTimePicker(props: FormControlProps) {
           <Calendar
             mode='single'
             selected={field.state.value ? new Date(field.state.value) : new Date()}
-            onSelect={(d) => field.handleChange(d ? d.toISOString() : new Date().toISOString())}
+            onSelect={(d) => field.handleChange(d!)}
             initialFocus
           />
         </PopoverContent>
