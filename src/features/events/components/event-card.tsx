@@ -26,19 +26,7 @@ export const EventCard = ({
           </Button>
         </TooltipButton>
       </CardActions>
-      <div className='absolute w-full flex items-start justify-between p-3 left-0 top-0'>
-        <div className=''>
-          {featured ? (
-            <Badge className='bg-chart-4 text-foreground'>Featured</Badge>
-          ) : (
-            <Badge className='bg-chart-1 text-foreground'>Regular</Badge>
-          )}
-        </div>
-        <div className='bg-foreground/10 backdrop-blur-sm rounded-sm p-3 text-foreground flex flex-col items-center'>
-          <span className='font-semibold text-lg'>{format(held_on, 'dd')}</span>
-          <span className='text-chart-4 uppercase'>{format(held_on, 'MMM')}</span>
-        </div>
-      </div>
+
       <div className='h-full flex items-end bg-linear-to-b from-foreground/30 group-hover:from-chart-4/30 transition-all duration-500 to-transparent from-10% to-100% overflow-hidden'>
         <div className='mt-auto h-1/5 bg-background/10 backdrop-blur-xs w-full p-3'>
           <CardTitle className='flex items-center justify-between'>

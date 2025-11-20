@@ -1,9 +1,11 @@
-import { cacheTag } from 'next/cache';
+import { cacheLife, cacheTag } from 'next/cache';
 import eventsRepository from '../db/events.repo';
 import { FindEventsFilterTerm } from '../types';
 import { getCurrentUser } from '@/shared/lib/auth';
 
 export const GetEventsAction = async (term: FindEventsFilterTerm = 'all') => {
+  'use cache';
+  cacheLife('minutes');
   cacheTag(`${term}-events`);
   return eventsRepository.findAllEvents(term);
 };
