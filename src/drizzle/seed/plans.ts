@@ -4,21 +4,14 @@ import { PlanTable } from '../schemas/plan-schema';
 const initialPlans: (typeof PlanTable.$inferInsert)[] = [
   {
     name: 'free',
-    max_featured_count: 3,
     price: 0,
-    frequancy: 'monthly',
+    benfits: ['Create unlimited events', 'Access analytics dashboard'],
   },
   {
-    name: 'basic',
-    max_featured_count: 50,
-    price: 10,
-    frequancy: 'monthly',
-  },
-  {
-    name: 'ultimate',
-    max_featured_count: 1000,
+    name: 'pro',
     price: 20,
-    frequancy: 'monthly',
+    stripe_price_id: 'price_1SVtOXRwFFQULsC3E9EtxhZm',
+    benfits: ['Create unlimited events', 'Access analytics dashboard', 'Mark unlimited events as featured'],
   },
 ];
 
