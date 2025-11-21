@@ -6,6 +6,7 @@ const isPublicRoute = createRouteMatcher([
   '/upcoming(.*)',
   '/expired(.*)',
   '/featured(.*)',
+  '/plan(.*)',
   '/api/inngest(.*)',
   '/',
 ]);

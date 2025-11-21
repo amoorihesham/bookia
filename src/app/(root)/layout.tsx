@@ -50,7 +50,7 @@ export default function WebsiteLayout({ children }: { children: ReactNode }) {
           <SidebarNavMenuGroup
             title='Billing'
             // className='mt-auto'
-            items={[{ href: '/plans', icon: <TicketsPlane />, label: 'Plans', authStatus: 'signedIn' }]}
+            items={[{ href: '/plans', icon: <TicketsPlane />, label: 'Plans' }]}
           />
           <SidebarNavMenuGroup
             className='mt-auto'

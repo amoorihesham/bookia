@@ -1,13 +1,9 @@
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import { getAllPlansAction } from '@/features/plans/actions/query';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Check } from 'lucide-react';
-import { cacheLife } from 'next/cache';
-import { UpgradePlanButton } from '@/features/plans/components';
+import { Button } from '@/components/ui/button';
 
 export default async function PricingPage() {
-  'use cache';
-  cacheLife('days');
+  const plans = await getAllPlansAction();
 
   return (
     <>
@@ -19,108 +15,37 @@ export default async function PricingPage() {
         </p>
       </div>
 
-      <div className='mt-8 grid gap-6 md:mt-20 md:grid-cols-3'>
-        <Card className='flex flex-col bg-card/20'>
-          <CardHeader>
-            <CardTitle className='font-medium'>Free</CardTitle>
-            <span className='my-3 block text-2xl font-semibold'>$0 / mo</span>
-          </CardHeader>
+      <div className='mt-8 grid gap-6 md:mt-20 md:grid-cols-2'>
+        {plans.map((plan) => (
+          <Card
+            className='flex flex-col bg-card/20 relative'
+            key={plan.id}
+          >
+            {plan.name === 'pro' && (
+              <span className='bg-linear-to-br/increasing absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full from-purple-400 to-amber-300 px-3 py-1 text-xs font-medium text-amber-950 ring-1 ring-inset ring-white/20 ring-offset-1 ring-offset-gray-950/5'>
+                Best
+              </span>
+            )}
+            <CardHeader>
+              <CardTitle className='font-medium capitalize'>{plan.name}</CardTitle>
+              <span className='my-3 block text-2xl font-semibold'>${plan.price} / Life-Time</span>
+            </CardHeader>
 
-          <CardContent className='space-y-4'>
-            <hr className='border-dashed' />
+            <CardContent className='space-y-4'>
+              <hr className='border-dashed' />
 
-            <ul className='list-outside space-y-3 text-sm'>
-              {['Basic Analytics Dashboard', 'Unlimited Events Creation', 'Up to 3 Featured Events'].map(
-                (item, index) => (
-                  <li
-                    key={index}
-                    className='flex items-center gap-2'
-                  >
-                    <Check className='size-3' />
-                    {item}
-                  </li>
-                )
-              )}
-            </ul>
-          </CardContent>
+              <ul className='list-outside space-y-3 text-sm'>
+                {plan.benfits.map((ben, idx) => (
+                  <li key={idx + 1}>{ben}</li>
+                ))}
+              </ul>
+            </CardContent>
 
-          <CardFooter className='mt-auto'>
-            <Button
-              asChild
-              variant='outline'
-              className='w-full'
-            >
-              <Link href=''>Get Started</Link>
-            </Button>
-          </CardFooter>
-        </Card>
-
-        <Card className='relative bg-card/80'>
-          <span className='bg-linear-to-br/increasing absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full from-purple-400 to-amber-300 px-3 py-1 text-xs font-medium text-amber-950 ring-1 ring-inset ring-white/20 ring-offset-1 ring-offset-gray-950/5'>
-            Popular
-          </span>
-
-          <CardHeader>
-            <CardTitle className='font-medium'>Basic</CardTitle>
-            <span className='my-3 block text-2xl font-semibold'>$5 / mo</span>
-          </CardHeader>
-
-          <CardContent className='space-y-4'>
-            <hr className='border-dashed' />
-            <ul className='list-outside space-y-3 text-sm'>
-              {['Basic Analytics Dashboard', 'Unlimited Events Creation', 'Up to 100 Featured Events'].map(
-                (item, index) => (
-                  <li
-                    key={index}
-                    className='flex items-center gap-2'
-                  >
-                    <Check className='size-3' />
-                    {item}
-                  </li>
-                )
-              )}
-            </ul>
-          </CardContent>
-
-          <CardFooter className='mt-auto'>
-            <UpgradePlanButton planName='basic' />
-          </CardFooter>
-        </Card>
-
-        <Card className='flex flex-col bg-card/20'>
-          <CardHeader>
-            <CardTitle className='font-medium'>Ultimate</CardTitle>
-            <span className='my-3 block text-2xl font-semibold'>$10 / mo</span>
-          </CardHeader>
-
-          <CardContent className='space-y-4'>
-            <hr className='border-dashed' />
-
-            <ul className='list-outside space-y-3 text-sm'>
-              {['Basic Analytics Dashboard', 'Unlimited Events Creation', 'Up to 1000 Featured Events'].map(
-                (item, index) => (
-                  <li
-                    key={index}
-                    className='flex items-center gap-2'
-                  >
-                    <Check className='size-3' />
-                    {item}
-                  </li>
-                )
-              )}
-            </ul>
-          </CardContent>
-
-          <CardFooter className='mt-auto'>
-            <Button
-              asChild
-              variant='outline'
-              className='w-full'
-            >
-              <Link href=''>Get Started</Link>
-            </Button>
-          </CardFooter>
-        </Card>
+            <CardFooter className='mt-auto'>
+              {plan.name === 'pro' && <Button className='w-full'>Get Started</Button>}
+            </CardFooter>
+          </Card>
+        ))}
       </div>
     </>
   );
