@@ -8,7 +8,7 @@ const subscriptionsRepository = {
   insertNewSubscription: async (payload: typeof SubscriptionTable.$inferInsert) =>
     db.insert(SubscriptionTable).values(payload).returning(),
   updateSubscription: (subscriptionId: string, payload: Partial<typeof SubscriptionTable.$inferInsert>) =>
-    db.update(SubscriptionTable).set(payload).where(eq(SubscriptionTable.id, subscriptionId)),
+    db.update(SubscriptionTable).set(payload).where(eq(SubscriptionTable.id, subscriptionId)).returning(),
 };
 
 export default subscriptionsRepository;

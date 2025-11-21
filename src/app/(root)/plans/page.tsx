@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Check } from 'lucide-react';
 import { cacheLife } from 'next/cache';
+import { UpgradePlanButton } from '@/features/plans/components';
 
 export default async function PricingPage() {
   'use cache';
@@ -82,12 +83,7 @@ export default async function PricingPage() {
           </CardContent>
 
           <CardFooter className='mt-auto'>
-            <Button
-              asChild
-              className='w-full'
-            >
-              <Link href=''>Get Started</Link>
-            </Button>
+            <UpgradePlanButton planName='basic' />
           </CardFooter>
         </Card>
 
