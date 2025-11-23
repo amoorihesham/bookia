@@ -1,11 +1,21 @@
-import { boolean, integer, pgTable, real, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
+import {
+  boolean,
+  integer,
+  pgTable,
+  real,
+  timestamp,
+  uuid,
+  varchar,
+} from 'drizzle-orm/pg-core';
 import { createdAt, updatedAt } from '../schemaHelpers';
 import { UserTable } from './user-schema';
 import { relations } from 'drizzle-orm';
 
 export const EventTable = pgTable('events', {
   id: uuid().primaryKey().notNull().defaultRandom(),
-  user_id: varchar().references(() => UserTable.clerk_id, { onDelete: 'cascade' }),
+  user_id: varchar().references(() => UserTable.clerk_id, {
+    onDelete: 'cascade',
+  }),
   name: varchar().notNull(),
   ticket_price: real().notNull(),
   tickets: integer().notNull(),

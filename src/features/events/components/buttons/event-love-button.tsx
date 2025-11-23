@@ -14,14 +14,16 @@ export const LoveEventButton = () => {
 
   const isLoved = loves.some((item) => item.id === event?.id);
   return (
-    <TooltipButton tooltip='Love event'>
+    <TooltipButton tooltip="Love event">
       <Button
         variant={'ghost'}
         size={'icon'}
-        className='rounded-full dark:hover:bg-chart-4/20 hover:bg-chart-4/20'
+        className="dark:hover:bg-chart-4/20 hover:bg-chart-4/20 rounded-full"
         onClick={() => toggleLove({ id: event!.id! })}
       >
-        <Heart className={cn('size-5', isLoved && 'fill-red-400 text-red-400')} />
+        <Heart
+          className={cn('size-5', isLoved && 'fill-red-400 text-red-400')}
+        />
       </Button>
     </TooltipButton>
   );

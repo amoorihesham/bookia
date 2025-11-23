@@ -6,11 +6,15 @@ export const insertPlanSchema = z.object({
   price: z
     .string()
     .transform((v) => parseFloat(v))
-    .refine((v) => !isNaN(v) && v > 0, { error: 'Plan price must be greater than 0' }),
+    .refine((v) => !isNaN(v) && v > 0, {
+      error: 'Plan price must be greater than 0',
+    }),
   max_featured_count: z
     .string()
     .transform((v) => parseInt(v))
-    .refine((v) => !isNaN(v) && v > 0, { error: 'Plan max featured count must be greater than 0' }),
+    .refine((v) => !isNaN(v) && v > 0, {
+      error: 'Plan max featured count must be greater than 0',
+    }),
 });
 
 export type createNewPlanInput = z.input<typeof insertPlanSchema>;

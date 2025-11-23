@@ -55,9 +55,7 @@
         "plans_name_unique": {
           "name": "plans_name_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "name"
-          ]
+          "columns": ["name"]
         }
       },
       "policies": {},
@@ -145,12 +143,8 @@
           "name": "subscriptions_userId_users_id_fk",
           "tableFrom": "subscriptions",
           "tableTo": "users",
-          "columnsFrom": [
-            "userId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["userId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -158,12 +152,8 @@
           "name": "subscriptions_planId_plans_id_fk",
           "tableFrom": "subscriptions",
           "tableTo": "plans",
-          "columnsFrom": [
-            "planId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["planId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -243,12 +233,8 @@
           "name": "users_plan_id_plans_id_fk",
           "tableFrom": "users",
           "tableTo": "plans",
-          "columnsFrom": [
-            "plan_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["plan_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -258,9 +244,7 @@
         "users_email_unique": {
           "name": "users_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       },
       "policies": {},
@@ -355,12 +339,8 @@
           "name": "events_organizer_users_id_fk",
           "tableFrom": "events",
           "tableTo": "users",
-          "columnsFrom": [
-            "organizer"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["organizer"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -376,19 +356,12 @@
     "public.PLANS": {
       "name": "PLANS",
       "schema": "public",
-      "values": [
-        "free",
-        "start-up",
-        "ultimate"
-      ]
+      "values": ["free", "start-up", "ultimate"]
     },
     "public.ROLES": {
       "name": "ROLES",
       "schema": "public",
-      "values": [
-        "admin",
-        "user"
-      ]
+      "values": ["admin", "user"]
     }
   },
   "schemas": {},

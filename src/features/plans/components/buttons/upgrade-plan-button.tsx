@@ -10,7 +10,9 @@ export const UpgradePlanButton = ({
   children,
   planName,
   ...props
-}: React.ComponentProps<'button'> & { planName: 'basic' | 'free' | 'ultimate' }) => {
+}: React.ComponentProps<'button'> & {
+  planName: 'basic' | 'free' | 'ultimate';
+}) => {
   const [isPending, startTransition] = useTransition();
 
   const onClick = async () => {

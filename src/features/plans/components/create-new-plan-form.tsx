@@ -26,31 +26,35 @@ export function CreateNewPlanForm() {
         e.preventDefault();
         form.handleSubmit();
       }}
-      className='max-w-3xl mx-auto mt-14 bg-card/80 p-6 rounded-md'
+      className="bg-card/80 mx-auto mt-14 max-w-3xl rounded-md p-6"
     >
-      <FieldGroup className='w-full gap-3 space-y-3'>
-        <div className='flex items-center gap-x-4'>
-          <form.AppField name='name'>{(field) => <field.Input label='Plan Name' />}</form.AppField>
-          <form.AppField name='price'>{(field) => <field.Input label='Plan Price' />}</form.AppField>
+      <FieldGroup className="w-full gap-3 space-y-3">
+        <div className="flex items-center gap-x-4">
+          <form.AppField name="name">
+            {(field) => <field.Input label="Plan Name" />}
+          </form.AppField>
+          <form.AppField name="price">
+            {(field) => <field.Input label="Plan Price" />}
+          </form.AppField>
         </div>
-        <div className='flex items-center gap-x-4'>
-          <form.AppField name='frequency'>
+        <div className="flex items-center gap-x-4">
+          <form.AppField name="frequency">
             {(field) => (
-              <field.Select label='Plan Frequency'>
-                <SelectItem value='monthly'>Monthly</SelectItem>
-                <SelectItem value='yearly'>Yearly</SelectItem>
+              <field.Select label="Plan Frequency">
+                <SelectItem value="monthly">Monthly</SelectItem>
+                <SelectItem value="yearly">Yearly</SelectItem>
               </field.Select>
             )}
           </form.AppField>
-          <form.AppField name='max_featured_count'>
-            {(field) => <field.Input label='Plan Max Featured Count' />}
+          <form.AppField name="max_featured_count">
+            {(field) => <field.Input label="Plan Max Featured Count" />}
           </form.AppField>
         </div>
 
         <form.AppForm>
           <form.FormSubmitButton
-            label='Create New Plan'
-            pendingLabel='Createing New Plan'
+            label="Create New Plan"
+            pendingLabel="Createing New Plan"
             Icon={Plane}
           />
         </form.AppForm>

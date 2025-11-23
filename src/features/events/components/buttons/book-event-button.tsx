@@ -20,14 +20,14 @@ export const BookEventButton = () => {
   };
 
   return (
-    <TooltipButton tooltip='Book a ticket'>
+    <TooltipButton tooltip="Book a ticket">
       <Button
         variant={'ghost'}
         size={'icon'}
-        className='rounded-full dark:hover:bg-chart-4/20 hover:bg-chart-4/20'
+        className="dark:hover:bg-chart-4/20 hover:bg-chart-4/20 rounded-full"
         onClick={onClick}
       >
-        <BookAlert className='size-5' />
+        <BookAlert className="size-5" />
       </Button>
     </TooltipButton>
   );

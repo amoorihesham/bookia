@@ -9,7 +9,9 @@ export async function getCurrentUser() {
 }
 
 export function getUserPrimaryEmail(user: UserJSON) {
-  const email = user.email_addresses.find((email) => email.id === user.primary_email_address_id);
+  const email = user.email_addresses.find(
+    (email) => email.id === user.primary_email_address_id
+  );
 
   return email?.email_address ?? null;
 }

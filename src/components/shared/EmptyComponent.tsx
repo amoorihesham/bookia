@@ -21,22 +21,21 @@ export const EmptyComponent: React.FC<NoDataProps> = ({
   return (
     <div
       className={cn(
-        `flex flex-col items-center justify-center text-center max-w-4xl mx-auto h-[500px]  py-12 px-4 bg-card/20 rounded-2xl border border-dashed border-gray-600 shadow-sm`,
+        `bg-card/20 mx-auto flex h-[500px] max-w-4xl flex-col items-center justify-center rounded-2xl border border-dashed border-gray-600 px-4 py-12 text-center shadow-sm`,
         className
       )}
     >
-      <div className='flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-card'>
-        <FileSearch className='w-8 h-8 text-gray-300' />
+      <div className="bg-card mb-4 flex h-16 w-16 items-center justify-center rounded-full">
+        <FileSearch className="h-8 w-8 text-gray-300" />
       </div>
 
-      <h2 className='text-lg font-semibold text-foreground'>{title}</h2>
+      <h2 className="text-foreground text-lg font-semibold">{title}</h2>
 
-      <p className='mt-1 text-sm text-muted-foreground max-w-sm'>{description}</p>
+      <p className="text-muted-foreground mt-1 max-w-sm text-sm">
+        {description}
+      </p>
 
-      <Button
-        onClick={() => router.refresh()}
-        className='mt-6'
-      >
+      <Button onClick={() => router.refresh()} className="mt-6">
         Refresh
       </Button>
     </div>

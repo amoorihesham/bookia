@@ -7,11 +7,7 @@ export function FormCheckbox(props: FormControlProps) {
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
   return (
-    <FormBase
-      {...props}
-      controlFirst
-      horizontal
-    >
+    <FormBase {...props} controlFirst horizontal>
       <Checkbox
         id={field.name}
         name={field.name}

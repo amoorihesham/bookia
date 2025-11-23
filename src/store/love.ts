@@ -19,7 +19,8 @@ export const useLoveStore = create<LoveStore>()(
       toggleLove: (i) =>
         set((state) => {
           const exist = state.loves.some((item) => item.id === i.id);
-          if (exist) return { loves: state.loves.filter((item) => item.id !== i.id) };
+          if (exist)
+            return { loves: state.loves.filter((item) => item.id !== i.id) };
           return { loves: [...state.loves, i] };
         }),
       clearLoveList: () =>

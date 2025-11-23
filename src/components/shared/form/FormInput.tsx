@@ -2,7 +2,9 @@ import { useFieldContext } from '@/hooks/useAppForm';
 import { FormBase, FormControlProps } from './FormBase';
 import { Input } from '@/components/ui/input';
 
-export function FormInput(props: FormControlProps & React.InputHTMLAttributes<HTMLInputElement>) {
+export function FormInput(
+  props: FormControlProps & React.InputHTMLAttributes<HTMLInputElement>
+) {
   const field = useFieldContext<string>();
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
   const placeholder = props.placeholder;

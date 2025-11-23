@@ -4,12 +4,16 @@ import { SidebarUserButton } from '@/features/users/componnets/sidebar-user-butt
 import { Calendar, Home, LogInIcon, Sparkle } from 'lucide-react';
 import { ReactNode } from 'react';
 
-export default function AdminDashboardLayout({ children }: { children: ReactNode }) {
+export default function AdminDashboardLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
   return (
     <AppSidebar
       content={
         <SidebarNavMenuGroup
-          className='mt-auto'
+          className="mt-auto"
           items={[{ href: '/admin/plans', icon: <Calendar />, label: 'Plans' }]}
         />
       }

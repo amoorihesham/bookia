@@ -12,7 +12,9 @@ export function SubmitButton({
   label?: string;
   pendingLabel?: string;
   className?: string;
-  Icon?: ForwardRefExoticComponent<Omit<LucideProps, 'ref'> & RefAttributes<SVGSVGElement>>;
+  Icon?: ForwardRefExoticComponent<
+    Omit<LucideProps, 'ref'> & RefAttributes<SVGSVGElement>
+  >;
 }) {
   const form = useFormContext();
 
@@ -21,7 +23,7 @@ export function SubmitButton({
       {(isSubmitting) => (
         <Button
           disabled={isSubmitting}
-          type='submit'
+          type="submit"
           className={className ?? ''}
         >
           {Icon && <Icon />}

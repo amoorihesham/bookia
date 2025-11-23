@@ -11,7 +11,11 @@ const initialPlans: (typeof PlanTable.$inferInsert)[] = [
     name: 'pro',
     price: 20,
     stripe_price_id: 'price_1SVtOXRwFFQULsC3E9EtxhZm',
-    benfits: ['Create unlimited events', 'Access analytics dashboard', 'Mark unlimited events as featured'],
+    benfits: [
+      'Create unlimited events',
+      'Access analytics dashboard',
+      'Mark unlimited events as featured',
+    ],
   },
 ];
 

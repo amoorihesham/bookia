@@ -1,4 +1,11 @@
-import { PgArray, pgTable, real, text, uuid, varchar } from 'drizzle-orm/pg-core';
+import {
+  PgArray,
+  pgTable,
+  real,
+  text,
+  uuid,
+  varchar,
+} from 'drizzle-orm/pg-core';
 import { createdAt, updatedAt } from '../schemaHelpers';
 import { relations } from 'drizzle-orm';
 import { SubscriptionTable } from './subscription-schema';
@@ -15,6 +22,8 @@ export const PlanTable = pgTable('plans', {
 });
 
 export const PlanRelations = relations(PlanTable, ({ many }) => ({
-  subscriptions: many(SubscriptionTable, { relationName: 'subscriptions_plans' }),
+  subscriptions: many(SubscriptionTable, {
+    relationName: 'subscriptions_plans',
+  }),
   users: many(UserTable, { relationName: 'users_plans' }),
 }));

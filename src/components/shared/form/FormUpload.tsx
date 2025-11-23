@@ -10,7 +10,7 @@ export const FormUpload = ({ ...props }: FormControlProps) => {
     <FormBase {...props}>
       <Input
         id={field.name}
-        type='file'
+        type="file"
         name={field.name}
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(e.target.files!)}

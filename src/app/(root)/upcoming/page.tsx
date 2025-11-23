@@ -21,49 +21,52 @@ export default async function UpcomingPage() {
 
   return (
     <>
-      <div className='mx-auto max-w-2xl space-y-1 lg:space-y-4 text-center mb-6 lg:mb-12'>
-        <h1 className='text-center text-2xl font-semibold lg:text-5xl'>Upcoming Events to Look Forward To</h1>
-        <p className='text-xs lg:text-base'>
-          Get ready for what&apos;s next! Explore all the exciting events coming up and plan your experiences ahead of
-          time — don&apos;t miss out on the fun!
+      <div className="mx-auto mb-6 max-w-2xl space-y-1 text-center lg:mb-12 lg:space-y-4">
+        <h1 className="text-center text-2xl font-semibold lg:text-5xl">
+          Upcoming Events to Look Forward To
+        </h1>
+        <p className="text-xs lg:text-base">
+          Get ready for what&apos;s next! Explore all the exciting events coming
+          up and plan your experiences ahead of time — don&apos;t miss out on
+          the fun!
         </p>
       </div>
       <Suspense fallback={<EventsGridSkeleton />}>
         {events.length ? (
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6'>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
             {events.map((event) => (
               <EventCard
                 key={event.id}
                 event={event}
-                className='bg-[url(/card.jpg)]'
+                className="bg-[url(/card.jpg)]"
               >
-                <CardHeader className='z-5'>
-                  <CardActions className='z-6'>
+                <CardHeader className="z-5">
+                  <CardActions className="z-6">
                     <BookEventButton />
                     <LoveEventButton />
                   </CardActions>
-                  <div className='absolute w-full flex items-start justify-between p-3 left-0 top-0'>
-                    <CardPopularityBadge className='shadow-lg' />
-                    <CardDate className='shadow-lg' />
+                  <div className="absolute top-0 left-0 flex w-full items-start justify-between p-3">
+                    <CardPopularityBadge className="shadow-lg" />
+                    <CardDate className="shadow-lg" />
                   </div>
                 </CardHeader>
-                <CardContent className='bg-linear-to-b from-foreground/30 to-transparent from-10% to-100% absolute top-0 left-0 inset-0 group-hover:from-chart-4/30 z-1 flex items-end'>
-                  <div className='h-1/4 mt-auto px-4 p-3 bg-background/20 backdrop-blur-xs w-full space-y-1'>
-                    <div className='flex items-center justify-between'>
-                      <CardTitle className='text-lg font-bold' />
-                      <span className='flex items-center gap-1'>
+                <CardContent className="from-foreground/30 group-hover:from-chart-4/30 absolute inset-0 top-0 left-0 z-1 flex items-end bg-linear-to-b from-10% to-transparent to-100%">
+                  <div className="bg-background/20 mt-auto h-1/4 w-full space-y-1 p-3 px-4 backdrop-blur-xs">
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="text-lg font-bold" />
+                      <span className="flex items-center gap-1">
                         {event.tickets}
-                        <TicketCheck className='text-chart-4/60' />
+                        <TicketCheck className="text-chart-4/60" />
                       </span>
                     </div>
-                    <div className='flex items-center justify-between'>
-                      <div className='flex items-center gap-1'>
-                        <Clock className='size-4 text-chart-4/60' />
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1">
+                        <Clock className="text-chart-4/60 size-4" />
                         <span>{format(event.held_on, 'hh:mm a')}</span>
                       </div>
-                      <div className='flex items-center gap-1'>
-                        <MapPin className='size-4 text-chart-4/60' />
-                        <span className='capitalize'>{event.place}</span>
+                      <div className="flex items-center gap-1">
+                        <MapPin className="text-chart-4/60 size-4" />
+                        <span className="capitalize">{event.place}</span>
                       </div>
                     </div>
                   </div>

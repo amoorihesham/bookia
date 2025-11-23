@@ -12,7 +12,12 @@ import {
 import { SidebarMenuButton, useSidebar } from '@/components/ui/sidebar';
 import { SignOutButton } from '@/services/clerk/components/auth-buttons';
 import { useClerk } from '@clerk/nextjs';
-import { ChevronsUpDown, LogOutIcon, SettingsIcon, UserIcon } from 'lucide-react';
+import {
+  ChevronsUpDown,
+  LogOutIcon,
+  SettingsIcon,
+  UserIcon,
+} from 'lucide-react';
 import Link from 'next/link';
 
 type User = {
@@ -29,20 +34,20 @@ export function SidebarUserButtonClient({ user }: { user: User }) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <SidebarMenuButton
-          size='lg'
-          className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
+          size="lg"
+          className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
         >
           <UserInfo {...user} />
-          <ChevronsUpDown className='ml-auto group-data-[state=collapsed]:hidden' />
+          <ChevronsUpDown className="ml-auto group-data-[state=collapsed]:hidden" />
         </SidebarMenuButton>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         sideOffset={4}
-        align='end'
+        align="end"
         side={isMobile ? 'bottom' : 'right'}
-        className='min-w-64 max-w-80'
+        className="max-w-80 min-w-64"
       >
-        <DropdownMenuLabel className='font-normal p-1'>
+        <DropdownMenuLabel className="p-1 font-normal">
           <UserInfo {...user} />
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
@@ -52,17 +57,17 @@ export function SidebarUserButtonClient({ user }: { user: User }) {
             setOpenMobile(false);
           }}
         >
-          <UserIcon className='mr-1' /> Profile
+          <UserIcon className="mr-1" /> Profile
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href='/user-settings/notifications'>
-            <SettingsIcon className='mr-1' /> Settings
+          <Link href="/user-settings/notifications">
+            <SettingsIcon className="mr-1" /> Settings
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <SignOutButton>
           <DropdownMenuItem>
-            <LogOutIcon className='mr-1' /> Log Out
+            <LogOutIcon className="mr-1" /> Log Out
           </DropdownMenuItem>
         </SignOutButton>
       </DropdownMenuContent>
@@ -72,17 +77,16 @@ export function SidebarUserButtonClient({ user }: { user: User }) {
 
 function UserInfo({ image, email, username }: User) {
   return (
-    <div className='flex items-center gap-2 overflow-hidden'>
-      <Avatar className='rounded-lg size-8'>
-        <AvatarImage
-          src={image}
-          alt={username}
-        />
-        <AvatarFallback className='uppercase bg-primary text-primary-foreground'>{username}</AvatarFallback>
+    <div className="flex items-center gap-2 overflow-hidden">
+      <Avatar className="size-8 rounded-lg">
+        <AvatarImage src={image} alt={username} />
+        <AvatarFallback className="bg-primary text-primary-foreground uppercase">
+          {username}
+        </AvatarFallback>
       </Avatar>
-      <div className='flex flex-col flex-1 min-w-0 leading-tight group-data-[state=collapsed]:hidden'>
-        <span className='truncate text-sm font-semibold'>{username}</span>
-        <span className='truncate text-xs'>{email}</span>
+      <div className="flex min-w-0 flex-1 flex-col leading-tight group-data-[state=collapsed]:hidden">
+        <span className="truncate text-sm font-semibold">{username}</span>
+        <span className="truncate text-xs">{email}</span>
       </div>
     </div>
   );

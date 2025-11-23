@@ -21,7 +21,7 @@ export default function WebsiteLayout({ children }: { children: ReactNode }) {
       content={
         <>
           <SidebarNavMenuGroup
-            title='Events'
+            title="Events"
             // className='mt-auto'
             items={[
               { href: '/', icon: <Home />, label: 'All' },
@@ -48,17 +48,37 @@ export default function WebsiteLayout({ children }: { children: ReactNode }) {
             ]}
           />{' '}
           <SidebarNavMenuGroup
-            title='Billing'
+            title="Billing"
             // className='mt-auto'
             items={[{ href: '/plans', icon: <TicketsPlane />, label: 'Plans' }]}
           />
           <SidebarNavMenuGroup
-            className='mt-auto'
+            className="mt-auto"
             items={[
-              { href: '/new-event', icon: <Plus />, label: 'New Event', authStatus: 'signedIn' },
-              { href: '/my-events', icon: <HandMetal />, label: 'My Events', authStatus: 'signedIn' },
-              { href: '/my-orders', icon: <TicketsPlane />, label: 'My Orders', authStatus: 'signedIn' },
-              { href: '/my-bookings', icon: <Currency />, label: 'My Bookings', authStatus: 'signedIn' },
+              {
+                href: '/new-event',
+                icon: <Plus />,
+                label: 'New Event',
+                authStatus: 'signedIn',
+              },
+              {
+                href: '/my-events',
+                icon: <HandMetal />,
+                label: 'My Events',
+                authStatus: 'signedIn',
+              },
+              {
+                href: '/my-orders',
+                icon: <TicketsPlane />,
+                label: 'My Orders',
+                authStatus: 'signedIn',
+              },
+              {
+                href: '/my-bookings',
+                icon: <Currency />,
+                label: 'My Bookings',
+                authStatus: 'signedIn',
+              },
               {
                 href: '/sign-in',
                 icon: <LogInIcon />,

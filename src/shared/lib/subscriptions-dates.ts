@@ -4,7 +4,6 @@ export function addOneMonth(date: Date) {
   return result;
 }
 
-
 export function getRemainingDays(renewAt: Date) {
   const now = new Date();
   const diffMs = renewAt.getTime() - now.getTime();

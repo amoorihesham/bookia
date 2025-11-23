@@ -42,12 +42,13 @@ export const clerkCreatedUser = inngest.createFunction(
       });
 
       const subscription = await step.run('create-subscription', async () => {
-        const [subscription] = await subscriptionsRepository.insertNewSubscription({
-          user_id: user.clerk_id,
-          plan_id: plan.id,
-          subscribed_on: new Date(),
-          is_active: true,
-        });
+        const [subscription] =
+          await subscriptionsRepository.insertNewSubscription({
+            user_id: user.clerk_id,
+            plan_id: plan.id,
+            subscribed_on: new Date(),
+            is_active: true,
+          });
 
         return { user, subscription };
       });

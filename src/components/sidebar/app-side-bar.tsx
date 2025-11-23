@@ -11,7 +11,7 @@ import {
 import { SignedIn } from '@/services/clerk/components/signin-status';
 import { AppSidebarClient } from './app-sidebar-client';
 import { ReactNode } from 'react';
-import {ContentWrapper} from '../shared';
+import { ContentWrapper } from '../shared';
 
 export function AppSidebar({
   children,
@@ -23,15 +23,12 @@ export function AppSidebar({
   footerButton: ReactNode;
 }) {
   return (
-    <SidebarProvider className='overflow-y-hidden'>
+    <SidebarProvider className="overflow-y-hidden">
       <AppSidebarClient>
-        <Sidebar
-          collapsible='icon'
-          className='overflow-hidden'
-        >
-          <SidebarHeader className='flex-row'>
+        <Sidebar collapsible="icon" className="overflow-hidden">
+          <SidebarHeader className="flex-row">
             <SidebarTrigger />
-            <span className='text-xl text-nowrap'>Bookia</span>
+            <span className="text-xl text-nowrap">Bookia</span>
           </SidebarHeader>
           <SidebarContent>{content}</SidebarContent>
           <SignedIn>
@@ -42,7 +39,9 @@ export function AppSidebar({
             </SidebarFooter>
           </SignedIn>
         </Sidebar>
-        <ContentWrapper className='flex-1 py-6 lg:py-8'>{children}</ContentWrapper>
+        <ContentWrapper className="flex-1 py-6 lg:py-8">
+          {children}
+        </ContentWrapper>
       </AppSidebarClient>
     </SidebarProvider>
   );
