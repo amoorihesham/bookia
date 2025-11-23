@@ -27,14 +27,12 @@ export type BookEventResult =
   | BookEventSuccess<typeof EventTable.$inferSelect>
   | BookEventError;
 
-
-
 export const createNewEventAction = async (
   payload: createNewEventFormInput
 ) => {
   try {
     const vData = createNewEventSchema.parse(payload);
-    console.log(vData, "DATA_AFTER_VALIDATION");
+    console.log(vData, 'DATA_AFTER_VALIDATION');
     const user = await getCurrentUser();
     if (!user) throw Error('No user found');
     const guests = vData.guests.split(',');

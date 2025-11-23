@@ -37,9 +37,9 @@ export const createNewEventSchema = z.object({
     .refine((v) => !isNaN(v) && v > 0, {
       message: 'Tickt price must be greater than 0',
     }),
-  held_on: z
-    .date()
-    .refine((d) => d >= new Date(), { message: 'Event date must be in future.' }),
+  held_on: z.date().refine((d) => d >= new Date(), {
+    message: 'Event date must be in future.',
+  }),
   featured: z.string().transform((v) => v === 'true'),
   open: z.string().transform((v) => v === 'true'),
 });
