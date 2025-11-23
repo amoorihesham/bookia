@@ -1,21 +1,14 @@
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function PlansGridSkeleton() {
   return (
-    <div
-      className={
-        'mt-14 grid grid-cols-1 justify-items-center gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6'
-      }
-    >
+    <div className={'mt-14 grid grid-cols-1 justify-items-center gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6'}>
       {Array.from({ length: 3 }).map((_, idx) => (
-        <Card key={idx + 1} className="w-full">
+        <Card
+          key={idx + 1}
+          className="w-full"
+        >
           <CardHeader>
             <CardTitle className="bg-muted-foreground h-3 w-full animate-pulse rounded-full" />
           </CardHeader>

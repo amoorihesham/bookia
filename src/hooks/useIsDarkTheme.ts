@@ -11,7 +11,7 @@ export const useIsDarkTheme = () => {
     const c = new AbortController();
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener(
       'change',
-      (e) => {
+      e => {
         setIsDarkMode(e.matches);
       },
       { signal: c.signal }

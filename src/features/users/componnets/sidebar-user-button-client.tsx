@@ -12,12 +12,7 @@ import {
 import { SidebarMenuButton, useSidebar } from '@/components/ui/sidebar';
 import { SignOutButton } from '@/services/clerk/components/auth-buttons';
 import { useClerk } from '@clerk/nextjs';
-import {
-  ChevronsUpDown,
-  LogOutIcon,
-  SettingsIcon,
-  UserIcon,
-} from 'lucide-react';
+import { ChevronsUpDown, LogOutIcon, SettingsIcon, UserIcon } from 'lucide-react';
 import Link from 'next/link';
 
 type User = {
@@ -79,10 +74,11 @@ function UserInfo({ image, email, username }: User) {
   return (
     <div className="flex items-center gap-2 overflow-hidden">
       <Avatar className="size-8 rounded-lg">
-        <AvatarImage src={image} alt={username} />
-        <AvatarFallback className="bg-primary text-primary-foreground uppercase">
-          {username}
-        </AvatarFallback>
+        <AvatarImage
+          src={image}
+          alt={username}
+        />
+        <AvatarFallback className="bg-primary text-primary-foreground uppercase">{username}</AvatarFallback>
       </Avatar>
       <div className="flex min-w-0 flex-1 flex-col leading-tight group-data-[state=collapsed]:hidden">
         <span className="truncate text-sm font-semibold">{username}</span>

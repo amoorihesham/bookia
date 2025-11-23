@@ -14,12 +14,7 @@ interface EventCardProps extends ComponentPropsWithoutRef<'div'> {
 
 export const EventCardContext = createContext<EventType | null>(null);
 
-export const EventCard: React.FC<EventCardProps> = ({
-  children,
-  className,
-  event,
-  ...props
-}) => {
+export const EventCard: React.FC<EventCardProps> = ({ children, className, event, ...props }) => {
   return (
     <EventCardContext.Provider value={event}>
       <Card

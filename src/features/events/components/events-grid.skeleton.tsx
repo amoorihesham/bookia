@@ -12,7 +12,10 @@ export const EventsGridSkeleton = () => {
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
       {Array.from({ length: 6 }).map((_, idx) => (
-        <Card className="w-full" key={idx + 1}>
+        <Card
+          className="w-full"
+          key={idx + 1}
+        >
           <CardHeader>
             <CardTitle className="bg-muted-foreground h-4 w-[80%] animate-pulse rounded-full" />
             <CardDescription className="bg-muted-foreground h-3 w-[70%] animate-pulse rounded-full" />
@@ -33,9 +36,7 @@ export const EventsGridSkeleton = () => {
               </div>
             </div>
             <div>
-              <h3 className="text-muted-foreground animate-pulse text-5xl font-bold">
-                ??
-              </h3>
+              <h3 className="text-muted-foreground animate-pulse text-5xl font-bold">??</h3>
             </div>
           </CardContent>
           <CardFooter className="flex-col gap-2">

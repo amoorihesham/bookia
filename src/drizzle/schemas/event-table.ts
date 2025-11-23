@@ -1,12 +1,4 @@
-import {
-  boolean,
-  integer,
-  pgTable,
-  real,
-  timestamp,
-  uuid,
-  varchar,
-} from 'drizzle-orm/pg-core';
+import { boolean, integer, pgTable, real, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
 import { createdAt, updatedAt } from '../schemaHelpers';
 import { UserTable } from './user-schema';
 import { relations } from 'drizzle-orm';

@@ -12,15 +12,13 @@ export function SubmitButton({
   label?: string;
   pendingLabel?: string;
   className?: string;
-  Icon?: ForwardRefExoticComponent<
-    Omit<LucideProps, 'ref'> & RefAttributes<SVGSVGElement>
-  >;
+  Icon?: ForwardRefExoticComponent<Omit<LucideProps, 'ref'> & RefAttributes<SVGSVGElement>>;
 }) {
   const form = useFormContext();
 
   return (
-    <form.Subscribe selector={(state) => state.isSubmitting}>
-      {(isSubmitting) => (
+    <form.Subscribe selector={state => state.isSubmitting}>
+      {isSubmitting => (
         <Button
           disabled={isSubmitting}
           type="submit"

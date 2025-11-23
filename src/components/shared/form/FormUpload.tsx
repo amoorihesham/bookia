@@ -13,7 +13,7 @@ export const FormUpload = ({ ...props }: FormControlProps) => {
         type="file"
         name={field.name}
         onBlur={field.handleBlur}
-        onChange={(e) => field.handleChange(e.target.files!)}
+        onChange={e => field.handleChange(e.target.files!)}
         aria-invalid={isInvalid}
         placeholder={'Select File'}
       />

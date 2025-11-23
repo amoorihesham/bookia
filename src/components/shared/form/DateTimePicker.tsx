@@ -1,8 +1,4 @@
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { FormBase, FormControlProps } from './FormBase';
 import { useFieldContext } from '@/hooks/useAppForm';
 import { Button } from '@/components/ui/button';
@@ -24,11 +20,7 @@ export function DateTimePicker(props: FormControlProps) {
             aria-invalid={isInvalid}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {field.state.value ? (
-              format(new Date(field.state.value), 'PPPP, hh:mm')
-            ) : (
-              <span>Pick a date & time</span>
-            )}
+            {field.state.value ? format(new Date(field.state.value), 'PPPP, hh:mm') : <span>Pick a date & time</span>}
           </Button>
         </PopoverTrigger>
         <PopoverContent
@@ -37,10 +29,8 @@ export function DateTimePicker(props: FormControlProps) {
         >
           <Calendar
             mode="single"
-            selected={
-              field.state.value ? new Date(field.state.value) : new Date()
-            }
-            onSelect={(d) => field.handleChange(d!)}
+            selected={field.state.value ? new Date(field.state.value) : new Date()}
+            onSelect={d => field.handleChange(d!)}
             initialFocus
           />
         </PopoverContent>

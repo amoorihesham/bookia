@@ -22,7 +22,7 @@ export function CreateNewPlanForm() {
   });
   return (
     <form
-      onSubmit={(e) => {
+      onSubmit={e => {
         e.preventDefault();
         form.handleSubmit();
       }}
@@ -30,16 +30,12 @@ export function CreateNewPlanForm() {
     >
       <FieldGroup className="w-full gap-3 space-y-3">
         <div className="flex items-center gap-x-4">
-          <form.AppField name="name">
-            {(field) => <field.Input label="Plan Name" />}
-          </form.AppField>
-          <form.AppField name="price">
-            {(field) => <field.Input label="Plan Price" />}
-          </form.AppField>
+          <form.AppField name="name">{field => <field.Input label="Plan Name" />}</form.AppField>
+          <form.AppField name="price">{field => <field.Input label="Plan Price" />}</form.AppField>
         </div>
         <div className="flex items-center gap-x-4">
           <form.AppField name="frequency">
-            {(field) => (
+            {field => (
               <field.Select label="Plan Frequency">
                 <SelectItem value="monthly">Monthly</SelectItem>
                 <SelectItem value="yearly">Yearly</SelectItem>
@@ -47,7 +43,7 @@ export function CreateNewPlanForm() {
             )}
           </form.AppField>
           <form.AppField name="max_featured_count">
-            {(field) => <field.Input label="Plan Max Featured Count" />}
+            {field => <field.Input label="Plan Max Featured Count" />}
           </form.AppField>
         </div>
 

@@ -54,7 +54,7 @@ export const CreateNewEventForm = () => {
 
   return (
     <form
-      onSubmit={(e) => {
+      onSubmit={e => {
         e.preventDefault();
         form.handleSubmit();
       }}
@@ -63,27 +63,29 @@ export const CreateNewEventForm = () => {
       <FieldGroup className="w-full gap-2 space-y-2 lg:gap-3">
         <div className="flex flex-col items-center gap-4 lg:flex-row lg:gap-x-4">
           <form.AppField name="name">
-            {(field) => (
-              <field.Input label="Event name" placeholder="React conf 2025" />
+            {field => (
+              <field.Input
+                label="Event name"
+                placeholder="React conf 2025"
+              />
             )}
           </form.AppField>
           <form.AppField name="place">
-            {(field) => (
-              <field.Input label="Event place" placeholder="Copghenhagen" />
+            {field => (
+              <field.Input
+                label="Event place"
+                placeholder="Copghenhagen"
+              />
             )}
           </form.AppField>
         </div>
         <div className="flex items-center gap-x-4">
-          <form.AppField name="tickets">
-            {(field) => <field.Input label="Event avaliable tickets" />}
-          </form.AppField>
-          <form.AppField name="ticket_price">
-            {(field) => <field.Input label="Event ticket price" />}
-          </form.AppField>
+          <form.AppField name="tickets">{field => <field.Input label="Event avaliable tickets" />}</form.AppField>
+          <form.AppField name="ticket_price">{field => <field.Input label="Event ticket price" />}</form.AppField>
         </div>
         <div className="flex items-center gap-x-4">
           <form.AppField name="open">
-            {(field) => (
+            {field => (
               <field.Select label="Event status">
                 <SelectItem value="true">open</SelectItem>
                 <SelectItem value="false">closed</SelectItem>
@@ -91,7 +93,7 @@ export const CreateNewEventForm = () => {
             )}
           </form.AppField>
           <form.AppField name="featured">
-            {(field) => (
+            {field => (
               <field.Select label="Event featured status">
                 <SelectItem value="true">featured</SelectItem>
                 <SelectItem value="false">normal</SelectItem>
@@ -99,20 +101,16 @@ export const CreateNewEventForm = () => {
             )}
           </form.AppField>
         </div>
-        <form.AppField name="held_on">
-          {(field) => <field.Datetime label="Event held on date" />}
-        </form.AppField>
+        <form.AppField name="held_on">{field => <field.Datetime label="Event held on date" />}</form.AppField>
         <form.AppField name="guests">
-          {(field) => (
+          {field => (
             <field.Input
               label="Event guests"
               placeholder="Comma seprated ex Jhon_Doe,Marie_Martin"
             />
           )}
         </form.AppField>
-        <form.AppField name="cover_thumbnail">
-          {(field) => <field.Upload label="Cover Thimbnail" />}
-        </form.AppField>
+        <form.AppField name="cover_thumbnail">{field => <field.Upload label="Cover Thimbnail" />}</form.AppField>
 
         <form.AppForm>
           <form.FormSubmitButton

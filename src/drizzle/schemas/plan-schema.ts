@@ -1,11 +1,4 @@
-import {
-  PgArray,
-  pgTable,
-  real,
-  text,
-  uuid,
-  varchar,
-} from 'drizzle-orm/pg-core';
+import { PgArray, pgTable, real, text, uuid, varchar } from 'drizzle-orm/pg-core';
 import { createdAt, updatedAt } from '../schemaHelpers';
 import { relations } from 'drizzle-orm';
 import { SubscriptionTable } from './subscription-schema';

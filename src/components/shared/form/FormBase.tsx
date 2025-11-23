@@ -1,12 +1,6 @@
 import { HTMLInputTypeAttribute, ReactNode } from 'react';
 import { useFieldContext } from '@/hooks/useAppForm';
-import {
-  Field,
-  FieldContent,
-  FieldDescription,
-  FieldError,
-  FieldLabel,
-} from '../../ui/field';
+import { Field, FieldContent, FieldDescription, FieldError, FieldLabel } from '../../ui/field';
 
 export type FormControlProps = {
   label: string;
@@ -20,13 +14,7 @@ type FormBaseProps = FormControlProps & {
   controlFirst?: boolean;
 };
 
-export function FormBase({
-  children,
-  label,
-  description,
-  controlFirst,
-  horizontal,
-}: FormBaseProps) {
+export function FormBase({ children, label, description, controlFirst, horizontal }: FormBaseProps) {
   const field = useFieldContext();
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
   const labelElement = (
@@ -35,9 +23,7 @@ export function FormBase({
       {description && <FieldDescription>{description}</FieldDescription>}
     </>
   );
-  const errorElem = isInvalid && (
-    <FieldError errors={field.state.meta.errors} />
-  );
+  const errorElem = isInvalid && <FieldError errors={field.state.meta.errors} />;
 
   return (
     <Field

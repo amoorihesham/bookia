@@ -24,21 +24,11 @@ const eventsRepository = {
       with: { organizer: true },
     });
   },
-  findEventById: async (eventId: string) =>
-    db.query.EventTable.findMany({ where: eq(EventTable.id, eventId) }),
-  insertNewEvent: async (payload: typeof EventTable.$inferInsert) =>
-    db.insert(EventTable).values(payload).returning(),
-  updateEvent: async (
-    eventId: string,
-    payload: Partial<typeof EventTable.$inferInsert>
-  ) =>
-    db
-      .update(EventTable)
-      .set(payload)
-      .where(eq(EventTable.id, eventId))
-      .returning(),
-  deleteEvent: async (eventId: string) =>
-    db.delete(EventTable).where(eq(EventTable.id, eventId)),
+  findEventById: async (eventId: string) => db.query.EventTable.findMany({ where: eq(EventTable.id, eventId) }),
+  insertNewEvent: async (payload: typeof EventTable.$inferInsert) => db.insert(EventTable).values(payload).returning(),
+  updateEvent: async (eventId: string, payload: Partial<typeof EventTable.$inferInsert>) =>
+    db.update(EventTable).set(payload).where(eq(EventTable.id, eventId)).returning(),
+  deleteEvent: async (eventId: string) => db.delete(EventTable).where(eq(EventTable.id, eventId)),
 };
 
 export default eventsRepository;

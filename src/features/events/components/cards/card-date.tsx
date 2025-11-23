@@ -14,12 +14,8 @@ export const CardDate = ({ className }: React.ComponentProps<'div'>) => {
         className
       )}
     >
-      <span className="text-lg font-semibold">
-        {format(event!.held_on, 'dd')}
-      </span>
-      <span className="text-chart-4 uppercase">
-        {format(event!.held_on, 'MMM')}
-      </span>
+      <span className="text-lg font-semibold">{format(event!.held_on, 'dd')}</span>
+      <span className="text-chart-4 uppercase">{format(event!.held_on, 'MMM')}</span>
     </div>
   );
 };

@@ -1,11 +1,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 
-export const CardActions = ({
-  className,
-  children,
-  ...props
-}: React.HtmlHTMLAttributes<HTMLDivElement>) => {
+export const CardActions = ({ className, children, ...props }: React.HtmlHTMLAttributes<HTMLDivElement>) => {
   return (
     <div
       className={cn(

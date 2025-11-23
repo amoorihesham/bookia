@@ -10,11 +10,7 @@ export const ClerkProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <Suspense>
-      <OriginalClerkProvider
-        appearance={isDarkMode ? { theme: [dark] } : undefined}
-      >
-        {children}
-      </OriginalClerkProvider>
+      <OriginalClerkProvider appearance={isDarkMode ? { theme: [dark] } : undefined}>{children}</OriginalClerkProvider>
     </Suspense>
   );
 };

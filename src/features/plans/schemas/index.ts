@@ -5,14 +5,14 @@ export const insertPlanSchema = z.object({
   frequency: z.string().min(1, { error: 'Plane frequency is required' }),
   price: z
     .string()
-    .transform((v) => parseFloat(v))
-    .refine((v) => !isNaN(v) && v > 0, {
+    .transform(v => parseFloat(v))
+    .refine(v => !isNaN(v) && v > 0, {
       error: 'Plan price must be greater than 0',
     }),
   max_featured_count: z
     .string()
-    .transform((v) => parseInt(v))
-    .refine((v) => !isNaN(v) && v > 0, {
+    .transform(v => parseInt(v))
+    .refine(v => !isNaN(v) && v > 0, {
       error: 'Plan max featured count must be greater than 0',
     }),
 });

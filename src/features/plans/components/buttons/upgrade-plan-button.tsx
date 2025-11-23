@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { useTransition } from 'react';
 import { upgradePlane } from '../../actions/mutations';
 import { toast } from 'sonner';
+import { PLANS } from '@/drizzle/schema';
 
 export const UpgradePlanButton = ({
   className,
@@ -11,7 +12,7 @@ export const UpgradePlanButton = ({
   planName,
   ...props
 }: React.ComponentProps<'button'> & {
-  planName: 'basic' | 'free' | 'ultimate';
+  planName: (typeof PLANS.enumValues)[number];
 }) => {
   const [isPending, startTransition] = useTransition();
 

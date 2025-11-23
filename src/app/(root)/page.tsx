@@ -18,27 +18,25 @@ import { Clock, MapPin, TicketCheck } from 'lucide-react';
 
 export default async function Homepage() {
   const events = await GetEventsAction('all');
+
   return (
     <>
       <div className="mx-auto mb-6 max-w-2xl space-y-1 text-center lg:mb-12 lg:space-y-4">
-        <h1 className="text-center text-2xl font-semibold lg:text-5xl">
-          Discover All Events Around You
-        </h1>
+        <h1 className="text-center text-2xl font-semibold lg:text-5xl">Discover All Events Around You</h1>
         <p className="text-xs lg:text-base">
-          Get ready for an adventure! Browse all events happening near you —
-          from today&apos;s highlights to upcoming experiences — and find your
-          next unforgettable moment.
+          Get ready for an adventure! Browse all events happening near you — from today&apos;s highlights to upcoming
+          experiences — and find your next unforgettable moment.
         </p>
       </div>
 
       <Suspense fallback={<EventsGridSkeleton />}>
         {events.length ? (
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
-            {events.map((event) => (
+            {events.map(event => (
               <EventCard
                 key={event.id}
                 event={event}
-                className="bg-[url(/card.jpg)]"
+                style={{ backgroundImage: `url(${event.cover_thumbnail})` }}
               >
                 <CardHeader className="z-5">
                   <CardActions className="z-6">

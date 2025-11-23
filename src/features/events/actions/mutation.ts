@@ -3,11 +3,7 @@ import { getCurrentUser } from '@/shared/lib/auth';
 import eventsRepository from '../db/events.repo';
 import subscriptionsRepository from '@/features/subscriptions/db/subscriptions-repo';
 import { revalidatePath, updateTag } from 'next/cache';
-import {
-  createNewEventFormInput,
-  createNewEventFormOutput,
-  createNewEventSchema,
-} from '../schemas';
+import { createNewEventFormInput, createNewEventFormOutput, createNewEventSchema } from '../schemas';
 import { handleError } from '@/lib/error-handling';
 import { EventTable } from '@/drizzle/schema';
 import { pathToFileURL } from 'url';
@@ -25,18 +21,13 @@ type BookEventError = {
   errors: string[];
 };
 
-export type BookEventResult =
-  | BookEventSuccess<typeof EventTable.$inferSelect>
-  | BookEventError;
+export type BookEventResult = BookEventSuccess<typeof EventTable.$inferSelect> | BookEventError;
 
-export const createNewEventAction = async (
-  payload: createNewEventFormInput
-) => {
+export const createNewEventAction = async (payload: createNewEventFormInput) => {
   try {
     const vData = createNewEventSchema.parse(payload);
     const user = await getCurrentUser();
     if (!user) throw Error('No user found');
-
 
     const image = await uploadToCloudinary(vData.cover_thumbnail[0], {
       folder: 'bookia/events_thumbnails',
@@ -67,9 +58,7 @@ export const createNewEventAction = async (
   }
 };
 
-export const bookEventTicket = async (
-  eventId: string
-): Promise<BookEventResult> => {
+export const bookEventTicket = async (eventId: string): Promise<BookEventResult> => {
   try {
     const user = await getCurrentUser();
     console.log(user);

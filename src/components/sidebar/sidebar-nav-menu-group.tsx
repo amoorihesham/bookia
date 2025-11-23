@@ -35,10 +35,13 @@ export function SidebarNavMenuGroup({
       {title && <SidebarGroupLabel>{title}</SidebarGroupLabel>}
 
       <SidebarMenu>
-        {items.map((item) => {
+        {items.map(item => {
           const html = (
             <SidebarMenuItem key={item.href}>
-              <SidebarMenuButton asChild isActive={pathname === item.href}>
+              <SidebarMenuButton
+                asChild
+                isActive={pathname === item.href}
+              >
                 <Link
                   href={item.href}
                   onClick={() => {

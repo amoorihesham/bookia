@@ -5,19 +5,16 @@ export const createNewEventSchema = z.object({
   place: z.string().min(1, { message: 'Event place is required' }),
   guests: z.string().min(1, { message: 'Event guests required only one' }),
   cover_thumbnail: z
-    .custom<FileList>((v) => {
+    .custom<FileList>(v => {
       if (typeof FileList !== 'undefined') {
         return v instanceof FileList;
       }
       return true;
     })
     .refine(
-      (file) => {
+      file => {
         if (typeof FileList !== 'undefined' && file instanceof FileList) {
-          return (
-            file.length > 0 &&
-            ['image/png', 'image/jpeg'].includes(file.item(0)?.type || '')
-          );
+          return file.length > 0 && ['image/png', 'image/jpeg'].includes(file.item(0)?.type || '');
         }
         return true;
       },
@@ -27,21 +24,21 @@ export const createNewEventSchema = z.object({
     ),
   tickets: z
     .string()
-    .transform((v) => parseInt(v))
-    .refine((v) => !isNaN(v) && v > 0, {
+    .transform(v => parseInt(v))
+    .refine(v => !isNaN(v) && v > 0, {
       message: 'Tickts must be greater than 0',
     }),
   ticket_price: z
     .string()
-    .transform((v) => parseFloat(v))
-    .refine((v) => !isNaN(v) && v > 0, {
+    .transform(v => parseFloat(v))
+    .refine(v => !isNaN(v) && v > 0, {
       message: 'Tickt price must be greater than 0',
     }),
-  held_on: z.date().refine((d) => d >= new Date(), {
+  held_on: z.date().refine(d => d >= new Date(), {
     message: 'Event date must be in future.',
   }),
-  featured: z.string().transform((v) => v === 'true'),
-  open: z.string().transform((v) => v === 'true'),
+  featured: z.string().transform(v => v === 'true'),
+  open: z.string().transform(v => v === 'true'),
 });
 
 export type createNewEventFormType = z.infer<typeof createNewEventSchema>;

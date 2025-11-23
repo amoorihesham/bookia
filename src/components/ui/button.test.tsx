@@ -5,8 +5,6 @@ import { Button } from './button'; // Adjust import if needed based on actual bu
 describe('Button', () => {
   it('renders correctly', () => {
     render(<Button>Click me</Button>);
-    expect(
-      screen.getByRole('button', { name: /click me/i })
-    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /click me/i })).toBeInTheDocument();
   });
 });

@@ -31,11 +31,12 @@ export const EmptyComponent: React.FC<NoDataProps> = ({
 
       <h2 className="text-foreground text-lg font-semibold">{title}</h2>
 
-      <p className="text-muted-foreground mt-1 max-w-sm text-sm">
-        {description}
-      </p>
+      <p className="text-muted-foreground mt-1 max-w-sm text-sm">{description}</p>
 
-      <Button onClick={() => router.refresh()} className="mt-6">
+      <Button
+        onClick={() => router.refresh()}
+        className="mt-6"
+      >
         Refresh
       </Button>
     </div>

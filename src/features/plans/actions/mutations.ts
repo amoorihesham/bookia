@@ -6,9 +6,7 @@ import { PLANS } from '@/drizzle/schema';
 import subscriptionsRepository from '@/features/subscriptions/db/subscriptions-repo';
 import { stripe } from '@/services/stripe';
 
-export const upgradePlane = async (
-  planName: (typeof PLANS.enumValues)[number]
-) => {
+export const upgradePlane = async (planName: (typeof PLANS.enumValues)[number]) => {
   try {
     // get the current user
     const user = await getCurrentUser();
@@ -16,11 +14,8 @@ export const upgradePlane = async (
     // get plan by name
     const [wantedPlan] = await plansRepository.findPlanByName(planName);
     // check if current user plan === the wanted plan
-    if (user.plan_id === wantedPlan.id)
-      throw Error('You already subscribed to this plan.');
-    const [subscription] = await subscriptionsRepository.findUserSubscription(
-      user.clerk_id
-    );
+    if (user.plan_id === wantedPlan.id) throw Error('You already subscribed to this plan.');
+    const [subscription] = await subscriptionsRepository.findUserSubscription(user.clerk_id);
     let customerId = subscription.stripe_customer_id;
     if (!customerId) {
       const stripeCustomer = await stripe.customers.create({
@@ -34,11 +29,11 @@ export const upgradePlane = async (
     }
 
     const session = await stripe.checkout.sessions.create({
-      mode: 'subscription',
+      mode: 'payment',
       customer: customerId,
       line_items: [
         {
-          price: 'price_1SVht3RwFFQULsC3uvMy0Xlu',
+          price: wantedPlan.stripe_price_id!,
           quantity: 1,
         },
       ],

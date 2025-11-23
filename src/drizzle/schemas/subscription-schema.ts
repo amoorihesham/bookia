@@ -1,10 +1,4 @@
-import {
-  boolean,
-  pgTable,
-  timestamp,
-  uuid,
-  varchar,
-} from 'drizzle-orm/pg-core';
+import { boolean, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
 import { createdAt, updatedAt } from '../schemaHelpers';
 import { UserTable } from './user-schema';
 import { PlanTable } from './plan-schema';
@@ -25,16 +19,13 @@ export const SubscriptionTable = pgTable('subscriptions', {
   updatedAt,
 });
 
-export const SubscriptionRelations = relations(
-  SubscriptionTable,
-  ({ one }) => ({
-    user: one(UserTable, {
-      fields: [SubscriptionTable.user_id],
-      references: [UserTable.clerk_id],
-    }),
-    plan: one(PlanTable, {
-      fields: [SubscriptionTable.plan_id],
-      references: [PlanTable.id],
-    }),
-  })
-);
+export const SubscriptionRelations = relations(SubscriptionTable, ({ one }) => ({
+  user: one(UserTable, {
+    fields: [SubscriptionTable.user_id],
+    references: [UserTable.clerk_id],
+  }),
+  plan: one(PlanTable, {
+    fields: [SubscriptionTable.plan_id],
+    references: [PlanTable.id],
+  }),
+}));

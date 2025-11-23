@@ -16,18 +16,15 @@ import { Clock, MapPin, TicketCheck } from 'lucide-react';
 import { format } from 'date-fns';
 
 export default async function StatsSection() {
-  const { events, count, close_count, featured_count, open_count } =
-    await GetUserEventsAction();
+  const { events, count, close_count, featured_count, open_count } = await GetUserEventsAction();
 
   return (
     <>
       <div className="mx-auto mb-6 max-w-2xl space-y-1 text-center lg:mb-12 lg:space-y-4">
-        <h1 className="text-center text-2xl font-semibold lg:text-5xl">
-          Events in numbers
-        </h1>
+        <h1 className="text-center text-2xl font-semibold lg:text-5xl">Events in numbers</h1>
         <p className="text-xs lg:text-base">
-          Your events at a glance—analyze performance, track ticket sales,
-          monitor engagement, and gain insights to level up your next event.
+          Your events at a glance—analyze performance, track ticket sales, monitor engagement, and gain insights to
+          level up your next event.
         </p>
       </div>
 
@@ -53,11 +50,11 @@ export default async function StatsSection() {
       <Suspense fallback={<EventsGridSkeleton />}>
         {events.length ? (
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
-            {events.map((event) => (
+            {events.map(event => (
               <EventCard
                 key={event.id}
                 event={event}
-                className="bg-[url(/card.jpg)]"
+                style={{ backgroundImage: `url(${event.cover_thumbnail})` }}
               >
                 <CardHeader className="z-5">
                   <CardActions className="z-6">

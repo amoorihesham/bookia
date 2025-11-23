@@ -25,7 +25,10 @@ export function AppSidebar({
   return (
     <SidebarProvider className="overflow-y-hidden">
       <AppSidebarClient>
-        <Sidebar collapsible="icon" className="overflow-hidden">
+        <Sidebar
+          collapsible="icon"
+          className="overflow-hidden"
+        >
           <SidebarHeader className="flex-row">
             <SidebarTrigger />
             <span className="text-xl text-nowrap">Bookia</span>
@@ -39,9 +42,7 @@ export function AppSidebar({
             </SidebarFooter>
           </SignedIn>
         </Sidebar>
-        <ContentWrapper className="flex-1 py-6 lg:py-8">
-          {children}
-        </ContentWrapper>
+        <ContentWrapper className="flex-1 py-6 lg:py-8">{children}</ContentWrapper>
       </AppSidebarClient>
     </SidebarProvider>
   );

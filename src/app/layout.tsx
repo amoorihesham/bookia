@@ -23,7 +23,10 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en" suppressHydrationWarning>
+      <html
+        lang="en"
+        suppressHydrationWarning
+      >
         <body className={`${lato.variable} antialiased`}>
           <ThemeProvider
             attribute="class"
