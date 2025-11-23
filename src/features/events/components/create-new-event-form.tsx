@@ -11,15 +11,16 @@ import { useAppForm } from '@/hooks/useAppForm';
 
 import z from 'zod';
 
-const defaultValues: z.infer<typeof createNewEventSchema> = {
+const defaultValues: z.input<typeof createNewEventSchema> = {
   name: '',
   place: '',
   guests: '',
-  featured: false,
-  open: true,
+  featured: 'false',
+  open: 'true',
   held_on: new Date(),
-  ticket_price: 0,
-  tickets: 0,
+  ticket_price: '0',
+  tickets: '0',
+  cover_thumbnail: undefined as unknown as FileList,
 };
 
 export const CreateNewEventForm = () => {
@@ -33,8 +34,6 @@ export const CreateNewEventForm = () => {
 
     onSubmit: async ({ value }) => {
       startTransition(async () => {
-        console.log(value);
-
         const result = await createNewEventAction(value);
         if (result.success && 'data' in result) {
           toast.success(result.message, {
