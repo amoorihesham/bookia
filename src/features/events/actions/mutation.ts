@@ -10,6 +10,8 @@ import {
 } from '../schemas';
 import { handleError } from '@/lib/error-handling';
 import { EventTable } from '@/drizzle/schema';
+import { pathToFileURL } from 'url';
+import { uploadToCloudinary } from '@/services/cloudinary/functions';
 
 type BookEventSuccess<T> = {
   success: true;
@@ -32,19 +34,28 @@ export const createNewEventAction = async (
 ) => {
   try {
     const vData = createNewEventSchema.parse(payload);
-    console.log(vData, 'DATA_AFTER_VALIDATION');
     const user = await getCurrentUser();
     if (!user) throw Error('No user found');
+
+
+    const image = await uploadToCloudinary(vData.cover_thumbnail[0], {
+      folder: 'bookia/events_thumbnails',
+      resource_type: 'image',
+      format: 'webp',
+      allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
+    });
+    console.log(image, 'UPLOADED_IMAGE');
+
     const guests = vData.guests.split(',');
     const evt = await eventsRepository.insertNewEvent({
       ...vData,
       guests,
       user_id: user.clerk_id,
-      cover_thumbnail: 'hha',
+      cover_thumbnail: image.secure_url,
     });
     revalidatePath('/', 'page');
     updateTag('events');
-    console.log('CREATED_EVENT', evt);
+
     return {
       success: true,
       message: 'Event created successfully',
