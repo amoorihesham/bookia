@@ -1,11 +1,12 @@
 import {
-  DateTimePicker,
+  DatePicker,
   FormCheckbox,
   FormInput,
   FormSelect,
   FormTextarea,
   SubmitButton,
   FormUpload,
+  TimePicker
 } from '@/components/shared/form';
 import { createFormHook, createFormHookContexts } from '@tanstack/react-form';
 
@@ -18,7 +19,8 @@ const { useAppForm } = createFormHook({
     Textarea: FormTextarea,
     Select: FormSelect,
     Checkbox: FormCheckbox,
-    Datetime: DateTimePicker,
+    Date: DatePicker,
+    Time: TimePicker
   },
   formComponents: {
     FormSubmitButton: SubmitButton,

@@ -38,8 +38,15 @@ export const createNewEventAction = async (payload: createNewEventFormInput) => 
     console.log(image, 'UPLOADED_IMAGE');
 
     const guests = vData.guests.split(',');
+    const [hours, minutes] = vData.time_on.split(':').map(Number);
+    const heldOn = new Date(vData.held_on);
+    heldOn.setHours(hours, minutes);
+
+    const { time_on, ...eventData } = vData;
+
     const evt = await eventsRepository.insertNewEvent({
-      ...vData,
+      ...eventData,
+      held_on: heldOn,
       guests,
       user_id: user.clerk_id,
       cover_thumbnail: image.secure_url,

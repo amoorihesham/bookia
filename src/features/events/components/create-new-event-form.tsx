@@ -17,14 +17,15 @@ const defaultValues: z.input<typeof createNewEventSchema> = {
   guests: '',
   featured: 'false',
   open: 'true',
-  held_on: new Date(),
+  held_on: new Date(new Date().setHours(0, 0, 0, 0)),
   ticket_price: '0',
   tickets: '0',
   cover_thumbnail: undefined as unknown as FileList,
+  time_on: '12:00',
 };
 
 export const CreateNewEventForm = () => {
-  const [_, startTransition] = useTransition();
+  const [isPending, startTransition] = useTransition();
   const form = useAppForm({
     defaultValues,
 
@@ -101,7 +102,10 @@ export const CreateNewEventForm = () => {
             )}
           </form.AppField>
         </div>
-        <form.AppField name="held_on">{field => <field.Datetime label="Event held on date" />}</form.AppField>
+        <div className="flex items-center gap-x-4">
+          <form.AppField name="held_on">{field => <field.Date label="Event held on date" />}</form.AppField>
+          <form.AppField name="time_on">{field => <field.Time label="Event held on time" />}</form.AppField>
+        </div>
         <form.AppField name="guests">
           {field => (
             <field.Input
@@ -118,6 +122,7 @@ export const CreateNewEventForm = () => {
             pendingLabel="Createing Event..."
             className="capitalize"
             Icon={Construction}
+            disabled={isPending}
           />
         </form.AppForm>
       </FieldGroup>

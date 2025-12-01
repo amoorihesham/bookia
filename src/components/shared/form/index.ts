@@ -6,3 +6,4 @@ export * from './FormTextarea';
 export * from './DateTimePicker';
 export * from './FormSubmitButton';
 export * from './FormUpload';
+export * from './TimeInput';

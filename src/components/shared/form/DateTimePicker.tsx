@@ -6,7 +6,7 @@ import { CalendarIcon } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
 
-export function DateTimePicker(props: FormControlProps) {
+export function DatePicker(props: FormControlProps) {
   const field = useFieldContext<Date>();
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
@@ -20,7 +20,7 @@ export function DateTimePicker(props: FormControlProps) {
             aria-invalid={isInvalid}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {field.state.value ? format(new Date(field.state.value), 'PPPP, hh:mm') : <span>Pick a date & time</span>}
+            {field.state.value ? format(new Date(field.state.value), 'PPPP') : <span>Pick a date & time</span>}
           </Button>
         </PopoverTrigger>
         <PopoverContent

@@ -10,7 +10,7 @@ export const createNewEventSchema = z.object({
         return v instanceof FileList;
       }
       return true;
-    })
+    }, { message: 'An image is required' })
     .refine(
       file => {
         if (typeof FileList !== 'undefined' && file instanceof FileList) {
@@ -34,8 +34,11 @@ export const createNewEventSchema = z.object({
     .refine(v => !isNaN(v) && v > 0, {
       message: 'Tickt price must be greater than 0',
     }),
-  held_on: z.date().refine(d => d >= new Date(), {
+  held_on: z.date().refine(d => d >= new Date(new Date().setHours(0, 0, 0, 0)), {
     message: 'Event date must be in future.',
+  }),
+  time_on: z.string().refine(v => /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/.test(v), {
+    message: 'Time must be in HH:MM format',
   }),
   featured: z.string().transform(v => v === 'true'),
   open: z.string().transform(v => v === 'true'),
