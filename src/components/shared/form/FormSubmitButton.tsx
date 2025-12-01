@@ -3,7 +3,6 @@ import { useFormContext } from '@/hooks/useAppForm';
 import { LucideProps } from 'lucide-react';
 import { ForwardRefExoticComponent, RefAttributes } from 'react';
 
-
 export function SubmitButton({
   label = 'Submit',
   pendingLabel = 'Submiting...',
@@ -20,7 +19,6 @@ export function SubmitButton({
   const form = useFormContext();
 
   return (
-
     <form.Subscribe selector={state => state.isSubmitting}>
       {isSubmitting => (
         <Button
@@ -33,6 +31,5 @@ export function SubmitButton({
         </Button>
       )}
     </form.Subscribe>
-
   );
 }

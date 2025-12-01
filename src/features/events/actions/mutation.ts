@@ -1,12 +1,10 @@
 'use server';
 import { getCurrentUser } from '@/shared/lib/auth';
 import eventsRepository from '../db/events.repo';
-import subscriptionsRepository from '@/features/subscriptions/db/subscriptions-repo';
-import { revalidatePath, revalidateTag, updateTag } from 'next/cache';
-import { createNewEventFormInput, createNewEventFormOutput, createNewEventSchema } from '../schemas';
+import { revalidatePath, updateTag } from 'next/cache';
+import { createNewEventFormInput, createNewEventSchema } from '../schemas';
 import { handleError } from '@/lib/error-handling';
 import { EventTable } from '@/drizzle/schema';
-import { pathToFileURL } from 'url';
 import { uploadToCloudinary } from '@/services/cloudinary/functions';
 
 type BookEventSuccess<T> = {
@@ -35,7 +33,6 @@ export const createNewEventAction = async (payload: createNewEventFormInput) => 
       format: 'webp',
       allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
     });
-    console.log(image, 'UPLOADED_IMAGE');
 
     const guests = vData.guests.split(',');
     const [hours, minutes] = vData.time_on.split(':').map(Number);
@@ -80,38 +77,38 @@ export const bookEventTicket = async (eventId: string): Promise<BookEventResult>
   }
 };
 
-export const toggleEventFeaturedStatus = async (eventId: string, term: string) => {
+export const toggleEventFeaturedStatus = async (eventId: string) => {
   try {
-    const user = await getCurrentUser()
+    const user = await getCurrentUser();
     if (!user) throw Error('No user found');
-    const [evt] = await eventsRepository.findEventById(eventId)
-    if (!evt) throw Error('Event not found')
-    const [uEvt] = await eventsRepository.updateEvent(eventId, { featured: !evt.featured })
-    revalidateTag(`${term}-events`, 'minutes')
-    revalidatePath('/', 'layout')
-    return { success: true, message: `Event with id [${uEvt.id}] is now ${uEvt.featured ? 'featured' : 'normal'}`, data: uEvt }
-  }
-  catch (error) {
-    console.log(error);
-    return handleError(error)
+    const [evt] = await eventsRepository.findEventById(eventId);
+    if (!evt) throw Error('Event not found');
+    const [uEvt] = await eventsRepository.updateEvent(eventId, { featured: !evt.featured });
+    revalidatePath('/', 'layout');
 
+    return {
+      success: true,
+      message: `Event with id [${uEvt.id}] is now ${uEvt.featured ? 'featured' : 'normal'}`,
+      data: uEvt,
+    };
+  } catch (error) {
+    console.log(error);
+    return handleError(error);
   }
-}
+};
 
 export const deleteEventAction = async (eventId: string) => {
   try {
-    const user = await getCurrentUser()
+    const user = await getCurrentUser();
     if (!user) throw Error('No user found');
-    const [evt] = await eventsRepository.findEventById(eventId)
-    if (!evt) throw Error('Event not found')
-    if (user.clerk_id !== evt.user_id) throw Error('You are not authorized to delete this event')
-    await eventsRepository.deleteEvent(eventId)
-    revalidatePath('/', 'layout')
-    return { success: true, message: `Event with id [${eventId}] deleted successfully`, data: null }
-  }
-  catch (error) {
+    const [evt] = await eventsRepository.findEventById(eventId);
+    if (!evt) throw Error('Event not found');
+    if (user.clerk_id !== evt.user_id) throw Error('You are not authorized to delete this event');
+    await eventsRepository.deleteEvent(eventId);
+    revalidatePath('/', 'layout');
+    return { success: true, message: `Event with id [${eventId}] deleted successfully`, data: null };
+  } catch (error) {
     console.log(error);
-    return handleError(error)
-
+    return handleError(error);
   }
-}
+};

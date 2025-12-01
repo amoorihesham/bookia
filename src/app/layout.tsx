@@ -12,8 +12,9 @@ const lato = Lato({
 });
 
 export const metadata: Metadata = {
-  title: 'Bookia',
-  description: 'book tickets to events',
+  title: 'Venu | Create Events & Sell Tickets',
+  description:
+    'Venu is the easiest way to create events and sell tickets online. Discover amazing local experiences, manage bookings seamlessly, and grow your audience today.',
 };
 
 export default function RootLayout({

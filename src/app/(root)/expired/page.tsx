@@ -1,8 +1,6 @@
 import { Suspense } from 'react';
 import { GetEventsAction } from '@/features/events/actions/query';
 import {
-  BookEventButton,
-  LoveEventButton,
   CardActions,
   EventCard,
   EventsGridSkeleton,
@@ -42,12 +40,18 @@ export default async function ExpiredPage() {
               >
                 <CardHeader className="z-5">
                   <CardActions className="z-6">
-                    {user => event.user_id === user.clerk_id && (
-                      <>
-                        <ToggleFeaturedButton />
-                        <DeleteEventButton />
-                      </>
-                    )}
+                    {user => {
+                      if (!user) return null;
+
+                      return (
+                        event.user_id === user.clerk_id && (
+                          <>
+                            <ToggleFeaturedButton />
+                            <DeleteEventButton />
+                          </>
+                        )
+                      );
+                    }}
                   </CardActions>
                   <div className="absolute top-0 left-0 flex w-full items-start justify-between p-3">
                     <CardPopularityBadge className="shadow-lg" />

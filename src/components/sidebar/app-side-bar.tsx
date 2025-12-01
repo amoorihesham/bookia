@@ -12,6 +12,8 @@ import { SignedIn } from '@/services/clerk/components/signin-status';
 import { AppSidebarClient } from './app-sidebar-client';
 import { ReactNode } from 'react';
 import { ContentWrapper } from '../shared';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export function AppSidebar({
   children,
@@ -29,9 +31,17 @@ export function AppSidebar({
           collapsible="icon"
           className="overflow-hidden"
         >
-          <SidebarHeader className="flex-row">
+          <SidebarHeader className="flex-row justify-between">
+            <Link href={'/'}>
+              <Image
+                src={'/logo.png'}
+                alt="Venu logo"
+                width={84}
+                height={32}
+                className="object-contain"
+              />
+            </Link>
             <SidebarTrigger />
-            <span className="text-xl text-nowrap">Bookia</span>
           </SidebarHeader>
           <SidebarContent>{content}</SidebarContent>
           <SignedIn>

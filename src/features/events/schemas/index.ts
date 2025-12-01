@@ -5,12 +5,15 @@ export const createNewEventSchema = z.object({
   place: z.string().min(1, { message: 'Event place is required' }),
   guests: z.string().min(1, { message: 'Event guests required only one' }),
   cover_thumbnail: z
-    .custom<FileList>(v => {
-      if (typeof FileList !== 'undefined') {
-        return v instanceof FileList;
-      }
-      return true;
-    }, { message: 'An image is required' })
+    .custom<FileList>(
+      v => {
+        if (typeof FileList !== 'undefined') {
+          return v instanceof FileList;
+        }
+        return true;
+      },
+      { message: 'An image is required' }
+    )
     .refine(
       file => {
         if (typeof FileList !== 'undefined' && file instanceof FileList) {

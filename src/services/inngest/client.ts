@@ -1,5 +1,5 @@
 import { EventSchemas, Inngest } from 'inngest';
-import { DeletedObjectJSON, OrganizationJSON, OrganizationMembershipJSON, UserJSON } from '@clerk/nextjs/server';
+import { DeletedObjectJSON, UserJSON } from '@clerk/nextjs/server';
 import stripe from 'stripe';
 
 type WebhookData<T> = {
@@ -21,6 +21,3 @@ export const inngest = new Inngest({
   id: 'bookia',
   schemas: new EventSchemas().fromRecord<Events>(),
 });
-
-
-

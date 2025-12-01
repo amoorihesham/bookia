@@ -3,19 +3,20 @@ import { useFieldContext } from '@/hooks/useAppForm';
 import { Input } from '@/components/ui/input';
 
 export function TimePicker(props: FormControlProps) {
-    const field = useFieldContext<string>();
-    const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+  const field = useFieldContext<string>();
+  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
-    return (
-        <FormBase {...props}>
-            <Input type='time'
-                id={field.name}
-                name={field.name}
-                value={field.state.value}
-                onBlur={field.handleBlur}
-                onChange={e => field.handleChange(e.target.value)}
-                aria-invalid={isInvalid}
-            />
-        </FormBase>
-    );
+  return (
+    <FormBase {...props}>
+      <Input
+        type="time"
+        id={field.name}
+        name={field.name}
+        value={field.state.value}
+        onBlur={field.handleBlur}
+        onChange={e => field.handleChange(e.target.value)}
+        aria-invalid={isInvalid}
+      />
+    </FormBase>
+  );
 }

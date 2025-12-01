@@ -1,7 +1,4 @@
 import { CreateNewPlanDialog } from '@/features/plans/components/create-new-plan-dialog';
-import PlansGrid from '@/features/plans/components/plans-grid';
-import PlansGridSkeleton from '@/features/plans/components/plans.grid.skeleton';
-import { Suspense } from 'react';
 
 export default function PlansPage() {
   return (
@@ -15,9 +12,6 @@ export default function PlansPage() {
         </div>
         <CreateNewPlanDialog />
       </div>
-      <Suspense fallback={<PlansGridSkeleton />}>
-        <PlansGrid className="mt-10 justify-items-center" />
-      </Suspense>
     </div>
   );
 }

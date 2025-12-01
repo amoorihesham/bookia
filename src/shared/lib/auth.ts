@@ -1,4 +1,4 @@
-'use server'
+'use server';
 import userRepository from '@/features/users/db/user.repo';
 import { auth, UserJSON } from '@clerk/nextjs/server';
 

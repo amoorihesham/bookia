@@ -11,13 +11,12 @@ import {
   EventsGridSkeleton,
   LoveEventButton,
   ToggleFeaturedButton,
-  DeleteEventButton
+  DeleteEventButton,
 } from '@/features/events/components';
 import { GetEventsAction } from '@/features/events/actions/query';
 import { Clock, MapPin, TicketCheck } from 'lucide-react';
 import { format } from 'date-fns';
 import { EmptyComponent } from '@/components/shared';
-
 
 export default async function TodayPage() {
   const events = await GetEventsAction('today');
@@ -42,15 +41,21 @@ export default async function TodayPage() {
               >
                 <CardHeader className="z-5">
                   <CardActions className="z-6">
-                    {user => event.user_id === user.clerk_id ? (
-                      <>
-                        <ToggleFeaturedButton />
-                        <DeleteEventButton />
-                      </>
-                    ) : <>
-                      <BookEventButton />
-                      <LoveEventButton />
-                    </>}
+                    {user => {
+                      if (!user) return null;
+
+                      return event.user_id === user.clerk_id ? (
+                        <>
+                          <ToggleFeaturedButton />
+                          <DeleteEventButton />
+                        </>
+                      ) : (
+                        <>
+                          <BookEventButton />
+                          <LoveEventButton />
+                        </>
+                      );
+                    }}
                   </CardActions>
                   <div className="absolute top-0 left-0 flex w-full items-start justify-between p-3">
                     <CardPopularityBadge className="shadow-lg" />
