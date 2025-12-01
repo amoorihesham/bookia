@@ -1,7 +1,8 @@
-import { DeletedObjectJSON, OrganizationJSON, OrganizationMembershipJSON, UserJSON } from '@clerk/nextjs/server';
 import { EventSchemas, Inngest } from 'inngest';
+import { DeletedObjectJSON, OrganizationJSON, OrganizationMembershipJSON, UserJSON } from '@clerk/nextjs/server';
+import stripe from 'stripe';
 
-type ClerkWebhookData<T> = {
+type WebhookData<T> = {
   data: {
     data: T;
     raw: string;
@@ -10,12 +11,16 @@ type ClerkWebhookData<T> = {
 };
 
 export type Events = {
-  'clerk/user.created': ClerkWebhookData<UserJSON>;
-  'clerk/user.updated': ClerkWebhookData<UserJSON>;
-  'clerk/user.deleted': ClerkWebhookData<DeletedObjectJSON>;
+  'clerk/user.created': WebhookData<UserJSON>;
+  'clerk/user.updated': WebhookData<UserJSON>;
+  'clerk/user.deleted': WebhookData<DeletedObjectJSON>;
+  'stripe/webhook_recived': WebhookData<stripe.ResponseEvent>;
 };
 
 export const inngest = new Inngest({
   id: 'bookia',
   schemas: new EventSchemas().fromRecord<Events>(),
 });
+
+
+
