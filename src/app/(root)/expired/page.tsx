@@ -15,6 +15,8 @@ import {
 import { EmptyComponent } from '@/components/shared';
 import { format } from 'date-fns';
 import { Clock, MapPin, TicketCheck } from 'lucide-react';
+import { ToggleFeaturedButton } from '@/features/events/components/buttons/featured-event-button';
+import { DeleteEventButton } from '@/features/events/components/buttons/delete-event-button';
 
 export default async function ExpiredPage() {
   const events = await GetEventsAction('expired');
@@ -40,8 +42,12 @@ export default async function ExpiredPage() {
               >
                 <CardHeader className="z-5">
                   <CardActions className="z-6">
-                    <BookEventButton />
-                    <LoveEventButton />
+                    {user => event.user_id === user.clerk_id && (
+                      <>
+                        <ToggleFeaturedButton />
+                        <DeleteEventButton />
+                      </>
+                    )}
                   </CardActions>
                   <div className="absolute top-0 left-0 flex w-full items-start justify-between p-3">
                     <CardPopularityBadge className="shadow-lg" />

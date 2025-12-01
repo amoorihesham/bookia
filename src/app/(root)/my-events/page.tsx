@@ -14,6 +14,8 @@ import { EmptyComponent } from '@/components/shared';
 import { Suspense } from 'react';
 import { Clock, MapPin, TicketCheck } from 'lucide-react';
 import { format } from 'date-fns';
+import { ToggleFeaturedButton } from '@/features/events/components/buttons/featured-event-button';
+import { DeleteEventButton } from '@/features/events/components/buttons/delete-event-button';
 
 export default async function StatsSection() {
   const { events, count, close_count, featured_count, open_count } = await GetUserEventsAction();
@@ -58,7 +60,13 @@ export default async function StatsSection() {
               >
                 <CardHeader className="z-5">
                   <CardActions className="z-6">
-                    <BookEventButton />
+                    {user => event.user_id === user.clerk_id && (
+                      <>
+                        <ToggleFeaturedButton />
+                        <DeleteEventButton />
+                      </>
+                    )}
+
                   </CardActions>
                   <div className="absolute top-0 left-0 flex w-full items-start justify-between p-3">
                     <CardPopularityBadge className="shadow-lg" />

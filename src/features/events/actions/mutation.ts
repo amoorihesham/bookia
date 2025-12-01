@@ -2,7 +2,7 @@
 import { getCurrentUser } from '@/shared/lib/auth';
 import eventsRepository from '../db/events.repo';
 import subscriptionsRepository from '@/features/subscriptions/db/subscriptions-repo';
-import { revalidatePath, updateTag } from 'next/cache';
+import { revalidatePath, revalidateTag, updateTag } from 'next/cache';
 import { createNewEventFormInput, createNewEventFormOutput, createNewEventSchema } from '../schemas';
 import { handleError } from '@/lib/error-handling';
 import { EventTable } from '@/drizzle/schema';
@@ -68,7 +68,6 @@ export const createNewEventAction = async (payload: createNewEventFormInput) => 
 export const bookEventTicket = async (eventId: string): Promise<BookEventResult> => {
   try {
     const user = await getCurrentUser();
-    console.log(user);
     if (!user) throw Error('No user found');
 
     revalidatePath('/', 'page');
@@ -80,3 +79,39 @@ export const bookEventTicket = async (eventId: string): Promise<BookEventResult>
     return handleError(error) as BookEventError;
   }
 };
+
+export const toggleEventFeaturedStatus = async (eventId: string, term: string) => {
+  try {
+    const user = await getCurrentUser()
+    if (!user) throw Error('No user found');
+    const [evt] = await eventsRepository.findEventById(eventId)
+    if (!evt) throw Error('Event not found')
+    const [uEvt] = await eventsRepository.updateEvent(eventId, { featured: !evt.featured })
+    revalidateTag(`${term}-events`, 'minutes')
+    revalidatePath('/', 'layout')
+    return { success: true, message: `Event with id [${uEvt.id}] is now ${uEvt.featured ? 'featured' : 'normal'}`, data: uEvt }
+  }
+  catch (error) {
+    console.log(error);
+    return handleError(error)
+
+  }
+}
+
+export const deleteEventAction = async (eventId: string) => {
+  try {
+    const user = await getCurrentUser()
+    if (!user) throw Error('No user found');
+    const [evt] = await eventsRepository.findEventById(eventId)
+    if (!evt) throw Error('Event not found')
+    if (user.clerk_id !== evt.user_id) throw Error('You are not authorized to delete this event')
+    await eventsRepository.deleteEvent(eventId)
+    revalidatePath('/', 'layout')
+    return { success: true, message: `Event with id [${eventId}] deleted successfully`, data: null }
+  }
+  catch (error) {
+    console.log(error);
+    return handleError(error)
+
+  }
+}

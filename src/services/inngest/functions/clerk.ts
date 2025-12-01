@@ -27,7 +27,7 @@ export const clerkCreatedUser = inngest.createFunction(
       const user = await step.run('create-user', async () => {
         const payload = event.data.data;
 
-        const primaryEmail = getUserPrimaryEmail(payload);
+        const primaryEmail = await getUserPrimaryEmail(payload);
         if (!primaryEmail) throw Error('Primary email not found');
 
         const [user] = await userRepository.insertNewUser({
