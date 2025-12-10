@@ -40,21 +40,11 @@ export default async function FeaturedPage() {
                 style={{ backgroundImage: `url(${event.cover_thumbnail})` }}
               >
                 <CardHeader className="z-5">
-                  <CardActions className="z-6">
-                    {user =>
-                      event.user_id === user.clerk_id ? (
-                        <>
-                          <ToggleFeaturedButton />
-                          <DeleteEventButton />
-                        </>
-                      ) : (
-                        <>
-                          <BookEventButton />
-                          <LoveEventButton />
-                        </>
-                      )
-                    }
-                  </CardActions>
+                  <CardActions
+                    className="z-6"
+                    eventOwnerId={event.user_id!}
+                  />
+
                   <div className="absolute top-0 left-0 flex w-full items-start justify-between p-3">
                     <CardPopularityBadge className="shadow-lg" />
                     <CardDate className="shadow-lg" />

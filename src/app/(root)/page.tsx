@@ -41,23 +41,11 @@ export default async function Homepage() {
                 style={{ backgroundImage: `url(${event.cover_thumbnail})` }}
               >
                 <CardHeader className="z-5">
-                  <CardActions className="z-6">
-                    {user => {
-                      if (!user) return null;
+                  <CardActions
+                    className="z-6"
+                    eventOwnerId={event.user_id!}
+                  />
 
-                      return event.user_id === user.clerk_id ? (
-                        <>
-                          <ToggleFeaturedButton />
-                          <DeleteEventButton />
-                        </>
-                      ) : (
-                        <>
-                          <BookEventButton />
-                          <LoveEventButton />
-                        </>
-                      );
-                    }}
-                  </CardActions>
                   <div className="absolute top-0 left-0 flex w-full items-start justify-between p-3">
                     <CardPopularityBadge className="shadow-lg" />
                     <CardDate className="shadow-lg" />

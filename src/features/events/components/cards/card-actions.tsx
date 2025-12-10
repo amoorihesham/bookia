@@ -1,15 +1,19 @@
-import { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 import { getCurrentUser } from '@/shared/lib/auth';
-import { UserTable } from '@/drizzle/schema';
+import { ToggleFeaturedButton } from '../buttons/featured-event-button';
+import { DeleteEventButton } from '../buttons/delete-event-button';
+import { BookEventButton } from '../buttons/book-event-button';
+import { LoveEventButton } from '../buttons/event-love-button';
 
 type CardActionsProps = {
   className?: string;
-  children: (owner: typeof UserTable.$inferSelect) => ReactNode;
+  eventOwnerId: string;
 };
 
-export const CardActions = async ({ className, children }: CardActionsProps) => {
+export const CardActions = async ({ className, eventOwnerId }: CardActionsProps) => {
   const user = await getCurrentUser();
+
+  if (!user) return null;
   return (
     <div
       className={cn(
@@ -17,7 +21,17 @@ export const CardActions = async ({ className, children }: CardActionsProps) => 
         className
       )}
     >
-      {children(user!)}
+      {user.clerk_id === eventOwnerId ? (
+        <>
+          <ToggleFeaturedButton />
+          <DeleteEventButton />
+        </>
+      ) : (
+        <>
+          <BookEventButton />
+          <LoveEventButton />
+        </>
+      )}
     </div>
   );
 };
