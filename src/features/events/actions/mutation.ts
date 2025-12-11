@@ -62,54 +62,54 @@ export const createNewEventAction = async (payload: createNewEventFormInput) => 
   }
 };
 
-export const updateEventAction = async (eventId: string, payload: Partial<createNewEventFormInput>) => {
-  try {
-    const user = await getCurrentUser();
-    if (!user) throw Error('No user found');
-    const [evt] = await eventsRepository.findEventById(eventId);
-    if (!evt) throw Error('Event not found');
+// export const updateEventAction = async (eventId: string, payload: Partial<createNewEventFormInput>) => {
+//   try {
+//     const user = await getCurrentUser();
+//     if (!user) throw Error('No user found');
+//     const [evt] = await eventsRepository.findEventById(eventId);
+//     if (!evt) throw Error('Event not found');
 
-    let image;
-    if (payload.cover_thumbnail) {
-      image = await uploadToCloudinary(payload.cover_thumbnail[0], {
-        folder: 'bookia/events_thumbnails',
-        resource_type: 'image',
-        format: 'webp',
-        allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
-      });
-    }
+//     let image;
+//     if (payload.cover_thumbnail) {
+//       image = await uploadToCloudinary(payload.cover_thumbnail[0], {
+//         folder: 'bookia/events_thumbnails',
+//         resource_type: 'image',
+//         format: 'webp',
+//         allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
+//       });
+//     }
 
-    const guests = payload.guests ? payload.guests.split(',') : evt!.guests;
-    const heldOn = new Date(payload.held_on ?? evt.held_on);
-    const [hours, minutes] = payload.time_on
-      ? payload.time_on.split(':').map(Number)
-      : [heldOn.getHours(), heldOn.getMinutes()];
-    heldOn.setHours(hours, minutes);
+//     const guests = payload.guests ? payload.guests.split(',') : evt!.guests;
+//     const heldOn = new Date(payload.held_on ?? evt.held_on);
+//     const [hours, minutes] = payload.time_on
+//       ? payload.time_on.split(':').map(Number)
+//       : [heldOn.getHours(), heldOn.getMinutes()];
+//     heldOn.setHours(hours, minutes);
 
-    const { time_on, ...eventData } = payload;
+//     const { time_on, ...eventData } = payload;
 
-    const [uEvt] = await eventsRepository.updateEvent(eventId, {
-      ...eventData,
-      held_on: heldOn,
-      guests,
-      user_id: user.clerk_id,
-      cover_thumbnail: image.secure_url,
-      tickets: payload.tickets ?? evt.tickets,
-      tickets: payload.tickets ?? evt.tickets,
-    });
-    revalidatePath('/', 'page');
-    updateTag('events');
+//     const [uEvt] = await eventsRepository.updateEvent(eventId, {
+//       ...eventData,
+//       held_on: heldOn,
+//       guests,
+//       user_id: user.clerk_id,
+//       cover_thumbnail: image.secure_url,
+//       tickets: payload.tickets ?? evt.tickets,
+//       tickets: payload.tickets ?? evt.tickets,
+//     });
+//     revalidatePath('/', 'page');
+//     updateTag('events');
 
-    return {
-      success: true,
-      message: 'Event created successfully',
-      data: evt[0],
-    };
-  } catch (error: unknown) {
-    console.log(error);
-    return handleError(error);
-  }
-};
+//     return {
+//       success: true,
+//       message: 'Event created successfully',
+//       data: evt[0],
+//     };
+//   } catch (error: unknown) {
+//     console.log(error);
+//     return handleError(error);
+//   }
+// };
 
 export const bookEventTicket = async (eventId: string, ticketCount: number): Promise<BookEventResult> => {
   try {
