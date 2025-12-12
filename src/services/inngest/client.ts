@@ -1,6 +1,6 @@
 import { EventSchemas, Inngest } from 'inngest';
 import { DeletedObjectJSON, UserJSON } from '@clerk/nextjs/server';
-import stripe from 'stripe';
+import { Stripe } from 'stripe';
 
 type WebhookData<T> = {
   data: {
@@ -14,7 +14,10 @@ export type Events = {
   'clerk/user.created': WebhookData<UserJSON>;
   'clerk/user.updated': WebhookData<UserJSON>;
   'clerk/user.deleted': WebhookData<DeletedObjectJSON>;
-  'stripe/webhook_recived': WebhookData<stripe.ResponseEvent>;
+  'stripe/user.subscription': WebhookData<
+    Stripe.Checkout.Session & { metadata: { planName?: string; userId?: string } }
+  >;
+  'stripe/event.booked': WebhookData<Stripe.Checkout.Session & { metadata: { productId?: string; userId?: string } }>;
 };
 
 export const inngest = new Inngest({
