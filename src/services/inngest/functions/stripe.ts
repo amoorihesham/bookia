@@ -8,7 +8,7 @@ import { updateEventTicketsCountAction } from '@/features/events/actions/mutatio
 import { insertNewBookingRecordAction } from '@/features/bookings/actions/mutations';
 
 export const stripeUserSubscription = inngest.createFunction(
-  { id: 'stripe/update-db-after-checkout-completed', name: 'Stripe - Update User Subscription' },
+  { id: 'stripe/Subscription-completed', name: 'Stripe - Update User Subscription' },
   { event: 'stripe/user.subscription' },
   async ({ event, step }) => {
     try {
@@ -45,7 +45,7 @@ export const stripeUserSubscription = inngest.createFunction(
 );
 
 export const stripeUserBookedEvent = inngest.createFunction(
-  { id: 'stripe/update-db-after-checkout-completed', name: 'Stripe - Update User Subscription' },
+  { id: 'stripe/Event-booked', name: 'Stripe - Update User Booked Events' },
   { event: 'stripe/event.booked' },
   async ({ event, step }) => {
     try {
