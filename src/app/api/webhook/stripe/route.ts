@@ -16,10 +16,17 @@ export async function POST(req: NextRequest) {
       const session = event.data.object as Stripe.Checkout.Session & {
         metadata: Record<string, string>;
       };
-      await inngest.send({
-        name: event.data.object.metadata?.planName ? 'stripe/user.subscription' : 'stripe/event.booked',
-        data: { data: session, raw: rawBody, headers: Object.fromEntries(req.headers) },
-      });
+      if (session.metadata?.planName) {
+        await inngest.send({
+          name: 'stripe/user.subscription',
+          data: { data: session, raw: rawBody, headers: Object.fromEntries(req.headers) },
+        });
+      }else{
+        await inngest.send({
+          name: 'stripe/event.booked',
+          data: { data: session, raw: rawBody, headers: Object.fromEntries(req.headers) },
+        });
+      }
     }
 
     return NextResponse.json({ received: true }, { status: 200 });

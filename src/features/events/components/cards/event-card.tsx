@@ -20,6 +20,7 @@ export const EventCard: React.FC<EventCardProps> = ({ children, className, event
       <Card
         className={cn(
           'hover:border-chart-4 group relative max-h-[500px] min-h-[400px] w-full overflow-hidden bg-cover bg-center bg-no-repeat p-0 bg-blend-soft-light transition-all duration-300',
+          !event.open && 'cursor-not-allowed opacity-55',
           className
         )}
         {...props}

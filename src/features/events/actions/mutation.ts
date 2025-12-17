@@ -176,3 +176,21 @@ export const deleteEventAction = async (eventId: string) => {
     return handleError(error);
   }
 };
+
+export const updateEventTicketsCountAction = async (eventId: string, newTicketsCount: number) => {
+  return eventsRepository.updateEvent(eventId, { tickets: newTicketsCount });
+};
+
+export const toggleEventOpenStatusAction = async (eventId: string, newOpenStatus: boolean) => {
+  try {
+    const [newEvent] = await eventsRepository.updateEvent(eventId, { open: newOpenStatus });
+    revalidatePath('/', 'layout');
+    return {
+      success: true,
+      message: `Event with name [${newEvent.name}] is now ${newEvent.open ? 'open' : 'closed'}`,
+      data: newEvent,
+    };
+  } catch (error) {
+    return handleError(error);
+  }
+};

@@ -4,7 +4,7 @@ import { Suspense } from 'react';
 
 export default async function NewEventPage() {
   'use cache';
-  cacheLife('hours');
+  cacheLife('days');
   return (
     <>
       <div className="mx-auto mb-6 max-w-2xl space-y-1 text-center lg:mb-12 lg:space-y-4">

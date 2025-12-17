@@ -40,3 +40,7 @@ export const GetUserEventsAction = async () => {
     close_count,
   };
 };
+
+export const GetEventByIdAction = async (eventId: string) => {
+  return eventsRepository.findEventById(eventId);
+};

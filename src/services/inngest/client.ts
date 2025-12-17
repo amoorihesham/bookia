@@ -17,7 +17,9 @@ export type Events = {
   'stripe/user.subscription': WebhookData<
     Stripe.Checkout.Session & { metadata: { planName?: string; userId?: string } }
   >;
-  'stripe/event.booked': WebhookData<Stripe.Checkout.Session & { metadata: { productId?: string; userId?: string } }>;
+  'stripe/event.booked': WebhookData<
+    Stripe.Checkout.Session & { metadata: { productId?: string; userId?: string; tickets?: number } }
+  >;
 };
 
 export const inngest = new Inngest({

@@ -1,4 +1,9 @@
-export default function MyOrdersPage() {
+import { EmptyComponent } from '@/components/shared';
+import { GetUserBookingsAsOrdersAction } from '@/features/bookings/actions/query';
+
+export default async function MyOrdersPage() {
+  const orders = await GetUserBookingsAsOrdersAction();
+
   return (
     <>
       <div className="mx-auto mb-6 max-w-2xl space-y-1 text-center lg:mb-12 lg:space-y-4">
@@ -8,6 +13,7 @@ export default function MyOrdersPage() {
           sure you don&apos; t miss any of the experiences you&apos; ve signed up for.
         </p>
       </div>
+      <EmptyComponent />
     </>
   );
 }

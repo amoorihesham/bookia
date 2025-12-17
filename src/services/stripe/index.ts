@@ -33,7 +33,7 @@ export const createStripeCheckoutSessionForEvent = async (event: StripeEventItem
     metadata: {
       eventId: event.eventId,
       name: event.name,
-      tickets: event.tickets.toString(),
+      tickets: event.tickets,
     },
 
     success_url: `${env.BASE_URL}/success?session_id={CHECKOUT_SESSION_ID}`,

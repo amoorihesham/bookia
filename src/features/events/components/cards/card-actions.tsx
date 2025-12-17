@@ -4,6 +4,7 @@ import { ToggleFeaturedButton } from '../buttons/featured-event-button';
 import { DeleteEventButton } from '../buttons/delete-event-button';
 import { BookEventButton } from '../buttons/book-event-button';
 import { LoveEventButton } from '../buttons/event-love-button';
+import { ToggleOpenStatusButton } from '../buttons/toggle-open-status-button';
 
 type CardActionsProps = {
   className?: string;
@@ -23,6 +24,7 @@ export const CardActions = async ({ className, eventOwnerId }: CardActionsProps)
     >
       {user.clerk_id === eventOwnerId ? (
         <>
+          <ToggleOpenStatusButton />
           <ToggleFeaturedButton />
           <DeleteEventButton />
         </>
