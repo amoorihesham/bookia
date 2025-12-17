@@ -102,7 +102,7 @@ export const CreateNewEventForm = () => {
             )}
           </form.AppField>
         </div>
-        <div className="flex items-center gap-x-4">
+        <div className="flex flex-col items-center gap-y-3 gap-x-4 lg:flex-row">
           <form.AppField name="held_on">{field => <field.Date label="Event held on date" />}</form.AppField>
           <form.AppField name="time_on">{field => <field.Time label="Event held on time" />}</form.AppField>
         </div>
