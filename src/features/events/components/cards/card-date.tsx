@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 
 export const CardDate = ({ className }: React.ComponentProps<'div'>) => {
   const event = useContext(EventCardContext);
+
   return (
     <div
       className={cn(

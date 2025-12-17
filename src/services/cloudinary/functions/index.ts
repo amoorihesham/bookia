@@ -1,4 +1,4 @@
-import { UploadApiOptions } from 'cloudinary';
+import { UploadApiOptions, UploadApiResponse } from 'cloudinary';
 import cloudinary from '../client';
 import { Buffer } from 'node:buffer';
 import { checkFileTypeBeforeUpload } from '../lib';
@@ -8,14 +8,14 @@ export const uploadToCloudinary = async (fileInput: File | FileList | File[], op
   const arrayBuffer = await file.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
 
-  return new Promise<any>((resolve, reject) => {
+  return new Promise<UploadApiResponse>((resolve, reject) => {
     cloudinary.uploader
       .upload_stream(options, (error, result) => {
         if (error) {
           reject(error);
           return;
         }
-        resolve(result);
+        resolve(result as UploadApiResponse);
       })
       .end(buffer);
   });
