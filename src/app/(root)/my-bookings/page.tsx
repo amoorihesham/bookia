@@ -1,9 +1,10 @@
 import { EmptyComponent } from '@/components/shared';
 import { GetUserBookingsAction } from '@/features/bookings/actions/query';
-import { connection } from 'next/server';
+import { BookingsDataTable } from '@/features/bookings/components';
+import { Loader2 } from 'lucide-react';
+import { Suspense } from 'react';
 
 export default async function MyBookingsPage() {
-  await connection();
   const bookings = await GetUserBookingsAction();
 
   return (
@@ -15,8 +16,9 @@ export default async function MyBookingsPage() {
           moments that matter.
         </p>
       </div>
-
-      <EmptyComponent />
+      <Suspense fallback={<Loader2 />}>
+        {bookings.length ? <BookingsDataTable data={bookings} /> : <EmptyComponent />}
+      </Suspense>
     </>
   );
 }

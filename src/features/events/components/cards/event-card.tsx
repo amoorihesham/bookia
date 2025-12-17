@@ -4,7 +4,7 @@ import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { EventTable, UserTable } from '@/drizzle/schema';
 
-type EventType = typeof EventTable.$inferSelect & {
+export type EventType = typeof EventTable.$inferSelect & {
   organizer: typeof UserTable.$inferSelect | null;
 };
 

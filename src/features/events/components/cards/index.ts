@@ -5,3 +5,4 @@ export * from './event-card';
 export * from './card-date';
 export * from './card-content';
 export * from './card-title';
+export * from './event-card-compound';

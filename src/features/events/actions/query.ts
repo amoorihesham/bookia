@@ -10,11 +10,10 @@ export const GetEventsAction = async (term: FindEventsFilterTerm = 'all') => {
   return eventsRepository.findAllEvents(term);
 };
 
-export const GetUserEventsAction = async () => {
+export const GetUserEventStatsAction = async () => {
   const user = await getCurrentUser();
   if (!user)
     return {
-      events: [],
       count: 0,
       featured_count: 0,
       open_count: 0,
@@ -33,12 +32,17 @@ export const GetUserEventsAction = async () => {
     if (!e.open) close_count += 1;
   }
   return {
-    events: result,
     count: result.length,
     featured_count,
     open_count,
     close_count,
   };
+};
+export const GetUserEventsAction = async () => {
+  const user = await getCurrentUser();
+  if (!user) return [];
+
+  return eventsRepository.findUserEvents(user.clerk_id);
 };
 
 export const GetEventByIdAction = async (eventId: string) => {

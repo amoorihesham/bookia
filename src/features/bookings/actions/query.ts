@@ -2,6 +2,7 @@
 
 import { getCurrentUser } from '@/shared/lib/auth';
 import bookingsRepository from '../db/bookings.repo';
+import { cacheLife } from 'next/cache';
 
 export const GetAllBookingsAction = async () => {
   try {
@@ -16,24 +17,14 @@ export const GetAllBookingsAction = async () => {
 };
 
 export const GetUserBookingsAction = async () => {
-  try {
-    const user = await getCurrentUser();
-    if (!user) return [];
-    return await bookingsRepository.getUserBookings(user.clerk_id);
-  } catch (error) {
-    console.log('Error While Fetch User Bookings.', error);
-    return [];
-  }
+  const user = await getCurrentUser();
+  if (!user) return [];
+  return await bookingsRepository.getUserBookings(user.clerk_id);
 };
 
 export const GetUserBookingsAsOrdersAction = async () => {
-  try {
-    const user = await getCurrentUser();
-    if (!user) return [];
-    const allBookings = await bookingsRepository.getAllBookings();
-    return allBookings.filter(b => b.event.user_id === user.clerk_id);
-  } catch (error) {
-    console.log('Error While Fetch User Bookings.', error);
-    return [];
-  }
+  const user = await getCurrentUser();
+  if (!user) return [];
+  const allBookings = await bookingsRepository.getAllBookings();
+  return allBookings.filter(b => b.event.user_id === user.clerk_id);
 };
