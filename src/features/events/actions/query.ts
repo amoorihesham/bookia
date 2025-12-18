@@ -5,7 +5,7 @@ import { getCurrentUser } from '@/shared/lib/auth';
 
 export const GetEventsAction = async (term: FindEventsFilterTerm = 'all') => {
   'use cache';
-  cacheLife('minutes');
+  cacheLife('hours');
   cacheTag(`${term}-events`);
   return eventsRepository.findAllEvents(term);
 };

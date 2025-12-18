@@ -6,12 +6,9 @@ import { CardHeader } from './card-header';
 import { CardPopularityBadge } from './card-popularity';
 import { CardTitle } from './card-title';
 import { EventCard, EventType } from './event-card';
-import { toZonedTime, format } from 'date-fns-tz';
 import { EventTime } from './event-time';
 
 export const EventCardCompound = ({ event }: { event: EventType }) => {
-  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
   return (
     <EventCard
       key={event.id}
