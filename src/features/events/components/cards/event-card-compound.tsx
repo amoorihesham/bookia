@@ -7,9 +7,11 @@ import { CardPopularityBadge } from './card-popularity';
 import { CardTitle } from './card-title';
 import { EventCard, EventType } from './event-card';
 import { toZonedTime, format } from 'date-fns-tz';
+import { EventTime } from './event-time';
 
 export const EventCardCompound = ({ event }: { event: EventType }) => {
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
   return (
     <EventCard
       key={event.id}
@@ -37,10 +39,7 @@ export const EventCardCompound = ({ event }: { event: EventType }) => {
             </span>
           </div>
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-1">
-              <Clock className="text-chart-4/60 size-4" />
-              <span>{format(new Date(event.held_on), 'dd MMM, HH:mma')}</span>
-            </div>
+            <EventTime />
             <div className="flex items-center gap-1">
               <MapPin className="text-chart-4/60 size-4" />
               <span className="capitalize">{event.place}</span>
