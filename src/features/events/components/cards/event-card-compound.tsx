@@ -10,8 +10,6 @@ import { toZonedTime, format } from 'date-fns-tz';
 
 export const EventCardCompound = ({ event }: { event: EventType }) => {
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
-  const formatedDate = format(event.held_on, 'hh:mm a', { timeZone: userTimeZone });
   return (
     <EventCard
       key={event.id}
@@ -41,7 +39,7 @@ export const EventCardCompound = ({ event }: { event: EventType }) => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1">
               <Clock className="text-chart-4/60 size-4" />
-              <span>{formatedDate}</span>
+              <span>{format(new Date(event.held_on), 'dd MMM, HH:mma')}</span>
             </div>
             <div className="flex items-center gap-1">
               <MapPin className="text-chart-4/60 size-4" />
