@@ -1,4 +1,4 @@
-import { Clock, MapPin, TicketCheck } from 'lucide-react';
+import { MapPin, TicketCheck } from 'lucide-react';
 import { CardActions } from './card-actions';
 import { CardContent } from './card-content';
 import { CardDate } from './card-date';

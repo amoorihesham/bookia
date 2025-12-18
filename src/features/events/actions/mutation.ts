@@ -48,7 +48,7 @@ export const createNewEventAction = async (payload: createNewEventFormInput) => 
       user_id: user.clerk_id,
       cover_thumbnail: image.secure_url,
     });
-    revalidatePath('/', 'page');
+    revalidatePath('/', 'layout');
     updateTag('events');
 
     return {
@@ -165,7 +165,7 @@ export const deleteEventAction = async (eventId: string) => {
     const [evt] = await eventsRepository.findEventById(eventId);
     if (!evt) throw Error('Event not found');
 
-    if (user.clerk_id !== evt.user_id || user.role !== 'admin')
+    if (user.clerk_id !== evt.user_id && user.role !== 'admin')
       throw Error('You are not authorized to delete this event');
 
     await eventsRepository.deleteEvent(eventId);
