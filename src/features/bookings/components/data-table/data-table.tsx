@@ -1,8 +1,12 @@
 import { DataTable } from '@/components/shared';
 import { columns } from './columns';
-import { bookingTable } from '@/drizzle/schema';
+import { bookingTable, EventTable } from '@/drizzle/schema';
 
-export const BookingsDataTable = ({ data }: { data: (typeof bookingTable.$inferSelect)[] }) => {
+export const BookingsDataTable = ({
+  data,
+}: {
+  data: (typeof bookingTable.$inferSelect & { event: typeof EventTable.$inferSelect })[];
+}) => {
   return (
     <DataTable
       columns={columns}

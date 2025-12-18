@@ -17,29 +17,26 @@ import { Badge } from '@/components/ui/badge';
 
 export const columns: ColumnDef<typeof bookingTable.$inferSelect & { event: typeof EventTable.$inferSelect }>[] = [
   {
-    accessorKey: 'id',
     header: 'ID',
     accessorFn: row => {
       return `.....${row.id.split('-')[row.id.split('-').length - 1].slice(-6)}`;
     },
   },
   {
-    accessorKey: 'event.user_id',
     header: 'Seller ID',
+    accessorFn: row => row.event.user_id,
   },
   {
-    accessorKey: 'event.name',
     header: 'Event Name',
+    accessorFn: row => row.event.name,
   },
   {
-    accessorKey: 'event.held_on',
     header: 'Event Date',
     accessorFn: row => {
       return format(row.event.held_on, 'dd MMM, HH:mma');
     },
   },
   {
-    accessorKey: 'event.open',
     header: 'Event Status',
     cell: ({ row }) => (
       <Badge className={row.original.event.open ? 'bg-chart-4 text-white' : 'bg-destructive text-white'}>
@@ -48,7 +45,6 @@ export const columns: ColumnDef<typeof bookingTable.$inferSelect & { event: type
     ),
   },
   {
-    accessorKey: 'createdAt',
     header: 'Created At',
     accessorFn: row => {
       return format(row.createdAt, 'yyyy-MM-dd HH:mm:ss');
