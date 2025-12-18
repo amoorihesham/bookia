@@ -10,8 +10,8 @@ import { toZonedTime, format } from 'date-fns-tz';
 
 export const EventCardCompound = ({ event }: { event: EventType }) => {
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  const localDate = toZonedTime(event.held_on, userTimeZone);
-  const formatedDate = format(localDate, 'hh:mm a', { timeZone: userTimeZone });
+
+  const formatedDate = format(event.held_on, 'hh:mm a', { timeZone: userTimeZone });
   return (
     <EventCard
       key={event.id}

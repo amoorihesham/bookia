@@ -6,6 +6,7 @@ import { createNewEventFormInput, createNewEventSchema } from '../schemas';
 import { handleError } from '@/lib/error-handling';
 import { uploadToCloudinary } from '@/services/cloudinary/functions';
 import { createStripeCheckoutSessionForEvent } from '@/services/stripe';
+import { ConstructLocalDate, ConvertFromLocalToIso, ExtractHoursAndMinuts } from '@/shared/utils/date';
 
 type BookEventSuccess<T> = {
   success: true;
@@ -24,6 +25,10 @@ export type BookEventResult = BookEventSuccess<{ ceckout_url: string }> | BookEv
 export const createNewEventAction = async (payload: createNewEventFormInput) => {
   try {
     const vData = createNewEventSchema.parse(payload);
+    const timeArray = ExtractHoursAndMinuts(vData.time_on);
+    const localDate = ConstructLocalDate(vData.held_on, timeArray);
+    const isoDate = ConvertFromLocalToIso(localDate);
+
     const user = await getCurrentUser();
     if (!user) throw Error('No user found');
 
@@ -35,15 +40,10 @@ export const createNewEventAction = async (payload: createNewEventFormInput) => 
     });
 
     const guests = vData.guests.split(',');
-    const [hours, minutes] = vData.time_on.split(':').map(Number);
-    const heldOn = new Date(vData.held_on);
-    heldOn.setHours(hours, minutes);
 
-    const { time_on, ...eventData } = vData;
-
-    const evt = await eventsRepository.insertNewEvent({
-      ...eventData,
-      held_on: heldOn,
+    const [evt] = await eventsRepository.insertNewEvent({
+      ...vData,
+      held_on: new Date(isoDate),
       guests,
       user_id: user.clerk_id,
       cover_thumbnail: image.secure_url,
@@ -53,8 +53,8 @@ export const createNewEventAction = async (payload: createNewEventFormInput) => 
 
     return {
       success: true,
-      message: 'Event created successfully',
-      data: evt[0],
+      message: `Event Named " ${evt.name} " successfully created.`,
+      data: evt,
     };
   } catch (error: unknown) {
     console.log(error);

@@ -14,7 +14,7 @@ export const EventTable = pgTable('events', {
   place: varchar().notNull(),
   guests: varchar().array(),
   featured: boolean().default(false),
-  held_on: timestamp({ withTimezone: false, mode: 'date' }).notNull(),
+  held_on: timestamp({ withTimezone: true }).notNull(),
   cover_thumbnail: varchar().notNull(),
   max_ticket_user_can_book: integer().notNull().default(1),
   open: boolean().default(true),
