@@ -125,6 +125,7 @@ export const bookEventTicket = async (eventId: string, ticketCount: number): Pro
       price: evt.ticket_price,
       name: evt.name,
       thumbnail: evt.cover_thumbnail,
+      userId: user.clerk_id,
     });
 
     return { success: true, message: 'Event booked successfully', data: { ceckout_url: cUrl! } };

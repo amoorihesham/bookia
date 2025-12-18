@@ -18,7 +18,7 @@ export type Events = {
     Stripe.Checkout.Session & { metadata: { planName?: string; userId?: string } }
   >;
   'stripe/event.booked': WebhookData<
-    Stripe.Checkout.Session & { metadata: { productId?: string; userId?: string; tickets?: number } }
+    Stripe.Checkout.Session & { metadata: { eventId?: string; userId?: string; tickets?: number } }
   >;
 };
 

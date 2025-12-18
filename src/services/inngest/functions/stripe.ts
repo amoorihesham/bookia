@@ -52,14 +52,14 @@ export const stripeUserBookedEvent = inngest.createFunction(
       const sEvent = event.data.data;
 
       const evt = await step.run('find event.', async () => {
-        const [event] = await GetEventByIdAction(sEvent.metadata.productId!);
-        if (!event) throw new Error('Event not found');
+        const [event] = await GetEventByIdAction(sEvent.metadata.eventId!);
+        if (!event) throw new Error('Event not found STEP_ONE');
         return event;
       });
 
       const updatedEvent = await step.run('update event tickets count.', async () => {
         const [uevt] = await updateEventTicketsCountAction(
-          sEvent.metadata.productId!,
+          sEvent.metadata.eventId!,
           evt.tickets - sEvent.metadata.tickets!
         );
         if (!uevt) throw new Error('Event not found');

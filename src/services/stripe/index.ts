@@ -12,6 +12,7 @@ type StripeEventItem = {
   price: number;
   name: string;
   thumbnail: string;
+  userId: string;
 };
 
 export const createStripeCheckoutSessionForEvent = async (event: StripeEventItem) => {
@@ -34,6 +35,7 @@ export const createStripeCheckoutSessionForEvent = async (event: StripeEventItem
       eventId: event.eventId,
       name: event.name,
       tickets: event.tickets,
+      userId: event.userId,
     },
 
     success_url: `${env.BASE_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
