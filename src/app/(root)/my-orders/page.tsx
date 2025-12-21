@@ -1,12 +1,7 @@
-import { EmptyComponent } from '@/components/shared';
-import { GetUserBookingsAsOrdersAction } from '@/features/bookings/actions/query';
-import { BookingsDataTable } from '@/features/bookings/components';
-import { Loader2 } from 'lucide-react';
 import { Suspense } from 'react';
+import { OrdersDataTable } from '@/features/bookings/components';
 
 export default async function MyOrdersPage() {
-  const orders = await GetUserBookingsAsOrdersAction();
-
   return (
     <>
       <div className="mx-auto mb-6 max-w-2xl space-y-1 text-center lg:mb-12 lg:space-y-4">
@@ -16,8 +11,8 @@ export default async function MyOrdersPage() {
           sure you don&apos; t miss any of the experiences you&apos; ve signed up for.
         </p>
       </div>
-      <Suspense fallback={<Loader2 />}>
-        {orders.length ? <BookingsDataTable data={orders} /> : <EmptyComponent />}
+      <Suspense fallback={<div className="h-screen w-full animate-pulse bg-red-500" />}>
+        <OrdersDataTable />
       </Suspense>
     </>
   );

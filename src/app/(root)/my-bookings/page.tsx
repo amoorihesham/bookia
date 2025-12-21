@@ -1,12 +1,8 @@
-import { EmptyComponent } from '@/components/shared';
-import { GetUserBookingsAction } from '@/features/bookings/actions/query';
 import { BookingsDataTable } from '@/features/bookings/components';
 import { Loader2 } from 'lucide-react';
 import { Suspense } from 'react';
 
 export default async function MyBookingsPage() {
-  const bookings = await GetUserBookingsAction();
-
   return (
     <>
       <div className="mx-auto mb-6 max-w-2xl space-y-1 text-center lg:mb-12 lg:space-y-4">
@@ -17,7 +13,7 @@ export default async function MyBookingsPage() {
         </p>
       </div>
       <Suspense fallback={<Loader2 />}>
-        {bookings.length ? <BookingsDataTable data={bookings} /> : <EmptyComponent />}
+        <BookingsDataTable />
       </Suspense>
     </>
   );

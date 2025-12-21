@@ -2,7 +2,8 @@
 
 import { getCurrentUser } from '@/shared/lib/auth';
 import bookingsRepository from '../db/bookings.repo';
-import { cacheLife } from 'next/cache';
+import { cacheLife, cacheTag } from 'next/cache';
+import { UserTable } from '@/drizzle/schema';
 
 export const GetAllBookingsAction = async () => {
   try {
@@ -16,14 +17,18 @@ export const GetAllBookingsAction = async () => {
   }
 };
 
-export const GetUserBookingsAction = async () => {
-  const user = await getCurrentUser();
+export const GetUserBookingsAction = async (user: typeof UserTable.$inferSelect) => {
+  'use cache';
+  cacheLife('minutes');
+  cacheTag(`bookings-${user.clerk_id}`);
   if (!user) return [];
-  return await bookingsRepository.getUserBookings(user.clerk_id);
+  return bookingsRepository.getUserBookings(user.clerk_id);
 };
 
-export const GetUserBookingsAsOrdersAction = async () => {
-  const user = await getCurrentUser();
+export const GetUserBookingsAsOrdersAction = async (user: typeof UserTable.$inferSelect) => {
+  'use cache';
+  cacheLife('minutes');
+  cacheTag(`orders-${user.clerk_id}`);
   if (!user) return [];
   const allBookings = await bookingsRepository.getAllBookings();
   return allBookings.filter(b => b.event.user_id === user.clerk_id);

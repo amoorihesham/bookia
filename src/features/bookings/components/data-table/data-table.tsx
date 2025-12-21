@@ -1,16 +1,33 @@
-import { DataTable } from '@/components/shared';
+import { DataTable, EmptyComponent } from '@/components/shared';
 import { columns } from './columns';
-import { bookingTable, EventTable } from '@/drizzle/schema';
+import { GetUserBookingsAction, GetUserBookingsAsOrdersAction } from '../../actions/query';
+import { getCurrentUser } from '@/shared/lib/auth';
 
-export const BookingsDataTable = ({
-  data,
-}: {
-  data: (typeof bookingTable.$inferSelect & { event: typeof EventTable.$inferSelect })[];
-}) => {
-  return (
+export const BookingsDataTable = async () => {
+  const user = await getCurrentUser();
+  const orders = await GetUserBookingsAction(user!);
+
+  return orders.length ? (
     <DataTable
       columns={columns}
-      data={data}
+      data={orders}
     />
+  ) : (
+    <EmptyComponent />
+  );
+};
+
+
+export const OrdersDataTable = async () => {
+  const user = await getCurrentUser();
+  const orders = await GetUserBookingsAsOrdersAction(user!);
+
+  return orders.length ? (
+    <DataTable
+      columns={columns}
+      data={orders}
+    />
+  ) : (
+    <EmptyComponent />
   );
 };

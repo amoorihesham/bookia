@@ -1,7 +1,7 @@
 import { cacheLife, cacheTag } from 'next/cache';
 import eventsRepository from '../db/events.repo';
 import { FindEventsFilterTerm } from '../types';
-import { getCurrentUser } from '@/shared/lib/auth';
+import { UserTable } from '@/drizzle/schema';
 
 export const GetEventsAction = async (term: FindEventsFilterTerm = 'all') => {
   'use cache';
@@ -10,8 +10,10 @@ export const GetEventsAction = async (term: FindEventsFilterTerm = 'all') => {
   return eventsRepository.findAllEvents(term);
 };
 
-export const GetUserEventStatsAction = async () => {
-  const user = await getCurrentUser();
+export const GetUserEventStatsAction = async (user: typeof UserTable.$inferSelect) => {
+  'use cache';
+  cacheLife('minutes');
+  cacheTag(`stats-${user.clerk_id}`);
   if (!user)
     return {
       count: 0,
@@ -38,11 +40,13 @@ export const GetUserEventStatsAction = async () => {
     close_count,
   };
 };
-export const GetUserEventsAction = async () => {
-  const user = await getCurrentUser();
+export const GetUserEventsAction = async (user: typeof UserTable.$inferSelect) => {
+  'use cache';
+  cacheLife('minutes');
+  cacheTag(`${user.clerk_id}`);
   if (!user) return [];
 
-  return eventsRepository.findUserEvents(user.clerk_id);
+  return await eventsRepository.findUserEvents(user.clerk_id);
 };
 
 export const GetEventByIdAction = async (eventId: string) => {

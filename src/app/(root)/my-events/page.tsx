@@ -1,13 +1,10 @@
-import { EventCardCompound, EventsGridSkeleton } from '@/features/events/components';
-import { GetUserEventsAction } from '@/features/events/actions/query';
-import { EmptyComponent } from '@/components/shared';
 import { Suspense } from 'react';
+import { EventsGridSkeleton } from '@/features/events/components';
 import { StatsSection } from './_components/StatsSection';
 import { StatsSkeleton } from './_components/StatsSkeleton';
+import { EventsSection } from './_components/EventsSection';
 
 export default async function MyEventsPage() {
-  const events = await GetUserEventsAction();
-
   return (
     <>
       <div className="mx-auto mb-6 max-w-2xl space-y-1 text-center lg:mb-12 lg:space-y-4">
@@ -23,18 +20,7 @@ export default async function MyEventsPage() {
       </Suspense>
 
       <Suspense fallback={<EventsGridSkeleton />}>
-        {events.length ? (
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
-            {events.map(event => (
-              <EventCardCompound
-                event={event}
-                key={event.id}
-              />
-            ))}
-          </div>
-        ) : (
-          <EmptyComponent />
-        )}
+        <EventsSection />
       </Suspense>
     </>
   );
