@@ -8,12 +8,14 @@ export function SubmitButton({
   pendingLabel = 'Submiting...',
   className,
   Icon,
+  PendingIcon,
   disabled,
 }: {
   label?: string;
   pendingLabel?: string;
   className?: string;
-  Icon?: ForwardRefExoticComponent<Omit<LucideProps, 'ref'> & RefAttributes<SVGSVGElement>>;
+  Icon: ForwardRefExoticComponent<Omit<LucideProps, 'ref'> & RefAttributes<SVGSVGElement>>;
+  PendingIcon: ForwardRefExoticComponent<Omit<LucideProps, 'ref'> & RefAttributes<SVGSVGElement>>;
   disabled?: boolean;
 }) {
   const form = useFormContext();
@@ -22,12 +24,13 @@ export function SubmitButton({
     <form.Subscribe selector={state => state.isSubmitting}>
       {isSubmitting => (
         <Button
-          disabled={isSubmitting || disabled}
+          disabled={disabled}
           type="submit"
           className={className ?? ''}
         >
-          {Icon && <Icon />}
-          {isSubmitting || disabled ? pendingLabel : label}
+          {disabled ? <PendingIcon className="animate-spin" /> : <Icon />}
+
+          {disabled ? pendingLabel : label}
         </Button>
       )}
     </form.Subscribe>

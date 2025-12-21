@@ -2,7 +2,7 @@
 
 import { getCurrentUser } from '@/shared/lib/auth';
 import eventsRepository from '../db/events.repo';
-import { revalidatePath, updateTag } from 'next/cache';
+import { revalidatePath, revalidateTag, updateTag } from 'next/cache';
 import { createNewEventFormInput, createNewEventSchema } from '../schemas';
 import { handleError } from '@/lib/error-handling';
 import { uploadToCloudinary } from '@/services/cloudinary/functions';
@@ -49,8 +49,9 @@ export const createNewEventAction = async (payload: createNewEventFormInput) => 
       user_id: user.clerk_id,
       cover_thumbnail: image.secure_url,
     });
-    revalidatePath('/', 'layout');
-    updateTag('events');
+    revalidatePath('/');
+    updateTag(`events-${user.clerk_id}`);
+    updateTag(`stats-${user.clerk_id}`);
 
     return {
       success: true,
@@ -138,7 +139,7 @@ export const bookEventTicket = async (eventId: string, ticketCount: number): Pro
   }
 };
 
-export const toggleEventFeaturedStatus = async (eventId: string) => {
+export const toggleEventFeaturedStatus = async (eventId: string, userId: string) => {
   try {
     const user = await getCurrentUser();
     if (!user) throw Error('No user found');
@@ -149,7 +150,8 @@ export const toggleEventFeaturedStatus = async (eventId: string) => {
     if (!evt.open) throw Error('You can not change event featured status for closed event.');
 
     const [uEvt] = await eventsRepository.updateEvent(eventId, { featured: !evt.featured });
-    revalidatePath('/');
+    updateTag(`events-${userId}`);
+    updateTag(`stats-${userId}`);
 
     return {
       success: true,
@@ -162,7 +164,7 @@ export const toggleEventFeaturedStatus = async (eventId: string) => {
   }
 };
 
-export const deleteEventAction = async (eventId: string) => {
+export const deleteEventAction = async (eventId: string, userId: string) => {
   try {
     const user = await getCurrentUser();
     if (!user) throw Error('No user found');
@@ -174,7 +176,8 @@ export const deleteEventAction = async (eventId: string) => {
       throw Error('You are not authorized to delete this event');
 
     await eventsRepository.deleteEvent(eventId);
-    revalidatePath('/', 'layout');
+    updateTag(`events-${userId}`);
+    updateTag(`stats-${userId}`);
 
     return { success: true, message: `Event with id [${eventId}] deleted successfully`, data: null };
   } catch (error) {
@@ -187,10 +190,12 @@ export const updateEventTicketsCountAction = async (eventId: string, newTicketsC
   return eventsRepository.updateEvent(eventId, { tickets: newTicketsCount });
 };
 
-export const toggleEventOpenStatusAction = async (eventId: string, newOpenStatus: boolean) => {
+export const toggleEventOpenStatusAction = async (eventId: string, newOpenStatus: boolean, userId: string) => {
   try {
     const [newEvent] = await eventsRepository.updateEvent(eventId, { open: newOpenStatus });
-    revalidatePath('/');
+
+    updateTag(`events-${userId}`);
+    updateTag(`stats-${userId}`);
     return {
       success: true,
       message: `Event with name [${newEvent.name}] is now ${newEvent.open ? 'open' : 'closed'}`,

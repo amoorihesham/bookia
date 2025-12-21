@@ -2,7 +2,7 @@
 
 import { useTransition } from 'react';
 import { toast } from 'sonner';
-import { Construction } from 'lucide-react';
+import { Construction, Loader } from 'lucide-react';
 import { FieldGroup } from '@/components/ui/field';
 import { SelectItem } from '@/components/ui/select';
 import { createNewEventSchema } from '../schemas';
@@ -101,7 +101,7 @@ export const CreateNewEventForm = () => {
             )}
           </form.AppField>
         </div>
-        <div className="flex flex-col items-center gap-y-3 gap-x-4 lg:flex-row">
+        <div className="flex flex-col items-center gap-x-4 gap-y-3 lg:flex-row">
           <form.AppField name="held_on">{field => <field.Date label="Event held on date" />}</form.AppField>
           <form.AppField name="time_on">{field => <field.Time label="Event held on time" />}</form.AppField>
         </div>
@@ -121,6 +121,7 @@ export const CreateNewEventForm = () => {
             pendingLabel="Createing Event..."
             className="capitalize"
             Icon={Construction}
+            PendingIcon={Loader}
             disabled={isPending}
           />
         </form.AppForm>

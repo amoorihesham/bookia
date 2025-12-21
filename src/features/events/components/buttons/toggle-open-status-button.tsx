@@ -8,11 +8,11 @@ import { DoorClosed, DoorOpen, FolderClosed, FolderOpenDot } from 'lucide-react'
 import { toggleEventOpenStatusAction } from '../../actions/mutation';
 import { toast } from 'sonner';
 
-export const ToggleOpenStatusButton = () => {
+export const ToggleOpenStatusButton = ({ userId }: { userId: string }) => {
   const event = useContext(EventCardContext);
 
   const onClick = async () => {
-    const { success, message } = await toggleEventOpenStatusAction(event?.id!, !event?.open);
+    const { success, message } = await toggleEventOpenStatusAction(event?.id!, !event?.open, userId);
     if (!success) return toast.error(message);
     toast.success(message);
   };

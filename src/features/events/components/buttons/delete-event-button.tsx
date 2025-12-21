@@ -8,11 +8,11 @@ import { Trash } from 'lucide-react';
 import { toast } from 'sonner';
 import { deleteEventAction } from '../../actions/mutation';
 
-export const DeleteEventButton = () => {
+export const DeleteEventButton = ({ userId }: { userId: string }) => {
   const event = useContext(EventCardContext);
 
   const onClick = async () => {
-    const result = await deleteEventAction(event!.id);
+    const result = await deleteEventAction(event!.id, userId);
     if (result.success && 'data' in result) {
       toast.success(result.message);
       return;

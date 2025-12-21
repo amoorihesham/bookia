@@ -8,11 +8,11 @@ import { Feather } from 'lucide-react';
 import { toast } from 'sonner';
 import { toggleEventFeaturedStatus } from '../../actions/mutation';
 
-export const ToggleFeaturedButton = () => {
+export const ToggleFeaturedButton = ({ userId }: { userId: string }) => {
   const event = useContext(EventCardContext);
 
   const onClick = async () => {
-    const result = await toggleEventFeaturedStatus(event!.id);
+    const result = await toggleEventFeaturedStatus(event!.id, userId);
     if (result.success && 'data' in result) {
       toast.success(result.message);
       return;
