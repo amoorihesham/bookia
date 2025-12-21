@@ -1,3 +1,4 @@
+import { TableSkeleton } from '@/components/shared';
 import { BookingsDataTable } from '@/features/bookings/components';
 import { Loader2 } from 'lucide-react';
 import { Suspense } from 'react';
@@ -12,7 +13,7 @@ export default async function MyBookingsPage() {
           moments that matter.
         </p>
       </div>
-      <Suspense fallback={<Loader2 />}>
+      <Suspense fallback={<TableSkeleton />}>
         <BookingsDataTable />
       </Suspense>
     </>

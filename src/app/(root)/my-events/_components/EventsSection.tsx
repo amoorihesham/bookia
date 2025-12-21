@@ -8,7 +8,7 @@ export const EventsSection = async () => {
   const events = await GetUserEventsAction(user!);
 
   return events.length ? (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6 xl:grid-cols-3">
       {events.map(event => (
         <EventCardCompound
           event={event}

@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { OrdersDataTable } from '@/features/bookings/components';
+import { TableSkeleton } from '@/components/shared';
 
 export default async function MyOrdersPage() {
   return (
@@ -11,7 +12,8 @@ export default async function MyOrdersPage() {
           sure you don&apos; t miss any of the experiences you&apos; ve signed up for.
         </p>
       </div>
-      <Suspense fallback={<div className="h-screen w-full animate-pulse bg-red-500" />}>
+
+      <Suspense fallback={<TableSkeleton />}>
         <OrdersDataTable />
       </Suspense>
     </>

@@ -32,14 +32,7 @@ export default function SuccessPage() {
             className="w-full"
             variant="default"
           >
-            <Link href="/">Go to Dashboard</Link>
-          </Button>
-          <Button
-            asChild
-            className="w-full"
-            variant="outline"
-          >
-            <Link href="/events">Browse Events</Link>
+            <Link href="/my-events">Go to Events</Link>
           </Button>
         </CardFooter>
       </Card>
