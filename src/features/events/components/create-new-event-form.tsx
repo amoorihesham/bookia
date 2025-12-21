@@ -8,7 +8,6 @@ import { SelectItem } from '@/components/ui/select';
 import { createNewEventSchema } from '../schemas';
 import { createNewEventAction } from '../actions/mutation';
 import { useAppForm } from '@/hooks/useAppForm';
-
 import z from 'zod';
 
 const defaultValues: z.input<typeof createNewEventSchema> = {

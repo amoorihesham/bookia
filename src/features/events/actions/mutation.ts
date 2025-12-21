@@ -1,4 +1,5 @@
 'use server';
+
 import { getCurrentUser } from '@/shared/lib/auth';
 import eventsRepository from '../db/events.repo';
 import { revalidatePath, updateTag } from 'next/cache';
@@ -119,6 +120,8 @@ export const bookEventTicket = async (eventId: string, ticketCount: number): Pro
     const [evt] = await eventsRepository.findEventById(eventId);
     if (!evt) throw Error('No event found.');
 
+    if (!evt.open) throw Error('Event is not open for booking');
+
     const cUrl = await createStripeCheckoutSessionForEvent({
       eventId: evt.id,
       tickets: ticketCount,
@@ -143,8 +146,10 @@ export const toggleEventFeaturedStatus = async (eventId: string) => {
     const [evt] = await eventsRepository.findEventById(eventId);
     if (!evt) throw Error('Event not found');
 
+    if (!evt.open) throw Error('You can not change event featured status for closed event.');
+
     const [uEvt] = await eventsRepository.updateEvent(eventId, { featured: !evt.featured });
-    revalidatePath('/', 'layout');
+    revalidatePath('/');
 
     return {
       success: true,
@@ -185,7 +190,7 @@ export const updateEventTicketsCountAction = async (eventId: string, newTicketsC
 export const toggleEventOpenStatusAction = async (eventId: string, newOpenStatus: boolean) => {
   try {
     const [newEvent] = await eventsRepository.updateEvent(eventId, { open: newOpenStatus });
-    revalidatePath('/', 'layout');
+    revalidatePath('/');
     return {
       success: true,
       message: `Event with name [${newEvent.name}] is now ${newEvent.open ? 'open' : 'closed'}`,
