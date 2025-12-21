@@ -2,10 +2,12 @@
 import { useAppForm } from '@/hooks/useAppForm';
 import { insertPlanSchema } from '../schemas';
 import { FieldGroup } from '@/components/ui/field';
-import { Plane } from 'lucide-react';
+import { Loader, Plane } from 'lucide-react';
 import { SelectItem } from '@/components/ui/select';
+import { useTransition } from 'react';
 
 export function CreateNewPlanForm() {
+  const [isPending, startTransition] = useTransition();
   const form = useAppForm({
     defaultValues: {
       name: '',
@@ -16,8 +18,10 @@ export function CreateNewPlanForm() {
     validators: {
       onSubmit: insertPlanSchema,
     },
-    onSubmit: async ({ value }) => {
-      console.log(value);
+    onSubmit: ({ value }) => {
+      startTransition(async () => {
+        console.log(value);
+      });
     },
   });
   return (
@@ -52,6 +56,8 @@ export function CreateNewPlanForm() {
             label="Create New Plan"
             pendingLabel="Createing New Plan"
             Icon={Plane}
+            PendingIcon={Loader}
+            disabled={isPending}
           />
         </form.AppForm>
       </FieldGroup>
