@@ -11,7 +11,7 @@ export const BookEventButton = () => {
   const event = useContext(EventCardContext);
 
   const onClick = async () => {
-    const result = await bookEventTicket(event!.id, 1);
+    const result = await bookEventTicket(event!.id);
     if (!result.success) {
       toast.error(result.message);
       return;
