@@ -16,7 +16,7 @@ export const BookEventButton = () => {
       toast.error(result.message);
       return;
     }
-    window.location.href = result.data.ceckout_url;
+    window.location.href = result.data.checkout_url;
   };
 
   return (
