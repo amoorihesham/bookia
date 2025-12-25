@@ -97,6 +97,47 @@ npm run dev
 
 The application will be available at **http://localhost:3000**.
 
-## 6. Webhooks (Optional but Recommended)
+## 6. Webhooks Configuration
 
-To test webhooks (Clerk, Stripe) locally, you may need a tunneling service like `ngrok` (included in devDependencies) or the built-in forwarding features of the respective providers.
+The application uses webhooks to stay in sync with external providers (**Clerk** & **Stripe**). We utilize **Inngest** to ensure reliable, asynchronous processing of these events.
+
+To test webhooks locally, you must expose your local server to the internet. We recommend using **ngrok**.
+
+### 1. Setup ngrok
+
+1.  **Install ngrok**: Download from [ngrok.com](https://ngrok.com/) or run `npx ngrok`.
+2.  **Start the tunnel**:
+    ```bash
+    ngrok http 3000
+    ```
+    _Copy the forwarding URL (e.g., `https://your-id.ngrok-free.app`)._
+
+### 2. Configure Stripe Webhook
+
+Stripe webhooks are received by the application API at `/api/webhook/stripe` and then forwarded to Inngest for processing.
+
+1.  Go to **[Stripe Dashboard > Developers > Webhooks](https://dashboard.stripe.com/test/webhooks)**.
+2.  **Add Endpoint**:
+    - **URL**: `https://<YOUR_NGROK_URL>/api/webhook/stripe`
+    - **Events**: Select `checkout.session.completed`, `invoice.payment_succeeded`, `customer.subscription.*`.
+3.  **Get Secret**: Reveal the **Signing Secret** (`whsec_...`).
+4.  **Update Environment**:
+    - In `.env.local`, set `STRIPE_WEBHOOK_SECRET` to this value.
+
+### 3. Configure Clerk Webhook
+
+Clerk webhooks are managed directly through Inngest.
+
+1.  **Inngest Setup**: Ensure the Inngest Dev Server is running (`npm run inngest:dev`).
+2.  **Clerk Dashboard**:
+    - Go to **[Clerk Dashboard > Webhooks](https://dashboard.clerk.com/)**.
+    - **Add Endpoint**:
+      - If using **Inngest Cloud**: Point to your Inngest Event Key URL.
+      - If running **Locally**: You can generally skip this and manually trigger events via the Inngest Dev Dashboard (`http://localhost:8288`) to simulate user creation (`clerk/user.created`).
+      - _Advanced_: If you need real-time sync from Clerk Dev to Local, you must configure a webhook pointing to your Inngest Serve URL via ngrok, but manual triggering is recommended for contributor simplicity.
+3.  **Update Environment**:
+    - Ensure `CLERK_SECRET_WEBHOOK_KEY` is set in `.env.local` to allow signature verification if you are receiving real webhooks.
+
+> [!TIP]
+> **Why Inngest?**
+> By using Inngest, we decouple webhook reception from processing. If your local server is down or busy, Inngest will retry the events automatically, ensuring no data is lost during development or production.
