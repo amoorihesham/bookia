@@ -34,20 +34,17 @@ export const CreateNewEventForm = () => {
 
     onSubmit: async ({ value }) => {
       startTransition(async () => {
-        const result = await createNewEventAction(value);
-        if (result.success && 'data' in result) {
-          toast.success(result.message, {
-            description: `Event ${result.data.name} created successfully.`,
-          });
-          form.reset();
-          return;
-        }
-        if ('errors' in result && result.errors.length > 0) {
-          toast.error(result.message, {
-            description: result.errors || result.errors[0],
+        const { success, message, errors } = await createNewEventAction(value);
+
+        if (!success) {
+          toast.error(message, {
+            description: errors?.[0] ?? errors,
           });
           return;
         }
+
+        toast.success(message);
+        form.reset();
       });
     },
   });

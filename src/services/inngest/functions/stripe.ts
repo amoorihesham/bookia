@@ -58,10 +58,7 @@ export const stripeUserBookedEvent = inngest.createFunction(
       });
 
       const updatedEvent = await step.run('update event tickets count.', async () => {
-        const result = await updateEventTicketsCountAction(
-          sEvent.metadata.eventId!,
-          evt.tickets - sEvent.metadata.tickets!
-        );
+        const result = await updateEventTicketsCountAction(sEvent.metadata.eventId!);
         if (!result.success) throw new Error(result.message);
         return 'data' in result ? result.data : null;
       });

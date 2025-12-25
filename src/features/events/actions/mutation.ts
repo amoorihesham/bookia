@@ -1,7 +1,7 @@
 'use server';
 
 import { getCurrentUser } from '@/shared/lib/auth';
-import { handleError } from '@/lib/error-handling';
+import { handleError } from '@/shared/lib/error-handling';
 import { uploadToCloudinary } from '@/services/cloudinary/functions';
 import { createStripeCheckoutSessionForEvent } from '@/services/stripe';
 import { ConstructLocalDate, ConvertFromLocalToIso, ExtractHoursAndMinuts } from '@/shared/utils/date';

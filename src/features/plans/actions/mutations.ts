@@ -1,5 +1,5 @@
 'use server';
-import { handleError } from '@/lib/error-handling';
+import { handleError } from '@/shared/lib/error-handling';
 import { getCurrentUser } from '@/shared/lib/auth';
 import plansRepository from '../db/plans.repo';
 import { PLANS } from '@/drizzle/schema';

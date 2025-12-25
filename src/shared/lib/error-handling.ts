@@ -1,8 +1,8 @@
+import { ActionResult } from '@/types/action-result';
 import { DrizzleQueryError } from 'drizzle-orm';
 import { ZodError } from 'zod';
-import { ActionError } from '@/types/action-result';
 
-export function handleError(error: unknown): ActionError {
+export function handleError<T>(error: unknown): ActionResult<T> {
   if (error instanceof ZodError) {
     return {
       success: false,
