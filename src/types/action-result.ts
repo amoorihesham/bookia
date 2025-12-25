@@ -3,16 +3,9 @@
  * Provides a discriminated union for success and error cases
  */
 
-export type ActionSuccess<T> = {
-  success: true;
+export type ActionResult<T> = {
+  success: boolean;
   message: string;
-  data: T;
+  data?: T;
+  errors?: string | string[];
 };
-
-export type ActionError = {
-  success: false;
-  message: string;
-  errors: string | string[];
-};
-
-export type ActionResult<T> = ActionSuccess<T> | ActionError;

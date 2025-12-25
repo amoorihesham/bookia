@@ -12,12 +12,12 @@ export const DeleteEventButton = () => {
   const event = useContext(EventCardContext);
 
   const onClick = async () => {
-    const result = await deleteEventAction(event!.id);
-    if (result.success && 'data' in result) {
-      toast.success(result.message);
+    const { success, message, errors } = await deleteEventAction(event!.id);
+    if (success) {
+      toast.success(message);
       return;
     }
-    toast.error(result.message);
+    toast.error(message, { description: errors?.[0] ?? errors });
   };
 
   return (

@@ -12,8 +12,8 @@ export const ToggleOpenStatusButton = () => {
   const event = useContext(EventCardContext);
 
   const onClick = async () => {
-    const { success, message } = await toggleEventOpenStatusAction(event!.id!, !event!.open);
-    if (!success) return toast.error(message);
+    const { success, message, errors } = await toggleEventOpenStatusAction(event!.id!);
+    if (!success) return toast.error(message, { description: errors?.[0] ?? errors });
     toast.success(message);
   };
 

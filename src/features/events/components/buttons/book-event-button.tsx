@@ -11,12 +11,12 @@ export const BookEventButton = () => {
   const event = useContext(EventCardContext);
 
   const onClick = async () => {
-    const result = await bookEventTicket(event!.id);
-    if (!result.success) {
-      toast.error(result.message);
+    const { success, message, errors, data } = await bookEventTicket(event!.id);
+    if (!success) {
+      toast.error(message, { description: errors?.[0] ?? errors });
       return;
     }
-    window.location.href = result.data.checkout_url;
+    window.location.href = data!.checkout_url;
   };
 
   return (
