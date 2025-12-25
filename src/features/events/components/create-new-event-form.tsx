@@ -44,7 +44,7 @@ export const CreateNewEventForm = () => {
         }
         if ('errors' in result && result.errors.length > 0) {
           toast.error(result.message, {
-            description: result.errors.join(', '),
+            description: result.errors || result.errors[0],
           });
           return;
         }

@@ -10,13 +10,21 @@ export const uploadToCloudinary = async (fileInput: File | FileList | File[], op
 
   return new Promise<UploadApiResponse>((resolve, reject) => {
     cloudinary.uploader
-      .upload_stream(options, (error, result) => {
-        if (error) {
-          reject(error);
-          return;
+      .upload_stream(
+        options ?? {
+          folder: 'bookia/events_thumbnails',
+          resource_type: 'image',
+          format: 'webp',
+          allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
+        },
+        (error, result) => {
+          if (error) {
+            reject(error);
+            return;
+          }
+          resolve(result as UploadApiResponse);
         }
-        resolve(result as UploadApiResponse);
-      })
+      )
       .end(buffer);
   });
 };
