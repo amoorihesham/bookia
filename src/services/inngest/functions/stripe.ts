@@ -4,8 +4,8 @@ import { PLANS } from '@/drizzle/schema';
 import subscriptionsRepository from '@/features/subscriptions/db/subscriptions-repo';
 import userRepository from '@/features/users/db/user.repo';
 import { GetEventByIdAction } from '@/features/events/actions/query';
-import { updateEventTicketsCountAction } from '@/features/events/actions/mutation';
 import { insertNewBookingRecordAction } from '@/features/bookings/actions/mutations';
+import eventsRepository from '@/features/events/db/events.repo';
 
 export const stripeUserSubscription = inngest.createFunction(
   { id: 'stripe/Subscription-completed', name: 'Stripe - Update User Subscription' },
@@ -58,9 +58,9 @@ export const stripeUserBookedEvent = inngest.createFunction(
       });
 
       const updatedEvent = await step.run('update event tickets count.', async () => {
-        const result = await updateEventTicketsCountAction(sEvent.metadata.eventId!);
-        if (!result.success) throw new Error(result.message);
-        return 'data' in result ? result.data : null;
+        const [updatedEvent] = await eventsRepository.updateEvent(sEvent.id, { tickets: evt.tickets - 1 });
+
+        return updatedEvent;
       });
 
       const booking = await step.run('create booking record', async () => {

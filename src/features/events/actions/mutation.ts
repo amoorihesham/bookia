@@ -102,29 +102,6 @@ export const toggleEventFeaturedStatus = async (eventId: string): Promise<Action
   }
 };
 
-export const updateEventTicketsCountAction = async (eventId: string): Promise<ActionResult<EventType>> => {
-  try {
-    const user = await getCurrentUser();
-    if (!user) throw Error(GeneralErrorsMessages.userNotFound);
-
-    const [evt] = await eventsRepository.findEventById(eventId);
-    if (!evt) throw Error(EventsErrorsMessages.notFound);
-
-    const [updatedEvent] = await eventsRepository.updateEvent(eventId, { tickets: evt.tickets - 1 });
-    updateAllPagesCacheTag();
-    UpdateUserEventsAndStatsCacheTag(user.clerk_id);
-
-    return {
-      success: true,
-      message: `Event with name [${updatedEvent.name}] tickets count updated successfully`,
-      data: updatedEvent,
-    };
-  } catch (error) {
-    console.log(error);
-    return handleError(error);
-  }
-};
-
 export const toggleEventOpenStatusAction = async (eventId: string): Promise<ActionResult<EventType>> => {
   try {
     const user = await getCurrentUser();
