@@ -12,7 +12,7 @@ export const ToggleOpenStatusButton = () => {
   const event = useContext(EventCardContext);
 
   const onClick = async () => {
-    const { success, message } = await toggleEventOpenStatusAction(event?.id!, !event?.open);
+    const { success, message } = await toggleEventOpenStatusAction(event!.id!, !event!.open);
     if (!success) return toast.error(message);
     toast.success(message);
   };

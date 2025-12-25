@@ -3,7 +3,6 @@ import { Lato } from 'next/font/google';
 import { ClerkProvider, ThemeProvider } from '@/components/providers';
 import './globals.css';
 import { Toaster } from 'sonner';
-import { CircleAlert, WifiZeroIcon } from 'lucide-react';
 
 const lato = Lato({
   variable: '--font-lato',

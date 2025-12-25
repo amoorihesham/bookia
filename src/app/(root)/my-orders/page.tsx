@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { OrdersDataTable } from '@/features/bookings/components';
 import { TableSkeleton } from '@/components/shared';
+import { cacheLife } from 'next/cache';
 
 export default async function MyOrdersPage() {
   return (

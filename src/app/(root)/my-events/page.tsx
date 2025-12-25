@@ -3,6 +3,7 @@ import { EventsGridSkeleton } from '@/features/events/components';
 import { StatsSection } from './_components/StatsSection';
 import { StatsSkeleton } from './_components/StatsSkeleton';
 import { EventsSection } from './_components/EventsSection';
+import { cacheLife } from 'next/cache';
 
 export default async function MyEventsPage() {
   return (

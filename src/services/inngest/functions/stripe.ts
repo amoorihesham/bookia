@@ -58,18 +58,18 @@ export const stripeUserBookedEvent = inngest.createFunction(
       });
 
       const updatedEvent = await step.run('update event tickets count.', async () => {
-        const [uevt] = await updateEventTicketsCountAction(
+        const result = await updateEventTicketsCountAction(
           sEvent.metadata.eventId!,
           evt.tickets - sEvent.metadata.tickets!
         );
-        if (!uevt) throw new Error('Event not found');
-        return uevt;
+        if (!result.success) throw new Error(result.message);
+        return 'data' in result ? result.data : null;
       });
 
       const booking = await step.run('create booking record', async () => {
         const [bk] = await insertNewBookingRecordAction({
           user_id: sEvent.metadata.userId!,
-          event_id: updatedEvent.id,
+          event_id: updatedEvent!.id,
         });
         return bk;
       });

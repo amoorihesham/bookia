@@ -4,7 +4,6 @@ import { getCurrentUser } from '@/shared/lib/auth';
 export const StatsSection = async () => {
   const user = await getCurrentUser();
   const { count, open_count, featured_count, close_count } = await GetUserEventStatsAction(user!);
-  console.log({ count, open_count, featured_count, close_count });
 
   return (
     <div className="mx-auto mb-10 grid max-w-4xl grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 lg:gap-6">

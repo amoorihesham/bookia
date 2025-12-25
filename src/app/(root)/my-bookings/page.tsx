@@ -1,6 +1,5 @@
 import { TableSkeleton } from '@/components/shared';
 import { BookingsDataTable } from '@/features/bookings/components';
-import { Loader2 } from 'lucide-react';
 import { Suspense } from 'react';
 
 export default async function MyBookingsPage() {

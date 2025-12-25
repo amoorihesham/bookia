@@ -1,4 +1,4 @@
-import { cacheLife, cacheTag } from 'next/cache';
+import { cacheLife } from 'next/cache';
 import eventsRepository from '../db/events.repo';
 import { FindEventsFilterTerm } from '../types';
 import { UserTable } from '@/drizzle/schema';
