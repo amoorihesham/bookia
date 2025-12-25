@@ -1,17 +1,40 @@
-import { cacheLife } from 'next/cache';
-import eventsRepository from '../db/events.repo';
-import { FindEventsFilterTerm } from '../types';
 import { UserTable } from '@/drizzle/schema';
-import { SetUserEventsAndStatsCache } from '../helpers/cache';
+import { setPageCacheTag, SetUserEventsCacheTag, SetUserStatsCacheTag } from '@/shared/utils/cache';
+import eventsRepository from '../db/events.repo';
 
-export const GetEventsAction = async (term: FindEventsFilterTerm = 'all') => {
-  return eventsRepository.findAllEvents(term);
+export const GetHomepageEvents = async () => {
+  'use cache';
+  setPageCacheTag('home-page-events', 'hours');
+  return eventsRepository.findHomePageEvents();
+};
+
+export const GetTodaypageEvents = async () => {
+  'use cache';
+  setPageCacheTag('today-page-events', 'hours');
+  return eventsRepository.findTodayPageEvent();
+};
+
+export const GetExpiredpageEvents = async () => {
+  'use cache';
+  setPageCacheTag('expired-page-events', 'hours');
+  return eventsRepository.findExpiredPageEvents();
+};
+
+export const GetUpcomingpageEvents = async () => {
+  'use cache';
+  setPageCacheTag('upcoming-page-events', 'hours');
+  return eventsRepository.findUpcomingPageEvents();
+};
+
+export const GetFeaturedpageEvents = async () => {
+  'use cache';
+  setPageCacheTag('featured-page-events', 'hours');
+  return eventsRepository.findFeaturedPageEvents();
 };
 
 export const GetUserEventStatsAction = async (user: typeof UserTable.$inferSelect) => {
   'use cache';
-  cacheLife('hours');
-  SetUserEventsAndStatsCache(user.clerk_id);
+  SetUserStatsCacheTag(user.clerk_id, 'hours');
   if (!user)
     return {
       count: 0,
@@ -39,10 +62,10 @@ export const GetUserEventStatsAction = async (user: typeof UserTable.$inferSelec
     close_count,
   };
 };
+
 export const GetUserEventsAction = async (user: typeof UserTable.$inferSelect) => {
   'use cache';
-  cacheLife('hours');
-  SetUserEventsAndStatsCache(user.clerk_id);
+  SetUserEventsCacheTag(user.clerk_id, 'hours');
 
   return eventsRepository.findUserEvents(user.clerk_id);
 };

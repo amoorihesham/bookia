@@ -1,10 +1,11 @@
 import { Suspense } from 'react';
-import { GetEventsAction } from '@/features/events/actions/query';
+import { GetHomepageEvents } from '@/features/events/actions/query';
 import { EventsGridSkeleton, EventCardCompound } from '@/features/events/components';
 import { EmptyComponent } from '@/components/shared';
 
 export default async function Homepage() {
-  const events = await GetEventsAction('all');
+  const events = await GetHomepageEvents();
+  console.log(events);
 
   return (
     <>

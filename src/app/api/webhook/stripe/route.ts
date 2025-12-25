@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
           name: 'stripe/user.subscription',
           data: { data: session, raw: rawBody, headers: Object.fromEntries(req.headers) },
         });
-      }else{
+      } else {
         await inngest.send({
           name: 'stripe/event.booked',
           data: { data: session, raw: rawBody, headers: Object.fromEntries(req.headers) },

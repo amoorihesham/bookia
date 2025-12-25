@@ -1,10 +1,10 @@
 import { Suspense } from 'react';
 import { EventsGridSkeleton, EventCardCompound } from '@/features/events/components';
-import { GetEventsAction } from '@/features/events/actions/query';
+import { GetTodaypageEvents } from '@/features/events/actions/query';
 import { EmptyComponent } from '@/components/shared';
 
 export default async function TodayPage() {
-  const events = await GetEventsAction('today');
+  const events = await GetTodaypageEvents();
   return (
     <>
       <div className="mx-auto mb-6 max-w-2xl space-y-1 text-center lg:mb-12 lg:space-y-4">

@@ -1,21 +1,20 @@
 'use server';
 
 import { getCurrentUser } from '@/shared/lib/auth';
-import eventsRepository from '../db/events.repo';
-import { createNewEventFormInput, createNewEventSchema } from '../schemas';
 import { handleError } from '@/lib/error-handling';
 import { uploadToCloudinary } from '@/services/cloudinary/functions';
 import { createStripeCheckoutSessionForEvent } from '@/services/stripe';
 import { ConstructLocalDate, ConvertFromLocalToIso, ExtractHoursAndMinuts } from '@/shared/utils/date';
+import { updateAllPagesCacheTag, UpdateUserEventsAndStatsCacheTag } from '@/shared/utils/cache';
+import { GeneralErrorsMessages } from '@/shared/utils/messages';
 import { ActionResult } from '@/types/action-result';
-import { EventTable } from '@/drizzle/schema';
-import { EventErrors, EventsMessages } from '../helpers/messages';
-import { RevalidateAllPagesCache, UpdateUserEventsAndStatsCache } from '../helpers/cache';
+import eventsRepository from '../db/events.repo';
+import { createNewEventFormInput, createNewEventSchema } from '../schemas';
+import { EventsErrorsMessages, EventsMessages } from '../helpers/messages';
 import { CheckPermission } from '../helpers/validation';
+import { EventType } from '../types';
 
-export const createNewEventAction = async (
-  payload: createNewEventFormInput
-): Promise<ActionResult<typeof EventTable.$inferSelect>> => {
+export const createNewEventAction = async (payload: createNewEventFormInput): Promise<ActionResult<EventType>> => {
   try {
     const vData = createNewEventSchema.parse(payload);
     const timeArray = ExtractHoursAndMinuts(vData.time_on);
@@ -23,7 +22,7 @@ export const createNewEventAction = async (
     const isoDate = ConvertFromLocalToIso(localDate);
 
     const user = await getCurrentUser();
-    if (!user) throw Error(EventErrors.userNotFound);
+    if (!user) throw Error(GeneralErrorsMessages.userNotFound);
 
     const image = await uploadToCloudinary(vData.cover_thumbnail[0]);
 
@@ -36,8 +35,9 @@ export const createNewEventAction = async (
       user_id: user.clerk_id,
       cover_thumbnail: image.secure_url,
     });
-    RevalidateAllPagesCache();
-    UpdateUserEventsAndStatsCache(user.clerk_id);
+
+    updateAllPagesCacheTag();
+    UpdateUserEventsAndStatsCacheTag(user.clerk_id);
 
     return {
       success: true,
@@ -50,22 +50,18 @@ export const createNewEventAction = async (
   }
 };
 
-export const bookEventTicket = async (
-  eventId: string,
-  ticketCount: number
-): Promise<ActionResult<{ checkout_url: string }>> => {
+export const bookEventTicket = async (eventId: string): Promise<ActionResult<{ checkout_url: string }>> => {
   try {
     const user = await getCurrentUser();
-    if (!user) throw Error(EventErrors.userNotFound);
+    if (!user) throw Error(GeneralErrorsMessages.userNotFound);
 
     const [evt] = await eventsRepository.findEventById(eventId);
-    if (!evt) throw Error(EventErrors.notFound);
-
-    if (!evt.open) throw Error(EventErrors.notOpen);
+    if (!evt) throw Error(EventsErrorsMessages.notFound);
+    if (!evt.open) throw Error(EventsErrorsMessages.notOpen);
 
     const cUrl = await createStripeCheckoutSessionForEvent({
       eventId: evt.id,
-      tickets: ticketCount,
+      tickets: 1,
       price: evt.ticket_price,
       name: evt.name,
       thumbnail: evt.cover_thumbnail,
@@ -79,22 +75,22 @@ export const bookEventTicket = async (
   }
 };
 
-export const toggleEventFeaturedStatus = async (
-  eventId: string
-): Promise<ActionResult<typeof EventTable.$inferSelect>> => {
+export const toggleEventFeaturedStatus = async (eventId: string): Promise<ActionResult<EventType>> => {
   try {
     const user = await getCurrentUser();
-    if (!user) throw Error(EventErrors.userNotFound);
+    if (!user) throw Error(GeneralErrorsMessages.userNotFound);
 
     const [evt] = await eventsRepository.findEventById(eventId);
-    if (!evt) throw Error(EventErrors.notFound);
+    if (!evt) throw Error(EventsErrorsMessages.notFound);
+    if (!evt.open) throw Error(EventsErrorsMessages.cannotFeatureClosed);
 
     const hasPermission = CheckPermission(evt, user);
-    if (!hasPermission) throw Error(EventErrors.unauthorized);
+    if (!hasPermission) throw Error(GeneralErrorsMessages.unauthorized);
 
     const [uEvt] = await eventsRepository.updateEvent(eventId, { featured: !evt.featured });
-    RevalidateAllPagesCache();
-    UpdateUserEventsAndStatsCache(user.clerk_id);
+    updateAllPagesCacheTag();
+    UpdateUserEventsAndStatsCacheTag(user.clerk_id);
+
     return {
       success: true,
       message: EventsMessages.featured(uEvt.name, uEvt.featured!),
@@ -106,45 +102,17 @@ export const toggleEventFeaturedStatus = async (
   }
 };
 
-export const deleteEventAction = async (eventId: string): Promise<ActionResult<null>> => {
+export const updateEventTicketsCountAction = async (eventId: string): Promise<ActionResult<EventType>> => {
   try {
     const user = await getCurrentUser();
-    if (!user) throw Error(EventErrors.userNotFound);
+    if (!user) throw Error(GeneralErrorsMessages.userNotFound);
 
     const [evt] = await eventsRepository.findEventById(eventId);
-    if (!evt) throw Error(EventErrors.notFound);
+    if (!evt) throw Error(EventsErrorsMessages.notFound);
 
-    const hasPermission = CheckPermission(evt, user);
-    if (!hasPermission) throw Error(EventErrors.unauthorized);
-
-    await eventsRepository.deleteEvent(eventId);
-    RevalidateAllPagesCache();
-    UpdateUserEventsAndStatsCache(user.clerk_id);
-
-    return { success: true, message: EventsMessages.deleted(evt.name), data: null };
-  } catch (error) {
-    console.log(error);
-    return handleError(error);
-  }
-};
-
-export const updateEventTicketsCountAction = async (
-  eventId: string,
-  newTicketsCount: number
-): Promise<ActionResult<typeof EventTable.$inferSelect>> => {
-  try {
-    const user = await getCurrentUser();
-    if (!user) throw Error(EventErrors.userNotFound);
-
-    const [evt] = await eventsRepository.findEventById(eventId);
-    if (!evt) throw Error(EventErrors.notFound);
-
-    const hasPermission = CheckPermission(evt, user);
-    if (!hasPermission) throw Error(EventErrors.unauthorized);
-
-    const [updatedEvent] = await eventsRepository.updateEvent(eventId, { tickets: newTicketsCount });
-    RevalidateAllPagesCache();
-    UpdateUserEventsAndStatsCache(user.clerk_id);
+    const [updatedEvent] = await eventsRepository.updateEvent(eventId, { tickets: evt.tickets - 1 });
+    updateAllPagesCacheTag();
+    UpdateUserEventsAndStatsCacheTag(user.clerk_id);
 
     return {
       success: true,
@@ -157,23 +125,20 @@ export const updateEventTicketsCountAction = async (
   }
 };
 
-export const toggleEventOpenStatusAction = async (
-  eventId: string,
-  newOpenStatus: boolean
-): Promise<ActionResult<typeof EventTable.$inferSelect>> => {
+export const toggleEventOpenStatusAction = async (eventId: string): Promise<ActionResult<EventType>> => {
   try {
     const user = await getCurrentUser();
-    if (!user) throw Error(EventErrors.userNotFound);
+    if (!user) throw Error(GeneralErrorsMessages.userNotFound);
 
     const [evt] = await eventsRepository.findEventById(eventId);
-    if (!evt) throw Error(EventErrors.notFound);
+    if (!evt) throw Error(EventsErrorsMessages.notFound);
 
     const hasPermission = CheckPermission(evt, user);
-    if (!hasPermission) throw Error(EventErrors.unauthorized);
+    if (!hasPermission) throw Error(GeneralErrorsMessages.unauthorized);
 
-    const [newEvent] = await eventsRepository.updateEvent(eventId, { open: newOpenStatus });
-    RevalidateAllPagesCache();
-    UpdateUserEventsAndStatsCache(user.clerk_id);
+    const [newEvent] = await eventsRepository.updateEvent(eventId, { open: !evt.open });
+    updateAllPagesCacheTag();
+    UpdateUserEventsAndStatsCacheTag(user.clerk_id);
 
     return {
       success: true,
@@ -181,6 +146,28 @@ export const toggleEventOpenStatusAction = async (
       data: newEvent,
     };
   } catch (error) {
+    return handleError(error);
+  }
+};
+
+export const deleteEventAction = async (eventId: string): Promise<ActionResult<null>> => {
+  try {
+    const user = await getCurrentUser();
+    if (!user) throw Error(GeneralErrorsMessages.userNotFound);
+
+    const [evt] = await eventsRepository.findEventById(eventId);
+    if (!evt) throw Error(EventsErrorsMessages.notFound);
+
+    const hasPermission = CheckPermission(evt, user);
+    if (!hasPermission) throw Error(GeneralErrorsMessages.unauthorized);
+
+    await eventsRepository.deleteEvent(eventId);
+    updateAllPagesCacheTag();
+    UpdateUserEventsAndStatsCacheTag(user.clerk_id);
+
+    return { success: true, message: EventsMessages.deleted(evt.name), data: null };
+  } catch (error) {
+    console.log(error);
     return handleError(error);
   }
 };

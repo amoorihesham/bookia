@@ -1,20 +1,40 @@
+import { eq, lt, sql } from 'drizzle-orm';
 import { db } from '@/drizzle/db';
 import { EventTable } from '@/drizzle/schema';
-import { eq, gt, lt, sql } from 'drizzle-orm';
-import { FindEventsFilterTerm } from '../types';
-
-const conditions = {
-  featured: eq(EventTable.featured, true),
-  expired: lt(EventTable.held_on, sql`CURRENT_DATE`),
-  today: eq(EventTable.held_on, sql`CURRENT_DATE`),
-  upcoming: gt(EventTable.held_on, sql`CURRENT_DATE`),
-};
 
 const eventsRepository = {
-  findAllEvents: async (term: FindEventsFilterTerm) => {
-    const whereClaus = term === 'all' ? undefined : conditions[term];
+  findHomePageEvents: async () =>
+    db.query.EventTable.findMany({
+      where: eq(EventTable.open, true),
+      with: { organizer: true },
+      orderBy: (event, { desc }) => [desc(event.featured)],
+    }),
+  findUpcomingPageEvents: () =>
+    db.query.EventTable.findMany({
+      where: eq(EventTable.held_on, sql`CURRENT_DATE`),
+      with: { organizer: true },
+      orderBy: (event, { desc }) => [desc(event.featured)],
+    }),
+  findExpiredPageEvents: () =>
+    db.query.EventTable.findMany({
+      where: lt(EventTable.held_on, sql`CURRENT_DATE`),
+      with: { organizer: true },
+      orderBy: (event, { desc }) => [desc(event.featured)],
+    }),
+  findFeaturedPageEvents: () =>
+    db.query.EventTable.findMany({
+      where: eq(EventTable.featured, true),
+      with: { organizer: true },
+      orderBy: (event, { desc }) => [desc(event.featured)],
+    }),
+  findTodayPageEvent: () =>
+    db.query.EventTable.findMany({
+      where: eq(EventTable.held_on, sql`CURRENT_DATE`),
+      with: { organizer: true },
+      orderBy: (event, { desc }) => [desc(event.featured)],
+    }),
+  findAllEvents: async () => {
     return db.query.EventTable.findMany({
-      where: whereClaus,
       with: { organizer: true },
     });
   },

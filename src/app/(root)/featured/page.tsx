@@ -1,10 +1,10 @@
 import { Suspense } from 'react';
 import { EventsGridSkeleton, EventCardCompound } from '@/features/events/components';
 import { EmptyComponent } from '@/components/shared';
-import { GetEventsAction } from '@/features/events/actions/query';
+import { GetFeaturedpageEvents } from '@/features/events/actions/query';
 
 export default async function FeaturedPage() {
-  const events = await GetEventsAction('featured');
+  const events = await GetFeaturedpageEvents();
 
   return (
     <>

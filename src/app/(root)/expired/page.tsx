@@ -1,10 +1,10 @@
 import { Suspense } from 'react';
-import { GetEventsAction } from '@/features/events/actions/query';
+import { GetExpiredpageEvents } from '@/features/events/actions/query';
 import { EventsGridSkeleton, EventCardCompound } from '@/features/events/components';
 import { EmptyComponent } from '@/components/shared';
 
 export default async function ExpiredPage() {
-  const events = await GetEventsAction('expired');
+  const events = await GetExpiredpageEvents();
 
   return (
     <>

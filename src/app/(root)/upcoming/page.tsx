@@ -1,10 +1,10 @@
 import { Suspense } from 'react';
 import { EventsGridSkeleton, EventCardCompound } from '@/features/events/components';
 import { EmptyComponent } from '@/components/shared';
-import { GetEventsAction } from '@/features/events/actions/query';
+import { GetUpcomingpageEvents } from '@/features/events/actions/query';
 
 export default async function UpcomingPage() {
-  const events = await GetEventsAction('upcoming');
+  const events = await GetUpcomingpageEvents();
 
   return (
     <>

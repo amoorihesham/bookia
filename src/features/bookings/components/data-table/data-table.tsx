@@ -17,7 +17,6 @@ export const BookingsDataTable = async () => {
   );
 };
 
-
 export const OrdersDataTable = async () => {
   const user = await getCurrentUser();
   const orders = await GetUserBookingsAsOrdersAction(user!);
