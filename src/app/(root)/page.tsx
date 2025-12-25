@@ -5,7 +5,6 @@ import { EmptyComponent } from '@/components/shared';
 
 export default async function Homepage() {
   const events = await GetHomepageEvents();
-  console.log(events);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { eq, lt, sql } from 'drizzle-orm';
+import { eq, gt, lt, sql } from 'drizzle-orm';
 import { db } from '@/drizzle/db';
 import { EventTable } from '@/drizzle/schema';
 
@@ -11,7 +11,7 @@ const eventsRepository = {
     }),
   findUpcomingPageEvents: () =>
     db.query.EventTable.findMany({
-      where: eq(EventTable.held_on, sql`CURRENT_DATE`),
+      where: gt(EventTable.held_on, sql`CURRENT_DATE`),
       with: { organizer: true },
       orderBy: (event, { desc }) => [desc(event.featured)],
     }),
