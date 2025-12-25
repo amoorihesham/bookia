@@ -2,6 +2,7 @@ import { cacheLife, cacheTag } from 'next/cache';
 import eventsRepository from '../db/events.repo';
 import { FindEventsFilterTerm } from '../types';
 import { UserTable } from '@/drizzle/schema';
+import { SetUserEventsAndStatsCache } from '../helpers/cache';
 
 export const GetEventsAction = async (term: FindEventsFilterTerm = 'all') => {
   return eventsRepository.findAllEvents(term);
@@ -10,7 +11,7 @@ export const GetEventsAction = async (term: FindEventsFilterTerm = 'all') => {
 export const GetUserEventStatsAction = async (user: typeof UserTable.$inferSelect) => {
   'use cache';
   cacheLife('hours');
-  cacheTag(`stats-${user.clerk_id}`);
+  SetUserEventsAndStatsCache(user.clerk_id);
   if (!user)
     return {
       count: 0,
@@ -41,10 +42,9 @@ export const GetUserEventStatsAction = async (user: typeof UserTable.$inferSelec
 export const GetUserEventsAction = async (user: typeof UserTable.$inferSelect) => {
   'use cache';
   cacheLife('hours');
-  cacheTag(`events-${user.clerk_id}`);
-  if (!user) return [];
+  SetUserEventsAndStatsCache(user.clerk_id);
 
-  return await eventsRepository.findUserEvents(user.clerk_id);
+  return eventsRepository.findUserEvents(user.clerk_id);
 };
 
 export const GetEventByIdAction = async (eventId: string) => {

@@ -5,3 +5,12 @@ export const EventsMessages = {
   opened: (name: string, open: boolean) => `Event "${name}" is now ${open ? 'open' : 'closed'}`,
   deleted: (name: string) => `Event "${name}" deleted successfully.`,
 };
+
+export const EventErrors = {
+  notFound: 'The requested event could not be found.',
+  notOpen: 'This event is currently closed for bookings.',
+  expired: 'This event has already ended.',
+  unauthorized: 'You do not have permission to perform this action.',
+  userNotFound: 'User is not authenticated. Please log in.',
+  cannotFeatureClosed: 'Cannot feature a closed event.',
+};
