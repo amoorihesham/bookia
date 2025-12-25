@@ -16,7 +16,7 @@ export const updatePastEvents = inngest.createFunction(
     name: 'Update Past Events to Closed',
   },
 
-  { cron: '*/30 * * * *' },
+  { cron: '0 */2 * * *' },
   async ({ step }) => {
     const result = await step.run('close-past-events', async () => {
       try {
