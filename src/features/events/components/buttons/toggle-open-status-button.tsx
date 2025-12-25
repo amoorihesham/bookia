@@ -4,15 +4,15 @@ import { useContext } from 'react';
 import { EventCardContext } from '../cards';
 import { TooltipButton } from '@/components/buttons';
 import { Button } from '@/components/ui/button';
-import { DoorClosed, DoorOpen, FolderClosed, FolderOpenDot } from 'lucide-react';
+import { DoorClosed, DoorOpen } from 'lucide-react';
 import { toggleEventOpenStatusAction } from '../../actions/mutation';
 import { toast } from 'sonner';
 
-export const ToggleOpenStatusButton = ({ userId }: { userId: string }) => {
+export const ToggleOpenStatusButton = () => {
   const event = useContext(EventCardContext);
 
   const onClick = async () => {
-    const { success, message } = await toggleEventOpenStatusAction(event?.id!, !event?.open, userId);
+    const { success, message } = await toggleEventOpenStatusAction(event?.id!, !event?.open);
     if (!success) return toast.error(message);
     toast.success(message);
   };

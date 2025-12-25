@@ -24,9 +24,9 @@ export const CardActions = async ({ className, eventOwnerId }: CardActionsProps)
     >
       {user.clerk_id === eventOwnerId ? (
         <>
-          <ToggleOpenStatusButton userId={user.clerk_id} />
-          <ToggleFeaturedButton userId={user.clerk_id} />
-          <DeleteEventButton userId={user.clerk_id} />
+          <ToggleOpenStatusButton />
+          <ToggleFeaturedButton />
+          <DeleteEventButton />
         </>
       ) : (
         <>
