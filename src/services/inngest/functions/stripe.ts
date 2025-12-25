@@ -58,7 +58,7 @@ export const stripeUserBookedEvent = inngest.createFunction(
       });
 
       const updatedEvent = await step.run('update event tickets count.', async () => {
-        const [updatedEvent] = await eventsRepository.updateEvent(sEvent.id, { tickets: evt.tickets - 1 });
+        const [updatedEvent] = await eventsRepository.updateEvent(evt.id, { tickets: evt.tickets - 1 });
 
         return updatedEvent;
       });
