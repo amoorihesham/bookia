@@ -1,26 +1,37 @@
 'use client';
 import { useAppForm } from '@/hooks/useAppForm';
-import { insertPlanSchema } from '../schemas';
+import { CreateNewPlanInput, createPlanSchema } from '../schemas';
 import { FieldGroup } from '@/components/ui/field';
 import { Loader, Plane } from 'lucide-react';
-import { SelectItem } from '@/components/ui/select';
 import { useTransition } from 'react';
+import { createPlanAction } from '../actions/mutations';
+import { toast } from 'sonner';
+
+const defaultValues: CreateNewPlanInput = {
+  name: '',
+  price: '',
+  benfits: '',
+};
 
 export function CreateNewPlanForm() {
   const [isPending, startTransition] = useTransition();
   const form = useAppForm({
-    defaultValues: {
-      name: '',
-      price: '',
-      max_featured_count: '0',
-      frequency: 'monthly',
-    },
+    defaultValues,
     validators: {
-      onSubmit: insertPlanSchema,
+      onSubmit: createPlanSchema,
     },
     onSubmit: ({ value }) => {
       startTransition(async () => {
-        console.log(value);
+        const { success, message, errors } = await createPlanAction(value);
+
+        if (!success) {
+          toast.error(message, {
+            description: errors?.[0] ?? errors,
+          });
+        } else {
+          toast.success(message);
+          form.reset();
+        }
       });
     },
   });
@@ -30,26 +41,12 @@ export function CreateNewPlanForm() {
         e.preventDefault();
         form.handleSubmit();
       }}
-      className="bg-card/80 mx-auto mt-14 max-w-3xl rounded-md p-6"
+      className="mx-auto w-full rounded-md"
     >
       <FieldGroup className="w-full gap-3 space-y-3">
-        <div className="flex items-center gap-x-4">
-          <form.AppField name="name">{field => <field.Input label="Plan Name" />}</form.AppField>
-          <form.AppField name="price">{field => <field.Input label="Plan Price" />}</form.AppField>
-        </div>
-        <div className="flex items-center gap-x-4">
-          <form.AppField name="frequency">
-            {field => (
-              <field.Select label="Plan Frequency">
-                <SelectItem value="monthly">Monthly</SelectItem>
-                <SelectItem value="yearly">Yearly</SelectItem>
-              </field.Select>
-            )}
-          </form.AppField>
-          <form.AppField name="max_featured_count">
-            {field => <field.Input label="Plan Max Featured Count" />}
-          </form.AppField>
-        </div>
+        <form.AppField name="name">{field => <field.Input label="Plan Name" />}</form.AppField>
+        <form.AppField name="price">{field => <field.Input label="Plan Price" />}</form.AppField>
+        <form.AppField name="benfits">{field => <field.Input label="Plan Benfits" />}</form.AppField>
 
         <form.AppForm>
           <form.FormSubmitButton

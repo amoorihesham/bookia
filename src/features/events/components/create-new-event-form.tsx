@@ -5,12 +5,11 @@ import { toast } from 'sonner';
 import { Construction, Loader } from 'lucide-react';
 import { FieldGroup } from '@/components/ui/field';
 import { SelectItem } from '@/components/ui/select';
-import { createNewEventSchema } from '../schemas';
+import { createNewEventFormInput, createNewEventSchema } from '../schemas';
 import { createNewEventAction } from '../actions/mutation';
 import { useAppForm } from '@/hooks/useAppForm';
-import z from 'zod';
 
-const defaultValues: z.input<typeof createNewEventSchema> = {
+const defaultValues: createNewEventFormInput = {
   name: '',
   place: '',
   guests: '',

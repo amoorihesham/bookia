@@ -1,9 +1,12 @@
+import { TableSkeleton } from '@/components/shared';
+import { PlansDataTable } from '@/features/plans/components';
 import { CreateNewPlanDialog } from '@/features/plans/components/create-new-plan-dialog';
+import { Suspense } from 'react';
 
 export default function PlansPage() {
   return (
-    <div>
-      <div className="flex items-center justify-between">
+    <div className="space-y-12">
+      <div className="flex items-start justify-between">
         <div>
           <h3 className="text-2xl font-semibold uppercase">Plans</h3>
           <p className="text-muted-foreground max-w-xs text-sm">
@@ -12,6 +15,9 @@ export default function PlansPage() {
         </div>
         <CreateNewPlanDialog />
       </div>
+      <Suspense fallback={<TableSkeleton />}>
+        <PlansDataTable />
+      </Suspense>
     </div>
   );
 }
