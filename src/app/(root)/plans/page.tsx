@@ -1,6 +1,6 @@
 import { getAllPlansAction } from '@/features/plans/actions/query';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { UpgradePlanButton } from '@/features/plans/components';
+import { UpgradePlanButton } from '@/features/plans/components/buttons';
 
 export default async function PricingPage() {
   const plans = await getAllPlansAction();

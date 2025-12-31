@@ -3,6 +3,7 @@ import { UserTable } from '@/drizzle/schema';
 import { eq } from 'drizzle-orm';
 
 const userRepository = {
+  findAllUsers: async () => db.query.UserTable.findMany({ with: { plan: true } }),
   findUserById: async (userId: string) => db.query.UserTable.findFirst({ where: eq(UserTable.clerk_id, userId) }),
   findUserByEmail: async (email: string) => db.select().from(UserTable).where(eq(UserTable.email, email)),
   findUserByUsername: async (username: string) => db.select().from(UserTable).where(eq(UserTable.username, username)),
