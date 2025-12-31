@@ -14,6 +14,7 @@ import { toast } from 'sonner';
 import { PlanNameType, PlanType } from '../../types';
 import { useTransition } from 'react';
 import { deletePlanAction } from '../../actions/mutations';
+import { UpdatePlanDialog } from '../update-plan-dialog';
 
 export const TableAction = ({ row }: { row: Row<PlanType> }) => {
   const [isPending, startTransition] = useTransition();
@@ -47,16 +48,22 @@ export const TableAction = ({ row }: { row: Row<PlanType> }) => {
           <MoreHorizontal className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent
+        align="end"
+        className="space-y-1"
+      >
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <DropdownMenuItem onClick={copyToClipboard}>
-          {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Clipboard />}
+
+        <Button
+          variant={'ghost'}
+          size={'sm'}
+          onClick={copyToClipboard}
+        >
+          {isPending ? <Loader2 className="animate-spin" /> : <Clipboard />}
           Copy Plan ID
-        </DropdownMenuItem>
-        <DropdownMenuItem className="cursor-pointer">
-          {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Edit />}
-          Update Plan
-        </DropdownMenuItem>
+        </Button>
+
+        <UpdatePlanDialog plan={row.original} />
         <DropdownMenuSeparator />
 
         <DropdownMenuItem

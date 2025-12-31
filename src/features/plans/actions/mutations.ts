@@ -10,7 +10,7 @@ import { GeneralErrorsMessages } from '@/shared/utils/messages';
 import { PlansErrorsMessages, PlansMessages } from '../helpers/messages';
 import { updateTag } from 'next/cache';
 import { isAdmin } from '../helpers/validation';
-import { CreateNewPlanInput, createPlanSchema } from '../schemas';
+import { CreateNewPlanInput, createPlanSchema, UpdatePlanInput, updatePlanSchema } from '../schemas';
 
 export const createPlanAction = async (plan: CreateNewPlanInput): Promise<ActionResult<PlanType>> => {
   try {
@@ -27,6 +27,27 @@ export const createPlanAction = async (plan: CreateNewPlanInput): Promise<Action
     updateTag('plans');
 
     return { success: true, message: PlansMessages.created(newPlan.name), data: newPlan };
+  } catch (error) {
+    console.log(error);
+    return handleError(error);
+  }
+};
+
+export const updatePlanAction = async (planId: string, plan: UpdatePlanInput): Promise<ActionResult<PlanType>> => {
+  try {
+    const vdata = updatePlanSchema.parse(plan);
+
+    const user = await getCurrentUser();
+    if (!user) throw Error(GeneralErrorsMessages.userNotFound);
+    if (!isAdmin(user)) throw Error(GeneralErrorsMessages.unauthorized);
+
+    const [existingPlan] = await plansRepository.findPlanByName(vdata.name as PlanNameType);
+    if (existingPlan) throw Error(PlansErrorsMessages.alreadyExists(vdata.name));
+
+    const [newPlan] = await plansRepository.updatePlan(planId, vdata);
+    updateTag('plans');
+
+    return { success: true, message: PlansMessages.updated(newPlan.name), data: newPlan };
   } catch (error) {
     console.log(error);
     return handleError(error);
