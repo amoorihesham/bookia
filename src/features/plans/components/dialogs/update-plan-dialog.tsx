@@ -1,7 +1,6 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { PlanType } from '../types';
-import { UpdatePlanForm } from './update-plan-form';
-import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
+import { PlanType } from '../../types';
+import { UpdatePlanForm } from '../forms';
 import { Button } from '@/components/ui/button';
 import { Edit } from 'lucide-react';
 

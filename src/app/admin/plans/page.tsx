@@ -1,7 +1,7 @@
-import { TableSkeleton } from '@/components/shared';
-import { PlansDataTable } from '@/features/plans/components';
-import { CreateNewPlanDialog } from '@/features/plans/components/create-new-plan-dialog';
 import { Suspense } from 'react';
+import { TableSkeleton } from '@/components/shared';
+import { PlansDataTable } from '@/features/plans/components/data-table';
+import { CreateNewPlanDialog } from '@/features/plans/components/dialogs';
 
 export default function PlansPage() {
   return (

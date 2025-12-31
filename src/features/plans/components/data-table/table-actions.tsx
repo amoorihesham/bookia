@@ -3,38 +3,31 @@ import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Row } from '@tanstack/react-table';
-import { Clipboard, Edit, Loader2, MoreHorizontal, Trash } from 'lucide-react';
+import { MoreHorizontal } from 'lucide-react';
 import { toast } from 'sonner';
 import { PlanNameType, PlanType } from '../../types';
-import { useTransition } from 'react';
 import { deletePlanAction } from '../../actions/mutations';
-import { UpdatePlanDialog } from '../update-plan-dialog';
+import { UpdatePlanDialog } from '../dialogs/update-plan-dialog';
+import { CopyToClipboardButtonMenuItem, DeleteButtonMenuItem } from '@/components/buttons';
 
 export const TableAction = ({ row }: { row: Row<PlanType> }) => {
-  const [isPending, startTransition] = useTransition();
-
-  const copyToClipboard = () => {
-    startTransition(async () => {
-      await navigator.clipboard.writeText(String(row.original.id));
-      toast.info('Plan ID copied to clipboard');
-    });
+  const copyToClipboard = async () => {
+    await navigator.clipboard.writeText(String(row.original.id));
+    toast.info('Plan ID copied to clipboard');
   };
 
-  const deletePlan = () => {
-    startTransition(async () => {
-      const { success, message, errors } = await deletePlanAction(row.original.name as PlanNameType);
-      if (success) {
-        toast.success(message);
-      } else {
-        toast.error(errors?.[0] ?? errors);
-      }
-    });
+  const deletePlan = async () => {
+    const { success, message, errors } = await deletePlanAction(row.original.name as PlanNameType);
+    if (success) {
+      toast.success(message);
+    } else {
+      toast.error(errors?.[0] ?? errors);
+    }
   };
 
   return (
@@ -54,26 +47,18 @@ export const TableAction = ({ row }: { row: Row<PlanType> }) => {
       >
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
-        <Button
-          variant={'ghost'}
-          size={'sm'}
-          onClick={copyToClipboard}
-        >
-          {isPending ? <Loader2 className="animate-spin" /> : <Clipboard />}
-          Copy Plan ID
-        </Button>
+        <CopyToClipboardButtonMenuItem
+          title="Copy Plan Id"
+          onClickFn={copyToClipboard}
+        />
 
         <UpdatePlanDialog plan={row.original} />
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem
-          variant="destructive"
-          className="cursor-pointer"
-          onClick={deletePlan}
-        >
-          {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Trash />}
-          Delete Plan
-        </DropdownMenuItem>
+        <DeleteButtonMenuItem
+          title="Delete Plan"
+          onClickFn={deletePlan}
+        />
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -1,27 +1,28 @@
 'use client';
 import { useAppForm } from '@/hooks/useAppForm';
-import { updatePlanSchema } from '../schemas';
+import { CreateNewPlanInput, createPlanSchema } from '../../schemas';
 import { FieldGroup } from '@/components/ui/field';
 import { Loader, Plane } from 'lucide-react';
 import { useTransition } from 'react';
-import { updatePlanAction } from '../actions/mutations';
+import { createPlanAction } from '../../actions/mutations';
 import { toast } from 'sonner';
-import { PlanType } from '../types';
 
-export function UpdatePlanForm({ plan }: { plan: PlanType }) {
+const defaultValues: CreateNewPlanInput = {
+  name: '',
+  price: '',
+  benfits: '',
+};
+
+export function CreateNewPlanForm() {
   const [isPending, startTransition] = useTransition();
   const form = useAppForm({
-    defaultValues: {
-      name: plan.name,
-      price: String(plan.price) || '',
-      benfits: String(plan.benfits) || '',
-    },
+    defaultValues,
     validators: {
-      onSubmit: updatePlanSchema,
+      onSubmit: createPlanSchema,
     },
     onSubmit: ({ value }) => {
       startTransition(async () => {
-        const { success, message, errors } = await updatePlanAction(plan.id, value);
+        const { success, message, errors } = await createPlanAction(value);
 
         if (!success) {
           toast.error(message, {
@@ -40,7 +41,7 @@ export function UpdatePlanForm({ plan }: { plan: PlanType }) {
         e.preventDefault();
         form.handleSubmit();
       }}
-      className="rounded-md"
+      className="mx-auto w-full rounded-md"
     >
       <FieldGroup className="w-full gap-3 space-y-3">
         <form.AppField name="name">{field => <field.Input label="Plan Name" />}</form.AppField>

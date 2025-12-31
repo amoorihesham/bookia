@@ -1,28 +1,27 @@
 'use client';
 import { useAppForm } from '@/hooks/useAppForm';
-import { CreateNewPlanInput, createPlanSchema } from '../schemas';
+import { updatePlanSchema } from '../../schemas';
 import { FieldGroup } from '@/components/ui/field';
 import { Loader, Plane } from 'lucide-react';
 import { useTransition } from 'react';
-import { createPlanAction } from '../actions/mutations';
+import { updatePlanAction } from '../../actions/mutations';
 import { toast } from 'sonner';
+import { PlanType } from '../../types';
 
-const defaultValues: CreateNewPlanInput = {
-  name: '',
-  price: '',
-  benfits: '',
-};
-
-export function CreateNewPlanForm() {
+export function UpdatePlanForm({ plan }: { plan: PlanType }) {
   const [isPending, startTransition] = useTransition();
   const form = useAppForm({
-    defaultValues,
+    defaultValues: {
+      name: plan.name,
+      price: String(plan.price) || '',
+      benfits: String(plan.benfits) || '',
+    },
     validators: {
-      onSubmit: createPlanSchema,
+      onSubmit: updatePlanSchema,
     },
     onSubmit: ({ value }) => {
       startTransition(async () => {
-        const { success, message, errors } = await createPlanAction(value);
+        const { success, message, errors } = await updatePlanAction(plan.id, value);
 
         if (!success) {
           toast.error(message, {
@@ -41,7 +40,7 @@ export function CreateNewPlanForm() {
         e.preventDefault();
         form.handleSubmit();
       }}
-      className="mx-auto w-full rounded-md"
+      className="rounded-md"
     >
       <FieldGroup className="w-full gap-3 space-y-3">
         <form.AppField name="name">{field => <field.Input label="Plan Name" />}</form.AppField>
@@ -50,8 +49,8 @@ export function CreateNewPlanForm() {
 
         <form.AppForm>
           <form.FormSubmitButton
-            label="Create New Plan"
-            pendingLabel="Createing New Plan"
+            label={`Update ${plan.name} Plan`}
+            pendingLabel={`Updating ${plan.name} Plan`}
             Icon={Plane}
             PendingIcon={Loader}
             disabled={isPending}

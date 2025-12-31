@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Construction } from 'lucide-react';
-import { CreateNewPlanForm } from './create-new-plan-form';
+import { CreateNewPlanForm } from '../forms';
 export const CreateNewPlanDialog = () => {
   return (
     <Dialog>
