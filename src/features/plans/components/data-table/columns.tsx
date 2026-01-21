@@ -3,41 +3,47 @@ import { PlanTable } from '@/drizzle/schema';
 import { ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
 import { TableAction } from './table-actions';
+import { DataTableLabel } from '@/components/shared';
+import { cn } from '@/lib/utils';
 
 export const columns: ColumnDef<typeof PlanTable.$inferSelect>[] = [
   {
     header: 'ID',
-    cell: ({ row }) => {
-      const parts = row.original.id.split('-');
-      return (
-        <p className="text-primary text-lg font-semibold uppercase">
-          {parts[0]}...{parts[parts.length - 1]}
-        </p>
-      );
-    },
+    cell: ({ row }) => <DataTableLabel label={`...${row.original.id.slice(-5)}`} />,
     size: 100,
   },
 
   {
     header: 'Name',
-    cell: ({ row }) => <p className="text-primary text-lg font-semibold uppercase">{row.original.name}</p>,
+    cell: ({ row }) => (
+      <DataTableLabel
+        className={cn('font-semibold capitalize', row.original.name === 'pro' && 'text-chart-4')}
+        label={row.original.name}
+      />
+    ),
     size: 100,
   },
   {
     header: 'Price',
-    cell: ({ row }) => <p className="text-chart-4 text-lg font-semibold">{row.original.price}$</p>,
+    cell: ({ row }) => <DataTableLabel label={`${row.original.price}$`} />,
     size: 100,
   },
   {
     header: 'Stripe_Price_Id',
     cell: ({ row }) => (
-      <p className="text-muted-foreground text-lg font-semibold">{row.original.stripe_price_id ?? 'none'}</p>
+      <DataTableLabel
+        label={
+          row.original.stripe_price_id
+            ? `${row.original.stripe_price_id?.split('_')[0]}...${row.original.stripe_price_id.split('_')[1].slice(-5)}`
+            : 'none'
+        }
+      />
     ),
     size: 100,
   },
   {
     header: 'Created At',
-    accessorFn: row => format(row.createdAt, 'yyyy-MM-dd HH:mm:ss a'),
+    cell: ({ row }) => <DataTableLabel label={format(row.original.createdAt, 'yy-MM-dd HH:mm a')} />,
     size: 100,
   },
   {

@@ -17,7 +17,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
   });
 
   return (
-    <div className="overflow-hidden rounded-md border">
+    <div className="border-chart-4/30 shadow-chart-4/10 overflow-hidden rounded-md border shadow-xl">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map(headerGroup => (
@@ -26,7 +26,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                 return (
                   <TableHead
                     key={header.id}
-                    className="text-center"
+                    className="bg-chart-4/10 py-4 text-center text-lg"
                   >
                     {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                   </TableHead>
@@ -43,7 +43,12 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                 data-state={row.getIsSelected() && 'selected'}
               >
                 {row.getVisibleCells().map(cell => (
-                  <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+                  <TableCell
+                    key={cell.id}
+                    className="py-3"
+                  >
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
                 ))}
               </TableRow>
             ))

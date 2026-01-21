@@ -3,8 +3,6 @@ import { Label } from '../ui/label';
 
 export const DataTableLabel = ({ label, className }: { label: string; className?: string }) => {
   return (
-    <Label className={cn('flex items-center justify-center text-center text-lg font-light uppercase', className)}>
-      {label}
-    </Label>
+    <Label className={cn('flex items-center justify-center text-center text-lg font-light', className)}>{label}</Label>
   );
 };

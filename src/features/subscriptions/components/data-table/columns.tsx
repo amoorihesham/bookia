@@ -35,7 +35,7 @@ export const columns: ColumnDef<SubscriptionType & { user: DatabaseUser; plan: P
     header: 'Subscription Plan',
     cell: ({ row }) => (
       <DataTableLabel
-        className={row.original.plan.name === 'pro' ? 'text-chart-4' : ''}
+        className={`${row.original.plan.name === 'pro' ? 'text-chart-4' : ''} capitalize`}
         label={row.original.plan.name}
       />
     ),
@@ -53,7 +53,7 @@ export const columns: ColumnDef<SubscriptionType & { user: DatabaseUser; plan: P
         <p className="flex items-center justify-center">
           {row.original.is_active ? (
             <CheckCircle2
-              className="text-green-500"
+              className="text-chart-4"
               size={28}
             />
           ) : (
