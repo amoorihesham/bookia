@@ -1,8 +1,13 @@
 import { db } from '@/drizzle/db';
 import { SubscriptionTable } from '@/drizzle/schema';
-import { eq } from 'drizzle-orm';
+import { desc, eq } from 'drizzle-orm';
 
 const subscriptionsRepository = {
+  findAll: () =>
+    db.query.SubscriptionTable.findMany({
+      with: { user: true, plan: true },
+      orderBy: [desc(SubscriptionTable.createdAt)],
+    }),
   findUserSubscription: (userId: string) =>
     db.select().from(SubscriptionTable).where(eq(SubscriptionTable.user_id, userId)),
   insertNewSubscription: async (payload: typeof SubscriptionTable.$inferInsert) =>
