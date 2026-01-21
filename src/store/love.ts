@@ -28,6 +28,6 @@ export const useLoveStore = create<LoveStore>()(
         }),
       getLoveCount: () => get().loves.length,
     }),
-    { name: 'love-list' }
+    { name: 'love-list', }
   )
 );

@@ -1,5 +1,5 @@
-import { UserTable } from '@/drizzle/schema';
+import { DatabaseUser } from '@/features/users/types';
 
-export function requireAdmin(user: typeof UserTable.$inferSelect) {
+export function isAdmin(user: DatabaseUser) {
   return user.role === 'admin';
 }

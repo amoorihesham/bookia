@@ -9,8 +9,8 @@ import { PlanNameType, PlanType } from '../types';
 import { GeneralErrorsMessages } from '@/shared/utils/messages';
 import { PlansErrorsMessages, PlansMessages } from '../helpers/messages';
 import { updateTag } from 'next/cache';
-import { isAdmin } from '../helpers/validation';
 import { CreateNewPlanInput, createPlanSchema, UpdatePlanInput, updatePlanSchema } from '../schemas';
+import { isAdmin } from '@/shared/lib/checks';
 
 export const createPlanAction = async (plan: CreateNewPlanInput): Promise<ActionResult<PlanType>> => {
   try {

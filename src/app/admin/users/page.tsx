@@ -1,5 +1,6 @@
 import { TableSkeleton } from '@/components/shared';
-import { UsersDataTable } from '@/features/users/componnets/admin/data-table';
+import { UsersDataTable } from '@/features/users/componnets/data-table';
+import { CreateNewUserDialog } from '@/features/users/componnets/dialogs';
 import { Suspense } from 'react';
 
 export default async function Userspage() {
@@ -12,6 +13,7 @@ export default async function Userspage() {
             Here you can manage the current users available in your site.
           </p>
         </div>
+        <CreateNewUserDialog />
       </div>
       <Suspense fallback={<TableSkeleton />}>
         <UsersDataTable />
