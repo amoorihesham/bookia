@@ -6,17 +6,16 @@ import { Loader, Plane } from 'lucide-react';
 import { useTransition } from 'react';
 import { createPlanAction } from '../../actions/mutations';
 import { toast } from 'sonner';
-
-const defaultValues: CreateNewPlanInput = {
-  name: '',
-  price: '',
-  benfits: '',
-};
+import z from 'zod';
 
 export function CreateNewPlanForm() {
   const [isPending, startTransition] = useTransition();
   const form = useAppForm({
-    defaultValues,
+    defaultValues: {
+      name: '',
+      price: '',
+      benfits: '',
+    } as z.input<typeof createPlanSchema>,
     validators: {
       onSubmit: createPlanSchema,
     },

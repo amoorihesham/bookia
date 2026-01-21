@@ -4,6 +4,7 @@ import { FieldGroup } from '@/components/ui/field';
 import { Loader, User } from 'lucide-react';
 import { useTransition } from 'react';
 import { toast } from 'sonner';
+import { z } from 'zod';
 import { createNewUserSchema } from '../../schemas';
 import { createNewUserAction } from '../../actions/admin/mutations';
 import { SelectItem } from '@/components/ui/select';
@@ -18,7 +19,7 @@ export function CreateNewUserForm() {
       role: 'user',
       plan: 'a20c9818-3778-4013-a8c9-a2ac5ee7f536',
       method: 'admin_portal',
-    },
+    } as z.infer<typeof createNewUserSchema>,
     validators: {
       onSubmit: createNewUserSchema,
     },

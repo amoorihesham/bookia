@@ -9,10 +9,9 @@ import { UsersErrorsMessages, UsersMessages } from '../../helpers/messages';
 import { handleError } from '@/shared/lib/error-handling';
 import { updateTag } from 'next/cache';
 import { createNewUserSchema, updateUserSchema } from '../../schemas';
-import z from 'zod';
 
 export const createNewUserAction = async (
-  payload: z.input<typeof createNewUserSchema>
+  payload: Omit<CreateNewUserPayload, 'image'>
 ): Promise<ActionResult<DatabaseUser>> => {
   try {
     const vData = createNewUserSchema.parse(payload);
