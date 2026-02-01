@@ -6,8 +6,8 @@ export const DeleteButtonMenuItem = ({ onClickFn, title }: { onClickFn: () => vo
   const [isPending, startTransition] = useTransition();
 
   const onClick = () => {
-    startTransition(async () => {
-      await onClickFn();
+    startTransition(() => {
+      onClickFn();
     });
   };
 

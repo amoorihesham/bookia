@@ -11,14 +11,25 @@ import { Row } from '@tanstack/react-table';
 import { MoreHorizontal } from 'lucide-react';
 import { toast } from 'sonner';
 import { SubscriptionType } from '../../types';
-import { CopyToClipboardButtonMenuItem, DeleteButtonMenuItem } from '@/components/buttons';
+import { CopyToClipboardButtonMenuItem, DeleteButtonMenuItem, ToggleButtonMenuItem } from '@/components/buttons';
 import { DatabaseUser } from '@/features/users/types';
 import { PlanType } from '@/features/plans/types';
+import { toggleSubscriptionStatusAction } from '../../actions/mutaions';
+import { UpdateSubscriptionDialog } from '../dialogs';
 
 export const TableActions = ({ row }: { row: Row<SubscriptionType & { user: DatabaseUser; plan: PlanType }> }) => {
   const copyToClipboard = async () => {
     await navigator.clipboard.writeText(String(row.original.id));
-    toast.info('Plan ID copied to clipboard');
+    toast.info('Subscription ID copied to clipboard');
+  };
+
+  const toggleSubscription = async () => {
+    const { success, message, errors } = await toggleSubscriptionStatusAction(row.original.id);
+    if (success) {
+      toast.success(message);
+    } else {
+      toast.error(errors?.[0] ?? errors);
+    }
   };
 
   const deletePlan = async () => {
@@ -48,15 +59,19 @@ export const TableActions = ({ row }: { row: Row<SubscriptionType & { user: Data
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
         <CopyToClipboardButtonMenuItem
-          title="Copy Plan Id"
+          title="Copy Subscription Id"
           onClickFn={copyToClipboard}
         />
+        <ToggleButtonMenuItem
+          title="Toggle Active Status"
+          onClickFn={toggleSubscription}
+        />
 
-        {/* <UpdatePlanDialog plan={row.original} /> */}
+        <UpdateSubscriptionDialog subscription={row.original} />
         <DropdownMenuSeparator />
 
         <DeleteButtonMenuItem
-          title="Delete Plan"
+          title="Delete Subscription"
           onClickFn={deletePlan}
         />
       </DropdownMenuContent>

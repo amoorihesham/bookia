@@ -58,7 +58,7 @@ export const columns: ColumnDef<SubscriptionType & { user: DatabaseUser; plan: P
             />
           ) : (
             <CheckCircle2
-              className="text-destructive"
+              className="text-gray-500"
               size={28}
             />
           )}

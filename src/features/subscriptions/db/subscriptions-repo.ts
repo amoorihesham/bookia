@@ -8,6 +8,11 @@ const subscriptionsRepository = {
       with: { user: true, plan: true },
       orderBy: [desc(SubscriptionTable.createdAt)],
     }),
+  findSubscriptionById: (subscriptionId: string) =>
+    db.query.SubscriptionTable.findFirst({
+      where: eq(SubscriptionTable.id, subscriptionId),
+      with: { user: true, plan: true },
+    }),
   findUserSubscription: (userId: string) =>
     db.select().from(SubscriptionTable).where(eq(SubscriptionTable.user_id, userId)),
   insertNewSubscription: async (payload: typeof SubscriptionTable.$inferInsert) =>
