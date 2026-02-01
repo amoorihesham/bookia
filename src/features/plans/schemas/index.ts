@@ -12,7 +12,7 @@ export const createPlanSchema = z.object({
 });
 
 export const updatePlanSchema = z.object({
-  planId: z.string().min(1, { message: 'Plan name is required' }),
+  name: z.string().min(1, { message: 'Plan name is required' }),
   price: z
     .string()
     .transform(v => parseFloat(v))
