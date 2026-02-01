@@ -4,7 +4,7 @@ import { EventsGridSkeleton, EventCardCompound } from '@/features/events/compone
 import { EmptyComponent } from '@/components/shared';
 
 export default async function ExpiredPage() {
-  const events = await GetExpiredpageEvents();
+  // const events = await GetExpiredpageEvents();
 
   return (
     <>
@@ -16,7 +16,7 @@ export default async function ExpiredPage() {
         </p>
       </div>
 
-      <Suspense fallback={<EventsGridSkeleton />}>
+      {/* <Suspense fallback={<EventsGridSkeleton />}>
         {events.length ? (
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6 xl:grid-cols-3">
             {events.map(event => (
@@ -29,7 +29,7 @@ export default async function ExpiredPage() {
         ) : (
           <EmptyComponent />
         )}
-      </Suspense>
+      </Suspense> */}
     </>
   );
 }

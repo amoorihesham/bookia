@@ -1,3 +1,4 @@
+'use server';
 import { UserTable } from '@/drizzle/schema';
 import { setPageCacheTag, SetUserEventsCacheTag, SetUserStatsCacheTag } from '@/shared/utils/cache';
 import eventsRepository from '../db/events.repo';

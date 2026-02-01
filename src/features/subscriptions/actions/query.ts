@@ -1,3 +1,4 @@
+'use server';
 import { cacheLife, cacheTag } from 'next/cache';
 import subscriptionsRepository from '../db/subscriptions-repo';
 

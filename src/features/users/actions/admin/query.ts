@@ -1,3 +1,4 @@
+'use server';
 import { cacheLife, cacheTag } from 'next/cache';
 import userRepository from '../../db/user.repo';
 
