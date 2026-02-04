@@ -16,6 +16,7 @@ export default async function FeaturedPage() {
           as="h1"
           duration={0.6}
           by="word"
+          once
         >
           Featured Events You Can&apos;t Miss
         </TextAnimate>
@@ -26,6 +27,8 @@ export default async function FeaturedPage() {
           delay={0.8}
           as={'p'}
           by="line"
+          once
+
         >
           {`Discover our hand-picked selection of standout events!\nThese are the most exciting experiences happening around.`}
         </TextAnimate>

@@ -16,6 +16,7 @@ export default async function ExpiredPage() {
           as="h1"
           duration={0.6}
           by="word"
+          once
         >
           Past Events That Made Memories
         </TextAnimate>
@@ -26,6 +27,7 @@ export default async function ExpiredPage() {
           delay={0.8}
           as={'p'}
           by="line"
+          once
         >
           {`Missed an event? Don't worry — here's\na look back at all the past experiences that have already\n
           taken place. Relive the moments and get inspired for what's coming next!`}

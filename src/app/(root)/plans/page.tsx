@@ -14,8 +14,9 @@ export default async function PricingPage() {
           className="text-center text-2xl font-semibold lg:text-5xl"
           animation="blurInDown"
           as="h1"
-          duration={0.6}
+          duration={0.4}
           by="word"
+          once
         >
           Pricing that Scales with You
         </TextAnimate>
@@ -23,9 +24,10 @@ export default async function PricingPage() {
           className="text-xs lg:text-base"
           animation="blurInUp"
           duration={0.2}
-          delay={0.8}
+          delay={0.5}
           as={'p'}
           by="line"
+          once
         >
           {`Whether you&apos;re an individual or a business, our plans are designed to scale with your\nneeds. Choose the plan that gives you access to the tools and features you need to create,\nmanage, and grow effortlessly.`}
         </TextAnimate>
@@ -35,7 +37,7 @@ export default async function PricingPage() {
         {plans.map((plan, idx) => (
           <BlurFade
             key={plan.id}
-            delay={0.6 + idx * 0.4}
+            delay={0.4 + idx * 0.4}
             inView
           >
             <Card className="bg-card/20 relative flex h-full w-full flex-col">

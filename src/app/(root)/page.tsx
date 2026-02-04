@@ -17,6 +17,7 @@ export default async function Homepage() {
           as="h1"
           duration={0.6}
           by="word"
+          once
         >
           Discover All Events Around You
         </TextAnimate>
@@ -27,6 +28,7 @@ export default async function Homepage() {
           delay={0.8}
           as={'p'}
           by="line"
+          once
         >
           {`Get ready for an adventure! Browse all events happening near you\n— from today's highlights to upcoming experiences.`}
         </TextAnimate>

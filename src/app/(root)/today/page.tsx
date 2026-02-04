@@ -15,6 +15,7 @@ export default async function TodayPage() {
           as="h1"
           duration={0.6}
           by="word"
+          once
         >
           What&apos;s Happening Today?
         </TextAnimate>
@@ -25,6 +26,7 @@ export default async function TodayPage() {
           delay={0.8}
           as={'p'}
           by="line"
+          once
         >
           {`Ready for some excitement?\nBrowse all events taking place today and jump into the experiences!`}
         </TextAnimate>

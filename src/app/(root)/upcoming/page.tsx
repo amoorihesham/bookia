@@ -16,6 +16,7 @@ export default async function UpcomingPage() {
           as="h1"
           duration={0.6}
           by="word"
+          once
         >
           Upcoming Events to Look Forward To
         </TextAnimate>
@@ -26,6 +27,7 @@ export default async function UpcomingPage() {
           delay={0.8}
           as={'p'}
           by="line"
+          once
         >
           {`Get ready for what's next! Explore all the exciting events\ncoming up and plan your experiences ahead of time — don&apos;t miss out on the fun!`}
         </TextAnimate>
