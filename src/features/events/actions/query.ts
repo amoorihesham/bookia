@@ -3,10 +3,16 @@ import { UserTable } from '@/drizzle/schema';
 import { setPageCacheTag, SetUserEventsCacheTag, SetUserStatsCacheTag } from '@/shared/utils/cache';
 import eventsRepository from '../db/events.repo';
 
-export const GetHomepageEvents = async () => {
+export const GetHomepageRegularEvents = async () => {
   'use cache';
-  setPageCacheTag('home-page-events', 'hours');
-  return eventsRepository.findHomePageEvents();
+  setPageCacheTag('home-page-regular-events', 'hours');
+  return eventsRepository.findHomePageRegularEvents();
+};
+
+export const GetHomepageFeaturedEvents = async () => {
+  'use cache';
+  setPageCacheTag('home-page-featured-events', 'hours');
+  return eventsRepository.findFeaturedPageEvents();
 };
 
 export const GetTodaypageEvents = async () => {

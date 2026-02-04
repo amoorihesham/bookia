@@ -11,7 +11,7 @@ export function CheckEventAvailabiltyAndPermission(
 
   if (!event.open) throw Error('Event is not open for booking');
 
-  if (event.held_on < new Date()) throw Error('Event is expired');
+  if (isEventTimePassed(event)) throw Error('Event is expired');
 
   return true;
 }
@@ -20,4 +20,8 @@ export function CheckPermission(event: typeof EventTable.$inferSelect, user: typ
   if (event.user_id !== user.clerk_id && user.role !== 'admin') return false;
 
   return true;
+}
+
+export function isEventTimePassed(event: typeof EventTable.$inferSelect) {
+  return event.held_on < new Date();
 }

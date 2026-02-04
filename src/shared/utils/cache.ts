@@ -1,7 +1,8 @@
 import { cacheLife, cacheTag, updateTag } from 'next/cache';
 
 type PagesCacheTags =
-  | 'home-page-events'
+  | 'home-page-regular-events'
+  | 'home-page-featured-events'
   | 'today-page-events'
   | 'expired-page-events'
   | 'featured-page-events'
@@ -19,7 +20,8 @@ export function updatePageCacheTag(tag: PagesCacheTags) {
 }
 
 export function updateAllPagesCacheTag() {
-  updatePageCacheTag('home-page-events');
+  updatePageCacheTag('home-page-regular-events');
+  updatePageCacheTag('home-page-featured-events');
   updatePageCacheTag('expired-page-events');
   updatePageCacheTag('today-page-events');
   updatePageCacheTag('featured-page-events');

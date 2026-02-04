@@ -1,10 +1,13 @@
 import { Suspense } from 'react';
-import { GetHomepageEvents } from '@/features/events/actions/query';
+
 import { EventsGridSkeleton, EventCardCompound } from '@/features/events/components';
 import { EmptyComponent } from '@/components/shared';
+import { GetHomepageFeaturedEvents, GetHomepageRegularEvents } from '@/features/events/actions/query';
 
 export default async function Homepage() {
-  const events = await GetHomepageEvents();
+  const [featuredEvents, regularEvents] = await Promise.all([GetHomepageFeaturedEvents(), GetHomepageRegularEvents()]);
+  console.log('FEATUED_EVENTS', featuredEvents);
+  console.log('REGULAR_EVENTS', regularEvents);
 
   return (
     <>
@@ -16,20 +19,46 @@ export default async function Homepage() {
         </p>
       </div>
 
-      <Suspense fallback={<EventsGridSkeleton />}>
-        {events.length ? (
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6 xl:grid-cols-3">
-            {events.map(event => (
-              <EventCardCompound
-                event={event}
-                key={event.id}
-              />
-            ))}
-          </div>
-        ) : (
-          <EmptyComponent />
-        )}
-      </Suspense>
+      <div className="space-y-12">
+        <div className="space-y-4">
+          <h2 className="text-foreground text-2xl font-semibold uppercase underline underline-offset-4">
+            Featured Events
+          </h2>
+          <Suspense fallback={<EventsGridSkeleton />}>
+            {featuredEvents.length ? (
+              <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6 xl:grid-cols-3">
+                {featuredEvents.map(event => (
+                  <EventCardCompound
+                    event={event}
+                    key={event.id}
+                  />
+                ))}
+              </div>
+            ) : (
+              <EmptyComponent />
+            )}
+          </Suspense>
+        </div>
+        <div className="space-y-4">
+          <h2 className="text-foreground text-2xl font-semibold uppercase underline underline-offset-4">
+            Regular Events
+          </h2>
+          <Suspense fallback={<EventsGridSkeleton />}>
+            {regularEvents.length ? (
+              <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6 xl:grid-cols-3">
+                {regularEvents.map(event => (
+                  <EventCardCompound
+                    event={event}
+                    key={event.id}
+                  />
+                ))}
+              </div>
+            ) : (
+              <EmptyComponent />
+            )}
+          </Suspense>
+        </div>
+      </div>
     </>
   );
 }

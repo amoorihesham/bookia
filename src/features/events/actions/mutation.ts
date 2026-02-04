@@ -11,7 +11,7 @@ import { ActionResult } from '@/types/action-result';
 import eventsRepository from '../db/events.repo';
 import { createNewEventFormInput, createNewEventSchema } from '../schemas';
 import { EventsErrorsMessages, EventsMessages } from '../helpers/messages';
-import { CheckPermission } from '../helpers/validation';
+import { CheckPermission, isEventTimePassed } from '../helpers/validation';
 import { EventType } from '../types';
 
 export const createNewEventAction = async (payload: createNewEventFormInput): Promise<ActionResult<EventType>> => {
@@ -112,6 +112,10 @@ export const toggleEventOpenStatusAction = async (eventId: string): Promise<Acti
 
     const hasPermission = CheckPermission(evt, user);
     if (!hasPermission) throw Error(GeneralErrorsMessages.unauthorized);
+
+    if (!evt.open) {
+      if (isEventTimePassed(evt)) throw Error(EventsErrorsMessages.cannotToggleExpired('open'));
+    }
 
     const [newEvent] = await eventsRepository.updateEvent(eventId, { open: !evt.open });
     updateAllPagesCacheTag();

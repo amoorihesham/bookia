@@ -11,4 +11,5 @@ export const EventsErrorsMessages = {
   notOpen: 'This event is currently closed for bookings.',
   expired: 'This event has already ended.',
   cannotFeatureClosed: 'Cannot feature a closed event.',
+  cannotToggleExpired: (action: 'open' | 'close') => `Cannot ${action} an event that has already ended.`,
 };

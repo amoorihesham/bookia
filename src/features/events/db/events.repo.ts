@@ -1,17 +1,17 @@
-import { eq, gt, lt, sql } from 'drizzle-orm';
+import { and, eq, gt, lt, sql } from 'drizzle-orm';
 import { db } from '@/drizzle/db';
 import { EventTable } from '@/drizzle/schema';
 
 const eventsRepository = {
-  findHomePageEvents: async () =>
+  findHomePageRegularEvents: async () =>
     db.query.EventTable.findMany({
-      where: eq(EventTable.open, true),
+      where: and(eq(EventTable.open, true), eq(EventTable.featured, false)),
       with: { organizer: true },
-      orderBy: (event, { desc }) => [desc(event.featured)],
+      orderBy: (event, { desc }) => [desc(event.held_on)],
     }),
   findUpcomingPageEvents: () =>
     db.query.EventTable.findMany({
-      where: gt(EventTable.held_on, sql`CURRENT_DATE`),
+      where: and(gt(EventTable.held_on, sql`CURRENT_DATE`), eq(EventTable.open, true)),
       with: { organizer: true },
       orderBy: (event, { desc }) => [desc(event.featured)],
     }),
@@ -19,17 +19,17 @@ const eventsRepository = {
     db.query.EventTable.findMany({
       where: lt(EventTable.held_on, sql`CURRENT_DATE`),
       with: { organizer: true },
-      orderBy: (event, { desc }) => [desc(event.featured)],
+      orderBy: (event, { desc }) => [desc(event.held_on), desc(event.featured)],
     }),
   findFeaturedPageEvents: () =>
     db.query.EventTable.findMany({
-      where: eq(EventTable.featured, true),
+      where: and(eq(EventTable.featured, true), eq(EventTable.open, true)),
       with: { organizer: true },
-      orderBy: (event, { desc }) => [desc(event.featured)],
+      orderBy: (event, { desc }) => [desc(event.held_on)],
     }),
   findTodayPageEvent: () =>
     db.query.EventTable.findMany({
-      where: eq(EventTable.held_on, sql`CURRENT_DATE`),
+      where: and(eq(EventTable.held_on, sql`CURRENT_DATE`), eq(EventTable.open, true)),
       with: { organizer: true },
       orderBy: (event, { desc }) => [desc(event.featured)],
     }),
@@ -42,6 +42,7 @@ const eventsRepository = {
     return db.query.EventTable.findMany({
       where: eq(EventTable.user_id, userId),
       with: { organizer: true },
+      orderBy: (event, { desc }) => [desc(event.featured), desc(event.held_on)],
     });
   },
   findEventById: async (eventId: string) => db.query.EventTable.findMany({ where: eq(EventTable.id, eventId) }),
