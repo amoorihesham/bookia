@@ -4,7 +4,7 @@ import plansRepository from '../db/plans.repo';
 
 export const getAllPlansAction = async () => {
   'use cache';
-  cacheLife('days');
+  cacheLife('weeks');
   cacheTag('plans');
 
   return plansRepository.findAllPlans();
