@@ -3,20 +3,33 @@ import { Suspense } from 'react';
 import { EventsGridSkeleton, EventCardCompound } from '@/features/events/components';
 import { EmptyComponent } from '@/components/shared';
 import { GetHomepageFeaturedEvents, GetHomepageRegularEvents } from '@/features/events/actions/query';
+import { TextAnimate } from '@/components/ui/text-animate';
 
 export default async function Homepage() {
   const [featuredEvents, regularEvents] = await Promise.all([GetHomepageFeaturedEvents(), GetHomepageRegularEvents()]);
-  console.log('FEATUED_EVENTS', featuredEvents);
-  console.log('REGULAR_EVENTS', regularEvents);
 
   return (
     <>
       <div className="mx-auto mb-6 max-w-2xl space-y-1 text-center lg:mb-12 lg:space-y-4">
-        <h1 className="text-center text-2xl font-semibold lg:text-5xl">Discover All Events Around You</h1>
-        <p className="text-xs lg:text-base">
-          Get ready for an adventure! Browse all events happening near you — from today&apos;s highlights to upcoming
-          experiences — and find your next unforgettable moment.
-        </p>
+        <TextAnimate
+          className="text-center text-2xl font-semibold lg:text-5xl"
+          animation="blurInDown"
+          as="h1"
+          duration={0.6}
+          by="word"
+        >
+          Discover All Events Around You
+        </TextAnimate>
+        <TextAnimate
+          className="text-xs lg:text-base"
+          animation="blurInUp"
+          duration={0.2}
+          delay={0.8}
+          as={'p'}
+          by="line"
+        >
+          {`Get ready for an adventure! Browse all events happening near you\n— from today's highlights to upcoming experiences.`}
+        </TextAnimate>
       </div>
 
       <div className="space-y-12">

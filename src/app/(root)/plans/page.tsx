@@ -1,6 +1,8 @@
 import { getAllPlansAction } from '@/features/plans/actions/query';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { UpgradePlanButton } from '@/features/plans/components/buttons';
+import { TextAnimate } from '@/components/ui/text-animate';
+import { BlurFade } from '@/components/ui/blur-fade';
 
 export default async function PricingPage() {
   const plans = await getAllPlansAction();
@@ -8,41 +10,58 @@ export default async function PricingPage() {
   return (
     <>
       <div className="mx-auto mb-6 max-w-2xl space-y-1 text-center lg:mb-12 lg:space-y-4">
-        <h1 className="text-center text-2xl font-semibold lg:text-5xl">Pricing that Scales with You</h1>
-        <p className="text-xs lg:text-base">
-          Whether you&apos;re an individual or a business, our plans are designed to scale with your needs. Choose the
-          plan that gives you access to the tools and features you need to create, manage, and grow effortlessly.
-        </p>
+        <TextAnimate
+          className="text-center text-2xl font-semibold lg:text-5xl"
+          animation="blurInDown"
+          as="h1"
+          duration={0.6}
+          by="word"
+        >
+          Pricing that Scales with You
+        </TextAnimate>
+        <TextAnimate
+          className="text-xs lg:text-base"
+          animation="blurInUp"
+          duration={0.2}
+          delay={0.8}
+          as={'p'}
+          by="line"
+        >
+          {`Whether you&apos;re an individual or a business, our plans are designed to scale with your\nneeds. Choose the plan that gives you access to the tools and features you need to create,\nmanage, and grow effortlessly.`}
+        </TextAnimate>
       </div>
 
       <div className="mt-8 grid gap-6 md:mt-20 md:grid-cols-2">
-        {plans.map(plan => (
-          <Card
-            className="bg-card/20 relative flex flex-col"
+        {plans.map((plan, idx) => (
+          <BlurFade
             key={plan.id}
+            delay={0.6 + idx * 0.4}
+            inView
           >
-            {plan.name === 'pro' && (
-              <span className="absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full bg-linear-to-br/increasing from-purple-400 to-amber-300 px-3 py-1 text-xs font-medium text-amber-950 ring-1 ring-white/20 ring-offset-1 ring-offset-gray-950/5 ring-inset">
-                Best
-              </span>
-            )}
-            <CardHeader>
-              <CardTitle className="font-medium capitalize">{plan.name}</CardTitle>
-              <span className="my-3 block text-2xl font-semibold">${plan.price} / Life-Time</span>
-            </CardHeader>
+            <Card className="bg-card/20 relative flex h-full w-full flex-col">
+              {plan.name === 'pro' && (
+                <span className="absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full bg-linear-to-br/increasing from-purple-400 to-amber-300 px-3 py-1 text-xs font-medium text-amber-950 ring-1 ring-white/20 ring-offset-1 ring-offset-gray-950/5 ring-inset">
+                  Best
+                </span>
+              )}
+              <CardHeader>
+                <CardTitle className="font-medium capitalize">{plan.name}</CardTitle>
+                <span className="my-3 block text-2xl font-semibold">${plan.price} / Life-Time</span>
+              </CardHeader>
 
-            <CardContent className="space-y-4">
-              <hr className="border-dashed" />
+              <CardContent className="space-y-4">
+                <hr className="border-dashed" />
 
-              <ul className="list-outside space-y-3 text-sm">
-                {plan.benfits.map((ben, idx) => (
-                  <li key={idx + 1}>{ben}</li>
-                ))}
-              </ul>
-            </CardContent>
+                <ul className="list-outside space-y-3 text-sm">
+                  {plan.benfits.map((ben, idx) => (
+                    <li key={idx + 1}>{ben}</li>
+                  ))}
+                </ul>
+              </CardContent>
 
-            <CardFooter className="mt-auto">{plan.name === 'pro' && <UpgradePlanButton planName="pro" />}</CardFooter>
-          </Card>
+              <CardFooter className="mt-auto">{plan.name === 'pro' && <UpgradePlanButton planName="pro" />}</CardFooter>
+            </Card>
+          </BlurFade>
         ))}
       </div>
     </>
