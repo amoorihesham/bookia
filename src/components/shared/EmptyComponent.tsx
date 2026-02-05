@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
+import { BlurFade } from '../ui/blur-fade';
 
 type NoDataProps = {
   title?: string;
@@ -19,11 +20,14 @@ export const EmptyComponent: React.FC<NoDataProps> = ({
 }) => {
   const router = useRouter();
   return (
-    <div
+    <BlurFade
       className={cn(
-        `bg-card/20 mx-auto flex h-[500px] max-w-4xl flex-col items-center justify-center rounded-2xl border border-dashed border-gray-600 px-4 py-12 text-center shadow-sm`,
+        `bg-card/20 mx-auto flex max-h-full max-w-4xl flex-col items-center justify-center rounded-2xl border border-dashed border-gray-600 px-4 py-12 text-center shadow-sm`,
         className
       )}
+      inView
+      delay={0.6}
+      duration={0.4}
     >
       <div className="bg-card mb-4 flex h-16 w-16 items-center justify-center rounded-full">
         <FileSearch className="h-8 w-8 text-gray-300" />
@@ -39,6 +43,6 @@ export const EmptyComponent: React.FC<NoDataProps> = ({
       >
         Refresh
       </Button>
-    </div>
+    </BlurFade>
   );
 };

@@ -14,7 +14,6 @@ export default async function PricingPage() {
           className="text-center text-2xl font-semibold lg:text-5xl"
           animation="blurInDown"
           as="h1"
-          duration={0.4}
           by="word"
           once
         >
@@ -23,9 +22,8 @@ export default async function PricingPage() {
         <TextAnimate
           className="text-xs lg:text-base"
           animation="blurInUp"
-          duration={0.2}
-          delay={0.5}
           as={'p'}
+          delay={0.4}
           by="line"
           once
         >

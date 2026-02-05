@@ -14,7 +14,6 @@ export default async function FeaturedPage() {
           className="text-center text-2xl font-semibold lg:text-5xl"
           animation="blurInDown"
           as="h1"
-          duration={0.6}
           by="word"
           once
         >
@@ -23,12 +22,10 @@ export default async function FeaturedPage() {
         <TextAnimate
           className="text-xs lg:text-base"
           animation="blurInUp"
-          duration={0.2}
-          delay={0.8}
+          delay={0.2}
           as={'p'}
           by="line"
           once
-
         >
           {`Discover our hand-picked selection of standout events!\nThese are the most exciting experiences happening around.`}
         </TextAnimate>

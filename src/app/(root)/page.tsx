@@ -11,27 +11,10 @@ export default async function Homepage() {
   return (
     <>
       <div className="mx-auto mb-6 max-w-2xl space-y-1 text-center lg:mb-12 lg:space-y-4">
-        <TextAnimate
-          className="text-center text-2xl font-semibold lg:text-5xl"
-          animation="blurInDown"
-          as="h1"
-          duration={0.6}
-          by="word"
-          once
-        >
-          Discover All Events Around You
-        </TextAnimate>
-        <TextAnimate
-          className="text-xs lg:text-base"
-          animation="blurInUp"
-          duration={0.2}
-          delay={0.8}
-          as={'p'}
-          by="line"
-          once
-        >
+        <h1 className="text-center text-2xl font-semibold lg:text-5xl">Discover All Events Around You</h1>
+        <p className="text-xs lg:text-base">
           {`Get ready for an adventure! Browse all events happening near you\n— from today's highlights to upcoming experiences.`}
-        </TextAnimate>
+        </p>
       </div>
 
       <div className="space-y-12">
@@ -40,8 +23,6 @@ export default async function Homepage() {
             className="text-foreground text-2xl font-semibold uppercase underline underline-offset-4"
             animation="blurInDown"
             as="h2"
-            duration={0.4}
-            delay={0.6}
             by="word"
             once
           >
@@ -54,15 +35,16 @@ export default async function Homepage() {
                 {featuredEvents.map((event, idx) => (
                   <BlurFade
                     key={event.id}
-                    delay={0.6 + idx * 0.4}
+                    delay={0.4 + idx * 0.4}
                     inView
+                    direction="right"
                   >
                     <EventCardCompound event={event} />
                   </BlurFade>
                 ))}
               </div>
             ) : (
-              <EmptyComponent />
+              <EmptyComponent className="mt-4 w-full max-w-full" />
             )}
           </Suspense>
         </div>
@@ -71,8 +53,6 @@ export default async function Homepage() {
             className="text-foreground text-2xl font-semibold uppercase underline underline-offset-4"
             animation="blurInDown"
             as="h2"
-            duration={0.4}
-            delay={0.6}
             by="word"
             once
           >
@@ -85,15 +65,16 @@ export default async function Homepage() {
                 {regularEvents.map((event, idx) => (
                   <BlurFade
                     key={event.id}
-                    delay={0.6 + idx * 0.4}
+                    delay={0.4 + idx * 0.4}
                     inView
+                    direction="left"
                   >
                     <EventCardCompound event={event} />
                   </BlurFade>
                 ))}
               </div>
             ) : (
-              <EmptyComponent />
+              <EmptyComponent className="mt-4 w-full max-w-full" />
             )}
           </Suspense>
         </div>
