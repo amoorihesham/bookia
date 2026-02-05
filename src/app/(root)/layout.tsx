@@ -1,4 +1,5 @@
 import { AppSidebar } from '@/components/sidebar/app-side-bar';
+import { DashboardButton } from '@/components/sidebar/dashboard-button';
 import { SidebarNavMenuGroup } from '@/components/sidebar/sidebar-nav-menu-group';
 import { SidebarUserButton } from '@/features/users/componnets/sidebar-user-button';
 import {
@@ -13,6 +14,7 @@ import {
   Plus,
   TicketsPlane,
 } from 'lucide-react';
+import { Route } from 'next';
 import { ReactNode } from 'react';
 
 export default function WebsiteLayout({ children }: { children: ReactNode }) {
@@ -80,13 +82,14 @@ export default function WebsiteLayout({ children }: { children: ReactNode }) {
                 authStatus: 'signedIn',
               },
               {
-                href: '/sign-in',
+                href: '/sign-in' as Route,
                 icon: <LogInIcon />,
                 label: 'Sign In',
                 authStatus: 'signedOut',
               },
             ]}
           />
+          <DashboardButton />
         </>
       }
       footerButton={<SidebarUserButton />}

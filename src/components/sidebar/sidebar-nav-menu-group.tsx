@@ -12,14 +12,16 @@ import {
 import { SignedIn, SignedOut } from '@/services/clerk/components/signin-status';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { DashboardButton } from './dashboard-button';
+import { Route } from 'next';
 
-export function SidebarNavMenuGroup({
+export function SidebarNavMenuGroup<T extends string>({
   title,
   items,
   className,
 }: {
   items: {
-    href: string;
+    href: Route<T> | URL;
     icon: ReactNode;
     label: string;
     authStatus?: 'signedOut' | 'signedIn';
@@ -34,9 +36,9 @@ export function SidebarNavMenuGroup({
       {title && <SidebarGroupLabel>{title}</SidebarGroupLabel>}
 
       <SidebarMenu>
-        {items.map(item => {
+        {items.map((item, idx) => {
           const html = (
-            <SidebarMenuItem key={item.href}>
+            <SidebarMenuItem key={idx + 1}>
               <SidebarMenuButton
                 asChild
                 isActive={pathname === item.href}
@@ -55,11 +57,11 @@ export function SidebarNavMenuGroup({
           );
 
           if (item.authStatus === 'signedOut') {
-            return <SignedOut key={item.href}>{html}</SignedOut>;
+            return <SignedOut key={idx + 1}>{html}</SignedOut>;
           }
 
           if (item.authStatus === 'signedIn') {
-            return <SignedIn key={item.href}>{html}</SignedIn>;
+            return <SignedIn key={idx + 1}>{html}</SignedIn>;
           }
 
           return html;
