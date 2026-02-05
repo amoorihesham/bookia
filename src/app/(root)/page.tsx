@@ -12,11 +12,10 @@ export default async function Homepage() {
     <>
       <div className="mx-auto mb-6 max-w-2xl space-y-1 text-center lg:mb-12 lg:space-y-4">
         <TextAnimate
-          className="text-foreground text-2xl font-semibold uppercase underline underline-offset-4"
+          className="text-center text-2xl font-semibold lg:text-5xl"
           animation="blurInDown"
-          as="h2"
-          duration={0.4}
-          delay={0.6}
+          as="h1"
+          duration={0.6}
           by="word"
           once
         >
