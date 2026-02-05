@@ -4,6 +4,7 @@ import { EventsGridSkeleton, EventCardCompound } from '@/features/events/compone
 import { EmptyComponent } from '@/components/shared';
 import { GetHomepageFeaturedEvents, GetHomepageRegularEvents } from '@/features/events/actions/query';
 import { TextAnimate } from '@/components/ui/text-animate';
+import { BlurFade } from '@/components/ui/blur-fade';
 
 export default async function Homepage() {
   const [featuredEvents, regularEvents] = await Promise.all([GetHomepageFeaturedEvents(), GetHomepageRegularEvents()]);
@@ -36,17 +37,29 @@ export default async function Homepage() {
 
       <div className="space-y-12">
         <div className="space-y-4">
-          <h2 className="text-foreground text-2xl font-semibold uppercase underline underline-offset-4">
+          <TextAnimate
+            className="text-foreground text-2xl font-semibold uppercase underline underline-offset-4"
+            animation="blurInDown"
+            as="h2"
+            duration={0.4}
+            delay={0.6}
+            by="word"
+            once
+          >
             Featured Events
-          </h2>
+          </TextAnimate>
+
           <Suspense fallback={<EventsGridSkeleton />}>
             {featuredEvents.length ? (
               <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6 xl:grid-cols-3">
-                {featuredEvents.map(event => (
-                  <EventCardCompound
-                    event={event}
+                {featuredEvents.map((event, idx) => (
+                  <BlurFade
                     key={event.id}
-                  />
+                    delay={0.6 + idx * 0.4}
+                    inView
+                  >
+                    <EventCardCompound event={event} />
+                  </BlurFade>
                 ))}
               </div>
             ) : (
@@ -55,17 +68,29 @@ export default async function Homepage() {
           </Suspense>
         </div>
         <div className="space-y-4">
-          <h2 className="text-foreground text-2xl font-semibold uppercase underline underline-offset-4">
+          <TextAnimate
+            className="text-foreground text-2xl font-semibold uppercase underline underline-offset-4"
+            animation="blurInDown"
+            as="h2"
+            duration={0.4}
+            delay={0.6}
+            by="word"
+            once
+          >
             Regular Events
-          </h2>
+          </TextAnimate>
+
           <Suspense fallback={<EventsGridSkeleton />}>
             {regularEvents.length ? (
               <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6 xl:grid-cols-3">
-                {regularEvents.map(event => (
-                  <EventCardCompound
-                    event={event}
+                {regularEvents.map((event, idx) => (
+                  <BlurFade
                     key={event.id}
-                  />
+                    delay={0.6 + idx * 0.4}
+                    inView
+                  >
+                    <EventCardCompound event={event} />
+                  </BlurFade>
                 ))}
               </div>
             ) : (
