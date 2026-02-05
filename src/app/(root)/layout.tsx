@@ -14,8 +14,7 @@ import {
   Plus,
   TicketsPlane,
 } from 'lucide-react';
-import { Route } from 'next';
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 
 export default function WebsiteLayout({ children }: { children: ReactNode }) {
   return (
@@ -82,14 +81,16 @@ export default function WebsiteLayout({ children }: { children: ReactNode }) {
                 authStatus: 'signedIn',
               },
               {
-                href: '/sign-in' as Route,
+                href: '/sign-in',
                 icon: <LogInIcon />,
                 label: 'Sign In',
                 authStatus: 'signedOut',
               },
             ]}
           />
-          <DashboardButton />
+          <Suspense fallback={<div className="bg-muted h-5 w-full animate-pulse rounded-sm">Loading...</div>}>
+            <DashboardButton />
+          </Suspense>
         </>
       }
       footerButton={<SidebarUserButton />}

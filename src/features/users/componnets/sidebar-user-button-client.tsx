@@ -54,11 +54,6 @@ export function SidebarUserButtonClient({ user }: { user: User }) {
         >
           <UserIcon className="mr-1" /> Profile
         </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href="/user-settings/notifications">
-            <SettingsIcon className="mr-1" /> Settings
-          </Link>
-        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <SignOutButton>
           <DropdownMenuItem>

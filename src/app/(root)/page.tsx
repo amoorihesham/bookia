@@ -1,5 +1,4 @@
 import { Suspense } from 'react';
-
 import { EventsGridSkeleton, EventCardCompound } from '@/features/events/components';
 import { EmptyComponent } from '@/components/shared';
 import { GetHomepageFeaturedEvents, GetHomepageRegularEvents } from '@/features/events/actions/query';
@@ -13,10 +12,11 @@ export default async function Homepage() {
     <>
       <div className="mx-auto mb-6 max-w-2xl space-y-1 text-center lg:mb-12 lg:space-y-4">
         <TextAnimate
-          className="text-center text-2xl font-semibold lg:text-5xl"
+          className="text-foreground text-2xl font-semibold uppercase underline underline-offset-4"
           animation="blurInDown"
-          as="h1"
-          duration={0.6}
+          as="h2"
+          duration={0.4}
+          delay={0.6}
           by="word"
           once
         >
